@@ -1,0 +1,15 @@
+objects/NALread.r.o: \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/NALread.cpp \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/NALread.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/CommonDef.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TypeDef.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TComBitStream.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/CommonDef.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/NAL.h
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/NALread.cpp :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/NALread.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/CommonDef.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TypeDef.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TComBitStream.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/CommonDef.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/NAL.h :

@@ -1,0 +1,15 @@
+objects/NALwrite.r.o: \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibEncoder/NALwrite.cpp \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/NAL.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/CommonDef.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/TypeDef.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/TComBitStream.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibEncoder/NALwrite.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/CommonDef.h
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibEncoder/NALwrite.cpp :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/NAL.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/CommonDef.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/TypeDef.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/TComBitStream.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibEncoder/NALwrite.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/CommonDef.h :

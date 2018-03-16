@@ -1,0 +1,31 @@
+objects/TComRdCostWeightPrediction.r.o: \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComRdCostWeightPrediction.cpp \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComRdCost.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/CommonDef.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TypeDef.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComPattern.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComMv.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComSlice.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComRom.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComList.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComChromaFormat.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComRectangle.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/ContextTables.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/Debug.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/CommonDef.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComRdCostWeightPrediction.h
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComRdCostWeightPrediction.cpp :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComRdCost.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/CommonDef.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TypeDef.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComPattern.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComMv.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComSlice.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComRom.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComList.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComChromaFormat.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComRectangle.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/ContextTables.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/Debug.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/CommonDef.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComRdCostWeightPrediction.h :

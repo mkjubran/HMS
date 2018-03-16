@@ -1,0 +1,25 @@
+objects/TEncBinCoderCABAC.r.o: \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibEncoder/TEncBinCoderCABAC.cpp \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibEncoder/TEncBinCoderCABAC.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/TComCABACTables.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/CommonDef.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/TypeDef.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/TComRom.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/CommonDef.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibEncoder/TEncBinCoder.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/ContextModel.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/TComRom.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/TComBitStream.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/Debug.h
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibEncoder/TEncBinCoderCABAC.cpp :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibEncoder/TEncBinCoderCABAC.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/TComCABACTables.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/CommonDef.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/TypeDef.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/TComRom.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/CommonDef.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibEncoder/TEncBinCoder.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/ContextModel.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/TComRom.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/TComBitStream.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/Debug.h :

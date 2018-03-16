@@ -1,0 +1,23 @@
+objects/TAppDecCfg.r.o: \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/App/TAppDecoder/TAppDecCfg.cpp \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/App/TAppDecoder/TAppDecCfg.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/CommonDef.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/TypeDef.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/Lib/TAppCommon/program_options_lite.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/TComChromaFormat.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/CommonDef.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/TComRectangle.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/ContextTables.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/TComRom.h \
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/Debug.h
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/App/TAppDecoder/TAppDecCfg.cpp :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/App/TAppDecoder/TAppDecCfg.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/CommonDef.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/TypeDef.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/Lib/TAppCommon/program_options_lite.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/TComChromaFormat.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/CommonDef.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/TComRectangle.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/ContextTables.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/TComRom.h :
+ /home/mohammad/Downloads/HM_MV_CNN_Original/HM_MV_CNN/HM_MVX/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/Debug.h :
