@@ -404,7 +404,7 @@ Void TComSlice::setRefPicList( TComList<TComPic*>& rcListPic, Bool checkNumPocTo
 
     assert(numPicTotalCurr > 0);
     // general tier and level limit:
-    assert(numPicTotalCurr <= 8);
+    // assert(numPicTotalCurr <= 8); //Commmented by Jubran
   }
 
   Int cIdx = 0;

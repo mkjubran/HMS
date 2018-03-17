@@ -1340,6 +1340,7 @@ Void TEncGOP::compressGOP( Int iPOCLast, Int iNumPicRcvd, TComList<TComPic*>& rc
     //  Set reference list
     pcSlice->setRefPicList ( rcListPic );
 
+
     //  Slice info. refinement
     if ( (pcSlice->getSliceType() == B_SLICE) && (pcSlice->getNumRefIdx(REF_PIC_LIST_1) == 0) )
     {
@@ -1387,6 +1388,19 @@ Void TEncGOP::compressGOP( Int iPOCLast, Int iNumPicRcvd, TComList<TComPic*>& rc
 
     //-------------------------------------------------------------
     pcSlice->setRefPOCList();
+
+/* dded by Jubran for debuging
+    for (Int iRefList = 0; iRefList < 2; iRefList++)
+    {
+    printf("\n After2: [L%d ", iRefList);
+    for (Int iRefIndex = 0; iRefIndex < pcSlice->getNumRefIdx(RefPicList(iRefList)); iRefIndex++)
+    {
+    printf ("%d (%d, %d)", pcSlice->getRefPOC(RefPicList(iRefList), iRefIndex)-pcSlice->getLastIDR(),pcSlice->getRefPOC(RefPicList(iRefList), iRefIndex),pcSlice->getLastIDR());
+    }
+    printf("]\n");
+    }
+//end for the added for debuging
+*/
 
     pcSlice->setList1IdxToList0Idx();
 
@@ -2373,6 +2387,7 @@ Void TEncGOP::xCalculateAddPSNR( TComPic* pcPic, TComPicYuv* pcPicD, const Acces
     for (Int iRefIndex = 0; iRefIndex < pcSlice->getNumRefIdx(RefPicList(iRefList)); iRefIndex++)
     {
       printf ("%d ", pcSlice->getRefPOC(RefPicList(iRefList), iRefIndex)-pcSlice->getLastIDR());
+    // printf ("%d (%d, %d)", pcSlice->getRefPOC(RefPicList(iRefList), iRefIndex)-pcSlice->getLastIDR(),pcSlice->getRefPOC(RefPicList(iRefList), iRefIndex),pcSlice->getLastIDR()); //Jubran
     }
     printf("]");
   }
