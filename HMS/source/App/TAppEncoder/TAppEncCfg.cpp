@@ -1118,7 +1118,7 @@ Bool TAppEncCfg::parseCfg( Int argc, TChar* argv[] )
   m_ext360.addOptions(opts, ext360CfgContext);
 #endif
 
-  for(Int i=1; i<MAX_GOP+1; i++)
+  for(Int i=1; i<300+1; i++) //jubran MAX_GOP=300
   {
     std::ostringstream cOSS;
     cOSS<<"Frame"<<i;
@@ -2083,6 +2083,7 @@ Void TAppEncCfg::xCheckParameter()
   {
     refList[1] = 1;
   }
+
   Bool isOK[MAX_GOP];
   for(Int i=0; i<MAX_GOP; i++)
   {

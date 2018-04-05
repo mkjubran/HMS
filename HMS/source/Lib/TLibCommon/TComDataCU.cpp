@@ -121,6 +121,7 @@ Void TComDataCU::create( ChromaFormat chromaFormatIDC, UInt uiNumPartition, UInt
 
   if ( !bDecSubCu )
   {
+    
     m_phQP               = (SChar*    )xMalloc(SChar,    uiNumPartition);
     m_puhDepth           = (UChar*    )xMalloc(UChar,    uiNumPartition);
     m_puhWidth           = (UChar*    )xMalloc(UChar,    uiNumPartition);

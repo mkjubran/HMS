@@ -58,38 +58,45 @@ def content_similarity(img_0, img_1):
 
     # Initiate SIFT detector
     orb = cv2.ORB_create()
+    print("{} ...... {}\n").format(img_0,img_1)
 
     # find the keypoints and descriptors with SIFT
     kp1, des1 = orb.detectAndCompute(img1,None)
     kp2, des2 = orb.detectAndCompute(img2,None)
+    
+    if (type(des1)==type(des2)):
+    	# create BFMatcher object
+    	bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
 
-    # create BFMatcher object
-    bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+    	# Match descriptors.
+    	matches = bf.match(des1,des2)
+    	# pdb.set_trace()
 
-    # Match descriptors.
-    matches = bf.match(des1,des2)
-    # pdb.set_trace()
+    	# Sort them in the order of their distance.
+    	matches   = sorted(matches, key = lambda x:x.distance)
+    	distances = [ _.distance for _ in matches]
+    	simind_1    =  np.mean(distances)
+    	#print("simind_1={}\n").format(simind_1)
 
-    # Sort them in the order of their distance.
-    matches   = sorted(matches, key = lambda x:x.distance)
-    distances = [ _.distance for _ in matches]
-    simind_1    =  np.mean(distances)
+    	# Match descriptors.
+    	matches = bf.match(des2,des1)
+    	# pdb.set_trace()
 
-    # Match descriptors.
-    matches = bf.match(des2,des1)
-    # pdb.set_trace()
+    	# Sort them in the order of their distance.
+    	matches   = sorted(matches, key = lambda x:x.distance)
+    	distances = [ _.distance for _ in matches]
+    	simind_2    =  np.mean(distances)
 
-    # Sort them in the order of their distance.
-    matches   = sorted(matches, key = lambda x:x.distance)
-    distances = [ _.distance for _ in matches]
-    simind_2    =  np.mean(distances)
-
-    simind = (simind_1 + simind_2)/float(2)
+    	simind = (simind_1 + simind_2)/float(2)
+	#print("dis1={}\n dis2={}\n").format(des1,des2)
+    else:
+	#print("dis1={}\n dis2={}\n").format(des1,des2)
+     	simind=1000
 
     # Draw first 10 matches.
-    # img3 = cv2.drawMatches(img1,kp1,img2,kp2,matches[:10], flags=2)
-    # plt.imshow(img3),plt.show()
-
+    #img3 = cv2.drawMatches(img1,kp1,img2,kp2,matches[:10], flags=2)
+    #plt.imshow(img3),plt.show()
+    #pdb.set_trace()
     return simind
 
 def make_windows(lfrm, numfrmwin):

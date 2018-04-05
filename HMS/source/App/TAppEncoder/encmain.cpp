@@ -51,8 +51,9 @@
 
 int main(int argc, char* argv[])
 {
-  TAppEncTop  cTAppEncTop;
 
+  TAppEncTop  cTAppEncTop;
+ 
   // print information
   fprintf( stdout, "\n" );
   fprintf( stdout, "HM software: Encoder Version [%s] (including RExt)", NV_VERSION );
