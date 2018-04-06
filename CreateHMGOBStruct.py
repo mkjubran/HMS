@@ -3,12 +3,34 @@
 
 import numpy as np
 import cv2, os, sys, subprocess, pdb
+import argparse
 
-with open(sys.argv[-1]) as f:
+# Instantiate the parser
+parser = argparse.ArgumentParser(description='Optional app description')
+
+# Optional argument
+parser.add_argument('--ranklist', type=str,
+                    help='A text file with with frames rank list')
+
+parser.add_argument('--ref_stitch', type=int,
+                    help='A text file with with frames rank list')
+
+parser.add_argument('--ref_active', type=int,
+                    help='A text file with with frames rank list')
+
+args = parser.parse_args()
+
+##Inputs
+RankListFile=args.ranklist;
+ref_pics_active_Stitching=args.ref_stitch;
+ref_pics_active_Max=args.ref_active;
+
+#with open(sys.argv[-1]) as f:
+with open(args.ranklist) as f:
     FNums = f.readlines()
 f.close()
-ref_pics_active_Max=5
-ref_pics_active_Stitching=3
+#ref_pics_active_Max=5
+#ref_pics_active_Stitching=3
 
 iFNums=map(int, FNums)
 GOB=len(iFNums)
