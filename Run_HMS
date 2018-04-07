@@ -7,4 +7,4 @@ python CreateHMGOBStruct.py --ranklist ./OrderedFrames_5sec.txt --ref_active 5 -
 
 ./HMS/bin/TAppDecoderStatic --BitstreamFile="../vid/HMEncodedVideo.bin" --ReconFile="../vid/HMDecodedVideo_Stitching.yuv"
 
-python ./video-quality/measure.py "../vid/scene_level_sample_320240_5sec.yuv" "../vid/HMDecodedVideo_Stitching.yuv"
+python ./video-quality/measure.py  ../vid/scene_level_sample_320240_5sec.yuv ../vid/HMDecodedVideo_Stitching.yuv 320 240
