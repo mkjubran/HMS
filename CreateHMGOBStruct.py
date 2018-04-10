@@ -2,7 +2,8 @@
 #print >> fid, 'Frame1:  P    1   5       -6.5                      0.2590         0          0          1.0   0            0               0           1                1         -1      0');
 
 import numpy as np
-import cv2, os, sys, subprocess, pdb
+import os, sys, subprocess, pdb
+#import cv2
 import argparse
 
 # Instantiate the parser
