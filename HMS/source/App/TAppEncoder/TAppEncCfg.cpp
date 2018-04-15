@@ -1733,11 +1733,11 @@ Void TAppEncCfg::xCheckParameter()
 {
   if (m_decodedPictureHashSEIType==HASHTYPE_NONE)
   {
-    fprintf(stderr, "******************************************************************\n");
+    /*fprintf(stderr, "******************************************************************\n");
     fprintf(stderr, "** WARNING: --SEIDecodedPictureHash is now disabled by default. **\n");
     fprintf(stderr, "**          Automatic verification of decoded pictures by a     **\n");
     fprintf(stderr, "**          decoder requires this option to be enabled.         **\n");
-    fprintf(stderr, "******************************************************************\n");
+    fprintf(stderr, "******************************************************************\n");*/
   }
   if( m_profile==Profile::NONE )
   {
