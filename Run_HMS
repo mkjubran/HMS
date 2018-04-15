@@ -1,14 +1,19 @@
 #!/bin/bash
 #clear
 
-InputYUV="../vid/scene_level_sample_320240_5sec.yuv"
-InputMP4="../vid/scene_level_sample_320240_5sec.mp4"
-RankListFile=./OrderedFrames_5sec.txt
+InputYUV="../vid/scene_level_sample_320240_1min.yuv"
+InputMP4="../vid/scene_level_sample_320240.mp4"
+RankListFile=./OrderedFrames_1min.txt
 
+rm -rf ./encoder_HMS_GOB.cfg
 python CreateHMGOBStruct.py --ranklist $RankListFile --ref_active 5 --ref_stitch 3
 
+
+rm -rf "../vid/HMEncodedVideo.bin"
 ./HMS/bin/TAppEncoderStatic -c ./HMS/cfg/encoder_HMS.cfg -c ./encoder_HMS_GOB.cfg --InputFile=$InputYUV --QP=24 --FramesToBeEncoded=3000 --MaxCUSize=16 --MaxPartitionDepth=2 --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin"
 
+
+rm -rf "../vid/HMDecodedVideo_Stitching.yuv"
 ./HMS/bin/TAppDecoderStatic --BitstreamFile="../vid/HMEncodedVideo.bin" --ReconFile="../vid/HMDecodedVideo_Stitching.yuv"
 
 python ./Quality/measure.py  $InputYUV ../vid/HMDecodedVideo_Stitching.yuv 320 240

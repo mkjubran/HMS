@@ -1694,7 +1694,7 @@ Void TEncGOP::compressGOP( Int iPOCLast, Int iNumPicRcvd, TComList<TComPic*>& rc
       for(Int s=0; s< uiNumSliceSegments; s++)
       {
         pcPic->getSlice(s)->setSaoEnabledFlag(CHANNEL_TYPE_LUMA, sliceEnabled[COMPONENT_Y]);
-        assert(sliceEnabled[COMPONENT_Cb] == sliceEnabled[COMPONENT_Cr]);
+	//assert(sliceEnabled[COMPONENT_Cb] == sliceEnabled[COMPONENT_Cr]);  //Jubran : commented by Jubran
         pcPic->getSlice(s)->setSaoEnabledFlag(CHANNEL_TYPE_CHROMA, sliceEnabled[COMPONENT_Cb]);
       }
     }
