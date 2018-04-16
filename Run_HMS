@@ -5,10 +5,51 @@ RankListFile=./OrderedFrames_1min.txt
 QP=24
 MaxCUSize=16
 MaxPartitionDepth=2
-Ref_active=5
-Ref_stitch=3
+Ref_active=8
+Ref_stitch=2
+FramesToBeEncoded=30000
 
-FramesToBeEncoded=300000
+for i in "$@"
+do
+case $i in
+    -vid=*|--vid=*)
+    fid="${i#*=}"
+    shift
+    ;;
+    -rlist=*|--rlist=*)
+    RankListFile="${i#*=}"
+    shift
+    ;;
+    -qp=*|--qp=*)
+    QP="${i#*=}"
+    shift
+    ;;
+    -mcu=*|--mcu=*)
+    MaxCUSize="${i#*=}"
+    shift
+    ;;
+    -mpd=*|--mpd=*)
+    MaxPartitionDepth="${i#*=}"
+    shift
+    ;;
+    -refa=*|--refa=*)
+    Ref_active="${i#*=}"
+    shift
+    ;;
+    -refs=*|--refs=*)
+    Ref_stitch="${i#*=}"
+    shift
+    ;;
+    -nf=*|--nf=*)
+    FramesToBeEncoded="${i#*=}"
+    shift
+    ;;
+    *)
+          # unknown option
+    ;;
+esac
+done
+#### End Parsing Command Line Parameters
 
 
 HMSResults="./HMSResults/"$fid"_QP"$QP"_MCU"$MaxCUSize"_Depth"$MaxPartitionDepth"_RefA"$Ref_active"_RefS"$Ref_stitch".dat"
