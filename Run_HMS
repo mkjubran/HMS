@@ -75,14 +75,14 @@ python CreateHMGOBStruct.py --ranklist $RankListFile --ref_active $Ref_active --
 
 rm -rf "../vid/HMEncodedVideo.bin"
 rm -rf encoder.log
-./HMS/bin/TAppEncoderStatic -c ./HMS/cfg/encoder_HMS.cfg -c ./encoder_HMS_GOB.cfg --InputFile=$InputYUV --QP=$QP --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" > encoder.log
+./HMS/bin/TAppEncoderStatic -c ./HMS/cfg/encoder_HMS.cfg -c ./encoder_HMS_GOB.cfg --InputFile=$InputYUV --QP=$QP --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" |& tee -a encoder.log
 
 file_size=`du -b "../vid/HMEncodedVideo.bin" | cut -f1`
 echo "File Size (.bin) = "$file_size" Bytes" >> $HMSResults
 echo "" >> $HMSResults
 
 rm -rf "../vid/HMDecodedVideo_Stitching.yuv"
-./HMS/bin/TAppDecoderStatic --BitstreamFile="../vid/HMEncodedVideo.bin" --ReconFile="../vid/HMDecodedVideo_Stitching.yuv" > /dev/null
+./HMS/bin/TAppDecoderStatic --BitstreamFile="../vid/HMEncodedVideo.bin" --ReconFile="../vid/HMDecodedVideo_Stitching.yuv" |& tee -a decoder.log
 
 python ./Quality/measure.py  $InputYUV ../vid/HMDecodedVideo_Stitching.yuv 320 240 >> $HMSResults 
 

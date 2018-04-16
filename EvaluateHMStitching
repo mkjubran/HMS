@@ -1,39 +1,39 @@
 #!/bin/bash
 #clear
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=8 --refs=4
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=8 --refs=6
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=8 --refs=4
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=8 --refs=6
 
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=16 --refs=0
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=16 --refs=2
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=16 --refs=4
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=16 --refs=8
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=16 --refs=12
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=16 --refs=0
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=16 --refs=2
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=16 --refs=4
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=16 --refs=8
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=16 --refs=12
 
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=0
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=2
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=4
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=8
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=12
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=16
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=20
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=24
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=28
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=0
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=2
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=4
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=8
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=12
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=16
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=20
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=24
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=28
 
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=0
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=2
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=4
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=8
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=12
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=16
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=20
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=24
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=28
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=32
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=36
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=40
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=0
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=2
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=4
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=8
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=12
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=16
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=20
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=24
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=28
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=32
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=36
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=40
 ./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=44
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=48
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=52
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=56
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=60
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=48
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=52
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=56
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=60
 

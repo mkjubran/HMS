@@ -1,0 +1,3 @@
+TAppDecoderStatic: /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/TDecCAVLC.cpp:215: virtual Void TDecCavlc::parsePPS(TComPPS*): Assertion `uiCode <= 14' failed.
+
+HM software: Decoder Version [16.17] (including RExt)[Linux][GCC 5.4.0][64 bit] 

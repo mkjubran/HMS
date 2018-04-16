@@ -1065,7 +1065,7 @@ Void TEncTop::xInitPPS(TComPPS &pps, const TComSPS &sps)
       bestPos=i;
     }
   }
-  assert(bestPos <= 15);
+  //assert(bestPos <= 15); //Jubran : commented
   pps.setNumRefIdxL0DefaultActive(bestPos);
   pps.setNumRefIdxL1DefaultActive(bestPos);
   pps.setTransquantBypassEnabledFlag(getTransquantBypassEnabledFlag());
