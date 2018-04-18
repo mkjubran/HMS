@@ -72,7 +72,6 @@ echo "" >> $HMSResults
 rm -rf ./encoder_HMS_GOB.cfg
 python CreateHMGOBStruct.py --ranklist $RankListFile --ref_active $Ref_active --ref_stitch $Ref_stitch
 
-
 rm -rf "../vid/HMEncodedVideo.bin"
 rm -rf encoder.log
 ./HMS/bin/TAppEncoderStatic -c ./HMS/cfg/encoder_HMS.cfg -c ./encoder_HMS_GOB.cfg --InputFile=$InputYUV --QP=$QP --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" |& tee -a encoder.log
@@ -82,9 +81,10 @@ echo "File Size (.bin) = "$file_size" Bytes" >> $HMSResults
 echo "" >> $HMSResults
 
 rm -rf "../vid/HMDecodedVideo_Stitching.yuv"
+rm -rf decoder.log
 ./HMS/bin/TAppDecoderStatic --BitstreamFile="../vid/HMEncodedVideo.bin" --ReconFile="../vid/HMDecodedVideo_Stitching.yuv" |& tee -a decoder.log
 
-python ./Quality/measure.py  $InputYUV ../vid/HMDecodedVideo_Stitching.yuv 320 240 >> $HMSResults 
+#python ./Quality/measure.py  $InputYUV ../vid/HMDecodedVideo_Stitching.yuv 320 240 >> $HMSResults 
 
 ## Parsing the Number of frames, size of bitstream, and size of motion info from the $JMFrameStatsOrigFileName
 NumFrame=0

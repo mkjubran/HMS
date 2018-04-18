@@ -1,0 +1,15 @@
+Input File (YUV) = ../vid/scene_level_sample_320240_1min.yuv
+Input File (MP4) = ../vid/scene_level_sample_320240_1min.mp4
+RankListFile = ./OrderedFrames_test.txt
+Ref_active = 10
+Ref_stitch = 8
+QP = 24
+MaxCUSize = 16
+MaxPartitionDepth = 2
+
+File Size (.bin) = 81909 Bytes
+
+
+Number of Frames = 140
+Number of written bytes = 81909
+Bit Rate = 117.013 kbps

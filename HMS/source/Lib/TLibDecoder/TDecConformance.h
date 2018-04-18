@@ -40,7 +40,7 @@
 
 // This can be enabled externally. Note that this is a PARTIAL CONFORMANCE CHECK - not a full check. More checks may be added later
 #ifndef DECODER_PARTIAL_CONFORMANCE_CHECK
-#define DECODER_PARTIAL_CONFORMANCE_CHECK                 0 ///< 0 (default) = do not check conformance. 1 = warn if conformance checks fail. 2 = error and quit if conformance checks fail. Note this is only a partial conformance check - not a full conformance check.
+#define DECODER_PARTIAL_CONFORMANCE_CHECK                 1 ///< 0 (default) = do not check conformance. 1 = warn if conformance checks fail. 2 = error and quit if conformance checks fail. Note this is only a partial conformance check - not a full conformance check. //jubran was 1
 #endif
 
 

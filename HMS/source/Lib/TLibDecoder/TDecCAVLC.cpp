@@ -1775,11 +1775,11 @@ Void TDecCavlc::parseDeltaQP( TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth 
 {
   Int  iDQp;
 
-#if RExt__DECODER_DEBUG_BIT_STATISTICS
+//#if RExt__DECODER_DEBUG_BIT_STATISTICS // jubran commmented the if loop and thhe else to endif lines becaue created errors
   READ_SVLC(iDQp, "delta_qp");
-#else
-  xReadSvlc( iDQp );
-#endif
+//#else
+//  xReadSvlc( iDQp );
+//#endif
 
   Int qpBdOffsetY = pcCU->getSlice()->getSPS()->getQpBDOffset(CHANNEL_TYPE_LUMA);
   const Int qp = (((Int) pcCU->getRefQP( uiAbsPartIdx ) + iDQp + 52 + 2*qpBdOffsetY )%(52+ qpBdOffsetY)) -  qpBdOffsetY;
