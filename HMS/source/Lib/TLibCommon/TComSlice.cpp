@@ -1527,7 +1527,7 @@ TComSPS::TComSPS()
 , m_pcmLog2MaxSize            (  5)
 , m_uiPCMLog2MinSize          (  7)
 , m_bPCMFilterDisableFlag     (false)
-, m_uiBitsForPOC              (  8)
+, m_uiBitsForPOC              (  16) //Jubran modified was 8
 , m_numLongTermRefPicSPS      (  0)
 , m_uiMaxTrSize               ( 32)
 , m_bUseSAO                   (false)

@@ -84,14 +84,14 @@ rm -rf "../vid/HMDecodedVideo_Stitching.yuv"
 rm -rf decoder.log
 ./HMS/bin/TAppDecoderStatic --BitstreamFile="../vid/HMEncodedVideo.bin" --ReconFile="../vid/HMDecodedVideo_Stitching.yuv" |& tee -a decoder.log
 
-#python ./Quality/measure.py  $InputYUV ../vid/HMDecodedVideo_Stitching.yuv 320 240 >> $HMSResults 
+python ./Quality/measure.py  $InputYUV ../vid/HMDecodedVideo_Stitching.yuv 320 240 >> $HMSResults 
 
 ## Parsing the Number of frames, size of bitstream, and size of motion info from the $JMFrameStatsOrigFileName
 NumFrame=0
 Size_Frame_Total=0;
 while IFS=$'\t' read -r HMSLine
 do
-  printf 'f1: %s\n' "$HMSLine"
+ # printf 'f1: %s\n' "$HMSLine"
   IFS='| ' read -r -a HMSLine_array1 <<< "$HMSLine"
   if [[ "${HMSLine_array1[0]}" == *"POC"* ]]
   then

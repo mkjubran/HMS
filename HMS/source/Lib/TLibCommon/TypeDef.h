@@ -73,7 +73,7 @@
 #endif
 #define DEC_NUH_TRACE                                     0 ///< When trace enabled, enable tracing of NAL unit headers at the decoder (currently not possible at the encoder)
 
-#define PRINT_RPS_INFO                                    1 ///< Enable/disable the printing of bits used to send the RPS. //Jubran was 1
+#define PRINT_RPS_INFO                                    0 ///< Enable/disable the printing of bits used to send the RPS. //Jubran was 1
 
 // ====================================================================================================================
 // Tool Switches - transitory (these macros are likely to be removed in future revisions)

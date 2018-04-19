@@ -507,6 +507,7 @@ Void TEncCavlc::codeSPS( const TComSPS* pcSPS )
 
   WRITE_UVLC( chromaEnabled ? (pcSPS->getBitDepth(CHANNEL_TYPE_CHROMA) - 8):0,  "bit_depth_chroma_minus8" );
 
+   
   WRITE_UVLC( pcSPS->getBitsForPOC()-4,                 "log2_max_pic_order_cnt_lsb_minus4" );
 
   const Bool subLayerOrderingInfoPresentFlag = 1;
@@ -773,6 +774,8 @@ Void TEncCavlc::codeSliceHeader         ( TComSlice* pcSlice )
       WRITE_CODE( picOrderCntLSB, pcSlice->getSPS()->getBitsForPOC(), "slice_pic_order_cnt_lsb");
       const TComReferencePictureSet* rps = pcSlice->getRPS();
 
+//printf("picOrderCntLSB=%3d ... pcSlice->getPOC=%3d ... pcSlice->getSPS()->getBitsForPOC=%3d ... 1st=%3d ... 2nd part=%3d\n\n",picOrderCntLSB,pcSlice->getPOC(), pcSlice->getSPS()->getBitsForPOC(),(1<<pcSlice->getSPS()->getBitsForPOC()),(1<<pcSlice->getSPS()->getBitsForPOC())-1); //Jubran added for debuging
+    
       // check for bitstream restriction stating that:
       // If the current picture is a BLA or CRA picture, the value of NumPocTotalCurr shall be equal to 0.
       // Ideally this process should not be repeated for each slice in a picture
