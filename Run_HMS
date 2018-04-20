@@ -8,6 +8,7 @@ MaxPartitionDepth=2
 Ref_active=8
 Ref_stitch=2
 FramesToBeEncoded=30000
+mode=stitching
 
 for i in "$@"
 do
@@ -44,6 +45,10 @@ case $i in
     FramesToBeEncoded="${i#*=}"
     shift
     ;;
+    -mode=*|--mode=*)
+    mode="${i#*=}"
+    shift
+    ;;
     *)
           # unknown option
     ;;
@@ -52,7 +57,17 @@ done
 #### End Parsing Command Line Parameters
 
 
-HMSResults="./HMSResults/"$fid"_QP"$QP"_MCU"$MaxCUSize"_Depth"$MaxPartitionDepth"_RefA"$Ref_active"_RefS"$Ref_stitch".dat"
+if [ $mode != "stitching" ] && [ $mode != "Stitching" ]
+then
+Ref_stitch=0;
+echo "================================================================================================"
+echo "With mode != stitching, number of stitching reference frames must be set to zero [--refs=0]"
+echo "================================================================================================"
+else
+mode="stitching"
+fi
+
+HMSResults="./HMSResults/"$fid"_QP"$QP"_MCU"$MaxCUSize"_Depth"$MaxPartitionDepth"_RefA"$Ref_active"_RefS"$Ref_stitch"_"$mode".dat"
 
 InputYUV="../vid/"$fid".yuv"
 InputMP4="../vid/"$fid".mp4"
@@ -69,12 +84,18 @@ echo "MaxCUSize = "$MaxCUSize >> $HMSResults
 echo "MaxPartitionDepth = "$MaxPartitionDepth >> $HMSResults
 echo "" >> $HMSResults
 
-rm -rf ./encoder_HMS_GOB.cfg
-python CreateHMGOBStruct.py --ranklist $RankListFile --ref_active $Ref_active --ref_stitch $Ref_stitch
+rm -rf ./encoder_HMS_GOP.cfg
+python CreateHMGOPStruct.py --ranklist $RankListFile --ref_active $Ref_active --ref_stitch $Ref_stitch --mode $mode
 
 rm -rf "../vid/HMEncodedVideo.bin"
 rm -rf encoder.log
-./HMS/bin/TAppEncoderStatic -c ./HMS/cfg/encoder_HMS.cfg -c ./encoder_HMS_GOB.cfg --InputFile=$InputYUV --QP=$QP --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" |& tee -a encoder.log
+
+if [ $mode = "stitching" ]
+then
+./HMS/bin/TAppEncoderStatic -c ./encoder_HMS.cfg -c ./encoder_HMS_GOP.cfg --InputFile=$InputYUV --QP=$QP --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" |& tee -a encoder.log
+else
+./HM_Original/bin/TAppEncoderStatic -c ./encoder_HMS.cfg -c ./encoder_HMS_GOP.cfg --InputFile=$InputYUV --QP=$QP --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" |& tee -a encoder.log
+fi
 
 file_size=`du -b "../vid/HMEncodedVideo.bin" | cut -f1`
 echo "File Size (.bin) = "$file_size" Bytes" >> $HMSResults
@@ -82,7 +103,13 @@ echo "" >> $HMSResults
 
 rm -rf "../vid/HMDecodedVideo_Stitching.yuv"
 rm -rf decoder.log
+
+if [ $mode = "stitching" ]
+then
 ./HMS/bin/TAppDecoderStatic --BitstreamFile="../vid/HMEncodedVideo.bin" --ReconFile="../vid/HMDecodedVideo_Stitching.yuv" |& tee -a decoder.log
+else
+./HM_Original/bin/TAppDecoderStatic --BitstreamFile="../vid/HMEncodedVideo.bin" --ReconFile="../vid/HMDecodedVideo_Stitching.yuv" |& tee -a decoder.log
+fi
 
 python ./Quality/measure.py  $InputYUV ../vid/HMDecodedVideo_Stitching.yuv 320 240 >> $HMSResults 
 
