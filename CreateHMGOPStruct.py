@@ -1,10 +1,11 @@
 #Frame1: Type POC QPoffset QPOffsetModelOff QPOffsetModelScale CbQPoffset CrQPoffset QPfactor tcOffsetDiv2 betaOffsetDiv2 temporal_id #ref_pics_active #ref_pics reference pictures     predict deltaRPS #ref_idcs reference idcs
 #print >> fid, 'Frame1:  P    1   5       -6.5                      0.2590         0          0          1.0   0            0               0           1                1         -1      0');
-
+from __future__ import division
 import numpy as np
 import os, sys, subprocess, pdb
 #import cv2
 import argparse
+
 
 # Instantiate the parser
 parser = argparse.ArgumentParser(description='Optional app description')
@@ -15,6 +16,9 @@ parser.add_argument('--ranklist', type=str,
 
 parser.add_argument('--ref_stitch', type=int,
                     help='number of stitching reference frames')
+
+parser.add_argument('--fsr', type=int,
+                    help='frame sample rate (ffmpeg -r ?)')
 
 parser.add_argument('--ref_active', type=int,
                     help='Number of frames within the active reference picture set including stitching reference frames')
@@ -29,6 +33,11 @@ RankListFile=args.ranklist;
 ref_pics_active_Stitching=args.ref_stitch;
 ref_pics_active_Max=args.ref_active;
 mode=args.mode;
+fsr=args.fsr;
+
+if ref_pics_active_Stitching>ref_pics_active_Max:
+	ref_pics_active_Stitching=ref_pics_active_Max
+
 
 #with open(sys.argv[-1]) as f:
 with open(args.ranklist) as f:
@@ -37,19 +46,21 @@ f.close()
 #ref_pics_active_Max=5
 #ref_pics_active_Stitching=3
 
+fps=25
 iFNums=map(int, FNums)
+iFNums[:] = [int(round(x * fps / fsr)) for x in iFNums]
+
+NumFrames=round(len(iFNums)*fps/fsr)
+NumFrames=int(NumFrames)
+
 if (mode == "stitching") or (mode == "Stitching"):
-	GOP=len(iFNums)
+	GOP=NumFrames
 	if GOP%2==0:
 		GOP=GOP-2
 	else:
-		GOP=int(GOP/2)*2
+		GOP=int(GOP/2) * 2
 else:
 	GOP=1
-
-NumFrames=len(iFNums)
-
-
 
 fid = open('encoder_HMS_GOP.cfg','w')
 print >> fid, '#======== Coding Structure ============='
@@ -63,8 +74,13 @@ print >> fid,''
 iFNums_array = np.array(iFNums)
 ref_pics_Stitching_array=iFNums_array[0:ref_pics_active_Stitching]
 ref_pics_RemovedStitching_array=iFNums_array[ref_pics_active_Stitching:NumFrames]
-ref_pics_RemovedStitching_array.sort()
 
+ref_pics_RemovedStitching_array=np.array(range(0,NumFrames))
+index=np.where(np.isin(ref_pics_RemovedStitching_array,ref_pics_Stitching_array))
+ref_pics_RemovedStitching_array=np.delete(ref_pics_RemovedStitching_array,index)
+
+
+ref_pics_RemovedStitching_array.sort()
 iFNums_array=np.concatenate((ref_pics_Stitching_array,ref_pics_RemovedStitching_array), axis=0) #Stitching Frames + Ordered remaining Frames
 
 for cnt in range(1,ref_pics_active_Stitching+1):

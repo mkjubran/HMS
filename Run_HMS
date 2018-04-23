@@ -8,7 +8,9 @@ MaxPartitionDepth=2
 Ref_active=8
 Ref_stitch=2
 FramesToBeEncoded=30000
+fsr=25
 mode=stitching
+path="./HMSResults/"
 
 for i in "$@"
 do
@@ -49,6 +51,14 @@ case $i in
     mode="${i#*=}"
     shift
     ;;
+    -fsr=*|--fsr=*)
+    fsr="${i#*=}"
+    shift
+    ;;
+   -output_dir=*|--output_dir=*)
+    path="${i#*=}"
+    shift
+    ;;
     *)
           # unknown option
     ;;
@@ -67,7 +77,13 @@ else
 mode="stitching"
 fi
 
-HMSResults="./HMSResults/"$fid"_QP"$QP"_MCU"$MaxCUSize"_Depth"$MaxPartitionDepth"_RefA"$Ref_active"_RefS"$Ref_stitch"_"$mode".dat"
+if [[ ! -e "$path" ]]
+then
+mkdir $path
+echo $path
+fi
+
+HMSResults=$path"/"$fid"_QP"$QP"_MCU"$MaxCUSize"_Depth"$MaxPartitionDepth"_RefA"$Ref_active"_RefS"$Ref_stitch"_fsr"$fsr"_"$mode".dat"
 
 InputYUV="../vid/"$fid".yuv"
 InputMP4="../vid/"$fid".mp4"
@@ -85,7 +101,7 @@ echo "MaxPartitionDepth = "$MaxPartitionDepth >> $HMSResults
 echo "" >> $HMSResults
 
 rm -rf ./encoder_HMS_GOP.cfg
-python CreateHMGOPStruct.py --ranklist $RankListFile --ref_active $Ref_active --ref_stitch $Ref_stitch --mode $mode
+python CreateHMGOPStruct.py --ranklist $RankListFile --ref_active $Ref_active --ref_stitch $Ref_stitch --mode $mode --fsr $fsr
 
 rm -rf "../vid/HMEncodedVideo.bin"
 rm -rf encoder.log

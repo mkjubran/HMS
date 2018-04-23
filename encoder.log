@@ -18,7 +18,7 @@ Frame MSE output                       : Disabled
 MS-SSIM output                         : Disabled
 Cabac-zero-word-padding                : Enabled
 Frame/Field                            : Frame based coding
-Frame index                            : 0 - 19 (20 frames)
+Frame index                            : 0 - 29999 (30000 frames)
 Profile                                : main
 CU size / depth / total-depth          : 16 / 2 / 2
 RQT trans. size (min / max)            : 4 / 16
@@ -69,48 +69,5 @@ Non-environment-variable-controlled macros set as follows:
                    Input ChromaFormatIDC =   4:2:0
        Output (internal) ChromaFormatIDC =   4:2:0
 
-POC    0 TId: 0 ( I-SLICE, nQP 24 QP 24 )       1864 bits [Y 55.0688 dB    U 53.0878 dB    V 54.9541 dB] [ET     0 ] [L0 ] [L1 ]
+POC    0 TId: 0 ( I-SLICE, nQP 24 QP 24 )       1920 bits [Y 55.0688 dB    U 53.0878 dB    V 54.9541 dB] [ET     0 ] [L0 ] [L1 ]
 POC    1 TId: 0 ( P-SLICE, nQP 24 QP 24 )        208 bits [Y 54.9904 dB    U 53.3265 dB    V 54.8307 dB] [ET     0 ] [L0 0 ] [L1 ]
-POC    2 TId: 0 ( P-SLICE, nQP 24 QP 24 )        216 bits [Y 55.0116 dB    U 53.3071 dB    V 54.8296 dB] [ET     0 ] [L0 1 0 ] [L1 ]
-POC    3 TId: 0 ( P-SLICE, nQP 24 QP 24 )       7912 bits [Y 49.7536 dB    U 54.6871 dB    V 54.1136 dB] [ET     1 ] [L0 2 1 0 ] [L1 ]
-POC    4 TId: 0 ( P-SLICE, nQP 24 QP 24 )       1824 bits [Y 49.6161 dB    U 54.3071 dB    V 54.0415 dB] [ET     1 ] [L0 3 2 1 0 ] [L1 ]
-POC    5 TId: 0 ( P-SLICE, nQP 24 QP 24 )       5536 bits [Y 48.8825 dB    U 54.2069 dB    V 54.4385 dB] [ET     1 ] [L0 4 3 2 1 ] [L1 ]
-POC    6 TId: 0 ( P-SLICE, nQP 24 QP 24 )       5336 bits [Y 48.2832 dB    U 54.4705 dB    V 54.2318 dB] [ET     1 ] [L0 5 4 3 2 ] [L1 ]
-POC    7 TId: 0 ( P-SLICE, nQP 24 QP 24 )       4744 bits [Y 47.9887 dB    U 54.4472 dB    V 54.2874 dB] [ET     1 ] [L0 6 5 4 3 ] [L1 ]
-POC    8 TId: 0 ( P-SLICE, nQP 24 QP 24 )       3176 bits [Y 47.6931 dB    U 53.8932 dB    V 53.8298 dB] [ET     1 ] [L0 7 6 5 4 ] [L1 ]
-POC    9 TId: 0 ( P-SLICE, nQP 24 QP 24 )       2496 bits [Y 47.6429 dB    U 54.4510 dB    V 54.0362 dB] [ET     1 ] [L0 8 7 6 5 ] [L1 ]
-POC   10 TId: 0 ( P-SLICE, nQP 24 QP 24 )       3152 bits [Y 47.6901 dB    U 54.2391 dB    V 54.0574 dB] [ET     1 ] [L0 9 8 7 6 ] [L1 ]
-POC   11 TId: 0 ( P-SLICE, nQP 24 QP 24 )       2600 bits [Y 47.7071 dB    U 54.0151 dB    V 53.8711 dB] [ET     1 ] [L0 10 9 8 7 ] [L1 ]
-POC   12 TId: 0 ( P-SLICE, nQP 24 QP 24 )       2648 bits [Y 47.4771 dB    U 53.5903 dB    V 54.0450 dB] [ET     1 ] [L0 11 10 9 8 ] [L1 ]
-POC   13 TId: 0 ( P-SLICE, nQP 24 QP 24 )       2600 bits [Y 47.3366 dB    U 53.1034 dB    V 53.7913 dB] [ET     1 ] [L0 12 11 10 9 ] [L1 ]
-POC   14 TId: 0 ( P-SLICE, nQP 24 QP 24 )       3224 bits [Y 47.4295 dB    U 53.2723 dB    V 53.9837 dB] [ET     1 ] [L0 13 12 11 10 ] [L1 ]
-POC   15 TId: 0 ( P-SLICE, nQP 24 QP 24 )       5168 bits [Y 47.1309 dB    U 53.0567 dB    V 53.8382 dB] [ET     1 ] [L0 14 13 12 11 ] [L1 ]
-POC   16 TId: 0 ( P-SLICE, nQP 24 QP 24 )       4920 bits [Y 46.6955 dB    U 53.0871 dB    V 53.8609 dB] [ET     1 ] [L0 15 14 13 12 ] [L1 ]
-POC   17 TId: 0 ( P-SLICE, nQP 24 QP 24 )       4680 bits [Y 46.4880 dB    U 53.2223 dB    V 53.6917 dB] [ET     1 ] [L0 16 15 14 13 ] [L1 ]
-POC   18 TId: 0 ( P-SLICE, nQP 24 QP 24 )       2832 bits [Y 46.2942 dB    U 53.4380 dB    V 53.5014 dB] [ET     1 ] [L0 17 16 15 14 ] [L1 ]
-POC   19 TId: 0 ( P-SLICE, nQP 24 QP 24 )       3200 bits [Y 46.5173 dB    U 53.2693 dB    V 53.6528 dB] [ET     1 ] [L0 18 17 16 15 ] [L1 ]
-
-
-SUMMARY --------------------------------------------------------
-	Total Frames |   Bitrate     Y-PSNR    U-PSNR    V-PSNR    YUV-PSNR 
-	       20    a      85.4200   48.7849   53.7239   54.0943   49.3661
-
-
-I Slices--------------------------------------------------------
-	Total Frames |   Bitrate     Y-PSNR    U-PSNR    V-PSNR    YUV-PSNR 
-	        1    i      46.6000   55.0688   53.0878   54.9541   54.6517
-
-
-P Slices--------------------------------------------------------
-	Total Frames |   Bitrate     Y-PSNR    U-PSNR    V-PSNR    YUV-PSNR 
-	       19    p      87.4632   48.4541   53.7574   54.0491   49.2081
-
-
-B Slices--------------------------------------------------------
-	Total Frames |   Bitrate     Y-PSNR    U-PSNR    V-PSNR    YUV-PSNR 
-	        0    b         -nan      -nan      -nan      -nan      -nan
-
-RVM: 0.832
-Bytes written to file: 8542 (85.420 kbps)
-
- Total Time:       12.433 sec.

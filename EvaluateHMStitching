@@ -1,45 +1,66 @@
 #!/bin/bash
 #clear
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=8 --refs=0 --mode=normal
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=8 --refs=0 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=8 --refs=2 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=8 --refs=4 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=8 --refs=6 --mode=stitching
+./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=2 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min_hold/"
+./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=26 --mcu=16 --mpd=2 --refa=2 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min/"
+./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=28 --mcu=16 --mpd=2 --refa=2 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min/"
+./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=30 --mcu=16 --mpd=2 --refa=2 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min/"
+./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=36 --mcu=16 --mpd=2 --refa=2 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min/"
+./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=42 --mcu=16 --mpd=2 --refa=2 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min/"
 
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=16 --refs=0 --mode=normal
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=16 --refs=0 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=16 --refs=2 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=16 --refs=4 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=16 --refs=8 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=16 --refs=12 --mode=stitching
+./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=4 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min/"
+./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=26 --mcu=16 --mpd=2 --refa=4 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min/"
+./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=28 --mcu=16 --mpd=2 --refa=4 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min/"
+./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=30 --mcu=16 --mpd=2 --refa=4 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min/"
+./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=36 --mcu=16 --mpd=2 --refa=4 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min/"
+./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=42 --mcu=16 --mpd=2 --refa=4 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min/"
 
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=0 --mode=normal
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=0 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=2 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=4 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=8 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=12 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=16 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=20 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=24 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=32 --refs=28 --mode=stitching
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=8 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=26 --mcu=16 --mpd=2 --refa=8 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=28 --mcu=16 --mpd=2 --refa=8 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=30 --mcu=16 --mpd=2 --refa=8 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=36 --mcu=16 --mpd=2 --refa=8 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=42 --mcu=16 --mpd=2 --refa=8 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min/"
 
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=0 --mode=normal
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=0 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=2 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=4 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=8 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=12 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=16 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=20 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=24 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=28 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=32 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=36 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=40 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=44 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=48 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=52 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=56 --mode=stitching
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 mpd==2 --refa=64 --refs=60 --mode=stitching
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=2 --refs=0 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=2 --refs=2 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=4 --refs=0 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=4 --refs=2 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=4 --refs=4 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+
+
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=8 --refs=0 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=8 --refs=2 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=8 --refs=4 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=8 --refs=6 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=16 --refs=0 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=16 --refs=4 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=16 --refs=12 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=32 --refs=0 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=32 --refs=4 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=32 --refs=8 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=32 --refs=12 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=32 --refs=16 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=32 --refs=20 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=32 --refs=24 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=32 --refs=28 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=64 --refs=0 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=64 --refs=4 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=64 --refs=8 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=64 --refs=12 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=64 --refs=16 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=64 --refs=20 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=64 --refs=24 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=64 --refs=28 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=64 --refs=32 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=64 --refs=36 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=64 --refs=40 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=64 --refs=44 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=64 --refs=48 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=64 --refs=52 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/" 
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=64 --refs=56 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
+#./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=64 --refs=60 --fsr=25 --mode=stitching --output_dir="./HMSResults/1min/"
 

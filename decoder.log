@@ -1,24 +1,4 @@
 
-HM software: Decoder Version [16.17] (including RExt)[Linux][GCC 5.4.0][64 bit] 
-POC    0 TId: 0 ( I-SLICE, QP 24 ) [DT  0.002] [L0 ] [L1 ] [:,(unk)] 
-POC    1 TId: 0 ( P-SLICE, QP 24 ) [DT  0.002] [L0 0 ] [L1 ] [:,(unk)] 
-POC    2 TId: 0 ( P-SLICE, QP 24 ) [DT  0.001] [L0 1 0 ] [L1 ] [:,(unk)] 
-POC    3 TId: 0 ( P-SLICE, QP 24 ) [DT  0.003] [L0 2 1 0 ] [L1 ] [:,(unk)] 
-POC    4 TId: 0 ( P-SLICE, QP 24 ) [DT  0.001] [L0 3 2 1 0 ] [L1 ] [:,(unk)] 
-POC    5 TId: 0 ( P-SLICE, QP 24 ) [DT  0.002] [L0 4 3 2 1 ] [L1 ] [:,(unk)] 
-POC    6 TId: 0 ( P-SLICE, QP 24 ) [DT  0.002] [L0 5 4 3 2 ] [L1 ] [:,(unk)] 
-POC    7 TId: 0 ( P-SLICE, QP 24 ) [DT  0.002] [L0 6 5 4 3 ] [L1 ] [:,(unk)] 
-POC    8 TId: 0 ( P-SLICE, QP 24 ) [DT  0.002] [L0 7 6 5 4 ] [L1 ] [:,(unk)] 
-POC    9 TId: 0 ( P-SLICE, QP 24 ) [DT  0.001] [L0 8 7 6 5 ] [L1 ] [:,(unk)] 
-POC   10 TId: 0 ( P-SLICE, QP 24 ) [DT  0.001] [L0 9 8 7 6 ] [L1 ] [:,(unk)] 
-POC   11 TId: 0 ( P-SLICE, QP 24 ) [DT  0.002] [L0 10 9 8 7 ] [L1 ] [:,(unk)] 
-POC   12 TId: 0 ( P-SLICE, QP 24 ) [DT  0.001] [L0 11 10 9 8 ] [L1 ] [:,(unk)] 
-POC   13 TId: 0 ( P-SLICE, QP 24 ) [DT  0.001] [L0 12 11 10 9 ] [L1 ] [:,(unk)] 
-POC   14 TId: 0 ( P-SLICE, QP 24 ) [DT  0.002] [L0 13 12 11 10 ] [L1 ] [:,(unk)] 
-POC   15 TId: 0 ( P-SLICE, QP 24 ) [DT  0.002] [L0 14 13 12 11 ] [L1 ] [:,(unk)] 
-POC   16 TId: 0 ( P-SLICE, QP 24 ) [DT  0.002] [L0 15 14 13 12 ] [L1 ] [:,(unk)] 
-POC   17 TId: 0 ( P-SLICE, QP 24 ) [DT  0.002] [L0 16 15 14 13 ] [L1 ] [:,(unk)] 
-POC   18 TId: 0 ( P-SLICE, QP 24 ) [DT  0.001] [L0 17 16 15 14 ] [L1 ] [:,(unk)] 
-POC   19 TId: 0 ( P-SLICE, QP 24 ) [DT  0.002] [L0 18 17 16 15 ] [L1 ] [:,(unk)] 
+failed to open bitstream file `../vid/HMEncodedVideo.bin' for reading
 
- Total Time:        0.071 sec.
+HM software: Decoder Version [16.17] (including RExt)[Linux][GCC 5.4.0][64 bit] 
