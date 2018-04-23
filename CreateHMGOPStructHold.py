@@ -52,7 +52,7 @@ iFNums[:] = [int(round(x * fps / fsr)) for x in iFNums]
 NumFrames=round(len(iFNums)*fps/fsr)
 NumFrames=int(NumFrames)
 
-if (mode == "stitching") or (mode == "Stitching"):
+if (mode == "stitching") or (mode == "Stitching") or (mode == "stitch") or (mode == "Stitch"):
 	GOP=NumFrames
 	if GOP%2==0:
 		GOP=GOP-2

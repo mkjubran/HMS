@@ -67,7 +67,7 @@ done
 #### End Parsing Command Line Parameters
 
 
-if [ $mode != "stitching" ] && [ $mode != "Stitching" ]
+if [ $mode != "stitching" ] && [ $mode != "Stitching" ] && [ $mode != "stitch" ] && [ $mode != "Stitch" ]
 then
 Ref_stitch=0;
 echo "================================================================================================"
