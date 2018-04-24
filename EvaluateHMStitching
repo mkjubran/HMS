@@ -1,7 +1,7 @@
 #!/bin/bash
 #clear
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=2 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min_hold/"
-./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=26 --mcu=16 --mpd=2 --refa=2 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min/"
+./Run_HMS_Hold --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=24 --mcu=16 --mpd=2 --refa=2 --refs=0 --fsr=25 --fps=30 --mode=normal --output_dir="./HMSResults/1min_hold/"
+./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=26 --mcu=16 --mpd=2 --refa=2 --refs=0 --fsr=25 --fps=30 --mode=normal --output_dir="./HMSResults/1min/"
 ./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=28 --mcu=16 --mpd=2 --refa=2 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min/"
 ./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=30 --mcu=16 --mpd=2 --refa=2 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min/"
 ./Run_HMS --vid="scene_level_sample_320240_1min" --rlist="./OrderedFrames_1min.txt" --qp=36 --mcu=16 --mpd=2 --refa=2 --refs=0 --fsr=25 --mode=normal --output_dir="./HMSResults/1min/"

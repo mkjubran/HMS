@@ -45,8 +45,8 @@ def img_read_yuv(src_file, width, height):
 ref_file = sys.argv[1]
 dist_file = sys.argv[2]
 
-height=int(sys.argv[3])
-width=int(sys.argv[4])
+height=int(sys.argv[4])
+width=int(sys.argv[3])
 
 ref_fh = open(ref_file, "rb")
 dist_fh = open(dist_file, "rb")
@@ -96,6 +96,14 @@ while True:
 	ssim_value = ssim.ssim(refY, distY)
 
         PIXEL_MAX = 255.0
+        if msefY == 0:
+		msefY=.000000001
+	if msefU == 0:
+		msefU=.000000001
+	if msefV == 0:
+		msefV=.000000001
+	if msefYUV == 0:
+		msefYUV=.000000001
 
         PSNRfY=20 * math.log10(PIXEL_MAX / (math.sqrt(msefY)))
 	PSNRfU=20 * math.log10(PIXEL_MAX / (math.sqrt(msefU)))

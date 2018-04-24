@@ -19,6 +19,9 @@ parser.add_argument('--ref_stitch', type=int,
 parser.add_argument('--fsr', type=int,
                     help='frame sample rate (ffmpeg -r ?)')
 
+parser.add_argument('--fps', type=int,
+                    help='frame per sec')
+
 parser.add_argument('--ref_active', type=int,
                     help='Number of frames within the active reference picture set including stitching reference frames')
 
@@ -33,6 +36,7 @@ ref_pics_active_Stitching=args.ref_stitch;
 ref_pics_active_Max=args.ref_active;
 mode=args.mode;
 fsr=args.fsr;
+fps=args.fps;
 
 if ref_pics_active_Stitching>ref_pics_active_Max:
 	ref_pics_active_Stitching=ref_pics_active_Max
@@ -45,7 +49,6 @@ f.close()
 #ref_pics_active_Max=5
 #ref_pics_active_Stitching=3
 
-fps=25
 iFNums=map(int, FNums)
 iFNums[:] = [int(round(x * fps / fsr)) for x in iFNums]
 
