@@ -762,8 +762,8 @@ Void TDecCavlc::parseSPS(TComSPS* pcSPS)
     READ_FLAG( uiCode, "pcm_loop_filter_disable_flag" );                 pcSPS->setPCMFilterDisableFlag ( uiCode ? true : false );
   }
 
-  READ_UVLC_CHK( uiCode, "num_short_term_ref_pic_sets", 0, 1024 ); // Jubran: increase uiCode length of GOP size
-  assert(uiCode <= 1024); // Jubran: increase uiCode length of GOP size
+  READ_UVLC_CHK( uiCode, "num_short_term_ref_pic_sets", 0, 4000 ); // Jubran: increase uiCode length of GOP size
+  assert(uiCode <= 4000); // Jubran: increase uiCode length of GOP size
   pcSPS->createRPSList(uiCode);
 
   TComRPSList* rpsList = pcSPS->getRPSList();
