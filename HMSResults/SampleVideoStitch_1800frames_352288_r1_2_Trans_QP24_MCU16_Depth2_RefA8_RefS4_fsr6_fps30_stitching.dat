@@ -1,0 +1,16 @@
+Input File (YUV) = ../vid/SampleVideoStitch_1800frames_352288_r1_2_Trans.yuv
+Input File (MP4) = ../vid/SampleVideoStitch_1800frames_352288_r1_2_Trans.mp4
+RankListFile = ./OrderedFrames_SampleVideoStitch_1800frames_352288_r1_2_d30_6.txt
+Ref_active = 8
+Ref_stitch = 4
+QP = 24
+MaxCUSize = 16
+MaxPartitionDepth = 2
+
+File Size (.bin) = 49468 Bytes
+
+Frame  1: [Y 40.1508dB   U 39.4752dB   V 39.4492dB   YUV 39.9089dB]  ..... Video: [Y 40.1508dB   U 39.4752dB   V 36.4649dB   YUV 39.9089dB]
+
+Number of Frames = 4
+Number of written bytes = 
+Bit Rate =  kbps

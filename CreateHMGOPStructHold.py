@@ -83,7 +83,11 @@ ref_pics_RemovedStitching_array=np.delete(ref_pics_RemovedStitching_array,index)
 
 
 ref_pics_RemovedStitching_array.sort()
-iFNums_array=np.concatenate((ref_pics_Stitching_array,ref_pics_RemovedStitching_array), axis=0) #Stitching Frames + Ordered remaining Frames
+iFNums_array2=np.concatenate((ref_pics_Stitching_array,ref_pics_RemovedStitching_array), axis=0) #Stitching Frames + Ordered remaining Frames
+
+
+#####
+
 
 ## Building encoding structure for GOP=-1
 ##Frame1: P 1 0 -6.5 0.2590 0 0 1.0 0 0 0 12 12 -1 -2 -3 -4 -5 -6 -7 -8 -9 -10 -11 -12 0
@@ -133,11 +137,12 @@ for cnt in range(1,NumFrames):
 		cnt2=cnt2-1
 	ref_pics=np.sort(ref_pics)
 	ref_pics=ref_pics[ref_pics>=0]
+	ref_pics=ref_pics[::-1]
 	#print ref_pics
 	if cnt in ref_pics_Stitching_array:
 		if len(ref_pics_stitch_to_use) < ref_pics_active_Stitching: 
 			ref_pics_stitch_to_use=np.append(ref_pics_stitch_to_use,cnt)
-
+	
 	GOPLine='Frame' + str(cnt) + ': P '+ str(cnt) +' 0 -6.5 0.2590 0 0 1.0 0 0 0 '+ str(len(ref_pics)) + ' ' + str(len(ref_pics))
 	for cnt1 in range(len(ref_pics)):
 		GOPLine=GOPLine+' '+str(int(ref_pics[cnt1]-cnt))

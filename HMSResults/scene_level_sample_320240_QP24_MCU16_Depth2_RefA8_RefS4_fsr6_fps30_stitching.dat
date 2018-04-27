@@ -1,0 +1,9 @@
+Input File (YUV) = ../vid/scene_level_sample_320240.yuv
+Input File (MP4) = ../vid/scene_level_sample_320240.mp4
+RankListFile = ./OrderedFrames_SampleVideoStitch_1800frames_352288_r1_2_d30_6.txt
+Ref_active = 8
+Ref_stitch = 4
+QP = 24
+MaxCUSize = 16
+MaxPartitionDepth = 2
+
