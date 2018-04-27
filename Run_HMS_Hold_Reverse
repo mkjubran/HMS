@@ -118,7 +118,7 @@ echo "MaxPartitionDepth = "$MaxPartitionDepth >> $HMSResults
 echo "" >> $HMSResults
 
 rm -rf ./encoder_HMS_GOP.cfg
-python CreateHMGOPStructHold.py --ranklist $RankListFile --ref_active $Ref_active --ref_stitch $Ref_stitch --mode $mode --fsr $fsr --fps $fps
+python CreateHMGOPStructHold_Reverse.py --ranklist $RankListFile --ref_active $Ref_active --ref_stitch $Ref_stitch --mode $mode --fsr $fsr --fps $fps
 
 rm -rf "../vid/HMEncodedVideo.bin"
 rm -rf encoder.log
