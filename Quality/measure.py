@@ -87,6 +87,16 @@ while True:
 	msefV   = mse.mse(refV, distV)
         msefYUV = mse.mse(refYUV, distYUV)
 
+        PIXEL_MAX = 255.0
+        if msefY == 0:
+		msefY=6.5175e-96
+	if msefU == 0:
+		msefU=6.5175e-96
+	if msefV == 0:
+		msefV=6.5175e-96
+	if msefYUV == 0:
+		msefYUV=6.5175e-96
+
         mseY = mseY+msefY;
 	mseU = mseU+msefU;
 	mseV = mseU+msefU;
@@ -94,16 +104,6 @@ while True:
 
 	vifp_value = vifp.vifp_mscale(refY.astype(float), distY.astype(float))
 	ssim_value = ssim.ssim(refY, distY)
-
-        PIXEL_MAX = 255.0
-        if msefY == 0:
-		msefY=.000000001
-	if msefU == 0:
-		msefU=.000000001
-	if msefV == 0:
-		msefV=.000000001
-	if msefYUV == 0:
-		msefYUV=.000000001
 
         PSNRfY=20 * math.log10(PIXEL_MAX / (math.sqrt(msefY)))
 	PSNRfU=20 * math.log10(PIXEL_MAX / (math.sqrt(msefU)))

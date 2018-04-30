@@ -1,0 +1,15 @@
+Input File (YUV) = ../vid/SampleVideoStitch_ffmpeg_concat_182frames.yuv
+Input File (MP4) = ../vid/SampleVideoStitch_ffmpeg_concat_182frames.mp4
+RankListFile = ./OrderedFrames_test.txt
+Ref_active = 8
+Ref_stitch = 0
+QP = 24
+MaxCUSize = 16
+MaxPartitionDepth = 2
+
+File Size (.bin) =  Bytes
+
+
+Number of Frames = 1
+Number of written bytes = 
+Bit Rate =  kbps

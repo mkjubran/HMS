@@ -1,9 +1,0 @@
-Input File (YUV) = ../vid/scene_level_sample_320240_1min.yuv
-Input File (MP4) = ../vid/scene_level_sample_320240_1min.mp4
-RankListFile = ./OrderedFrames_1min.txt
-Ref_active = 2
-Ref_stitch = 0
-QP = 24
-MaxCUSize = 16
-MaxPartitionDepth = 2
-

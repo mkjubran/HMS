@@ -144,6 +144,7 @@ for cnt in range(1,NumFrames):
 			ref_pics_stitch_to_use=np.append(ref_pics_stitch_to_use,cnt)
 	
 	GOPLine='Frame' + str(cnt) + ': P '+ str(cnt) +' 0 -6.5 0.2590 0 0 1.0 0 0 0 '+ str(len(ref_pics)) + ' ' + str(len(ref_pics))
+	#print ref_pics
 	for cnt1 in range(len(ref_pics)):
 		GOPLine=GOPLine+' '+str(int(ref_pics[cnt1]-cnt))
 	GOPLine=GOPLine+' 0'	
