@@ -1,0 +1,9 @@
+Input File (YUV) = ../vid/Sample1_h1080p_d30_6.yuv
+Input File (MP4) = ../vid/Sample1_h1080p_d30_6.mp4
+RankListFile = ./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt
+Ref_active = 8
+Ref_stitch = 0
+QP = 0
+MaxCUSize = 16
+MaxPartitionDepth = 2
+

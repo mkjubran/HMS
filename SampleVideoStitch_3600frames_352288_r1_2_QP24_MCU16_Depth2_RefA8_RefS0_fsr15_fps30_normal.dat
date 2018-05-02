@@ -1,0 +1,15 @@
+Input File (YUV) = ../vid/../SampleVideoStitch_3600frames_352288_r1_2.yuv
+Input File (MP4) = ../vid/../SampleVideoStitch_3600frames_352288_r1_2.mp4
+RankListFile = ./OrderedFrames_SampleVideoStitch_3600frames_352288_r1_2_downsampled1_5.txt
+Ref_active = 8
+Ref_stitch = 0
+QP = 24
+MaxCUSize = 16
+MaxPartitionDepth = 2
+
+File Size (.bin) = 0 Bytes
+
+
+Number of Frames = 1
+Number of written bytes = 
+Bit Rate =  kbps

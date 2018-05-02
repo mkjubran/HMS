@@ -1,0 +1,6 @@
+#!/bin/bash
+#clear
+
+qp=0
+
+./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=8 --refs=4 --fps=30 --fsr=30 --nf=300000 --mode=stitching --output_dir="./HMSResults"
