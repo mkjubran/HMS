@@ -170,3 +170,7 @@ echo "" >> $HMSResults
 echo "Number of Frames = "$((NumFrame + 1)) >> $HMSResults
 echo "Number of written bytes = "$WrittenBytes >> $HMSResults
 echo "Bit Rate = "$BitRate" kbps" >> $HMSResults
+
+rm temp.txt
+mv $HMSResults temp.txt
+cat temp.txt encoder.log >> $HMSResults
