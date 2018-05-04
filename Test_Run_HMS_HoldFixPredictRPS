@@ -1,68 +1,18 @@
 #!/bin/bash
 #clear
 
-qp=0
+vid="Sample1_h1080p_d30_6"
+W=1920
+H=816
+rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt"
+mcu=16
+mpd=2
+nf=300000
+output_dir="../HMSResultsTest"
 
 
-
-qp=20
 #Normal 4
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=4 --refs=0 --fps=30 --fsr=30 --nf=300000 --mode=normal --output_dir="./HMSResults"
-#Stitch 8 4
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=8 --refs=4 --fps=30 --fsr=30 --nf=300000 --mode=stitching --output_dir="./HMSResults"
+qp=20;refa=4;refs=0;fps=30;fsr=30;mode=normal;
+./Run_HMS_HoldFixPredictRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir
 
-qp=24
-#Normal 4
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=4 --refs=0 --fps=30 --fsr=30 --nf=300000 --mode=normal --output_dir="./HMSResults"
-#Stitch 8 4
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=8 --refs=4 --fps=30 --fsr=30 --nf=300000 --mode=stitching --output_dir="./HMSResults"
-
-qp=28
-#Normal 4
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=4 --refs=0 --fps=30 --fsr=30 --nf=300000 --mode=normal --output_dir="./HMSResults"
-#Stitch 8 4
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=8 --refs=4 --fps=30 --fsr=30 --nf=300000 --mode=stitching --output_dir="./HMSResults"
-
-qp=28
-#Normal 4
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=4 --refs=0 --fps=30 --fsr=30 --nf=300000 --mode=normal --output_dir="./HMSResults"
-#Stitch 8 4
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=8 --refs=4 --fps=30 --fsr=30 --nf=300000 --mode=stitching --output_dir="./HMSResults"
-
-qp=32
-#Normal 4
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=4 --refs=0 --fps=30 --fsr=30 --nf=300000 --mode=normal --output_dir="./HMSResults"
-#Stitch 8 4
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=8 --refs=4 --fps=30 --fsr=30 --nf=300000 --mode=stitching --output_dir="./HMSResults"
-
-qp=36
-#Normal 4
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=4 --refs=0 --fps=30 --fsr=30 --nf=300000 --mode=normal --output_dir="./HMSResults"
-#Stitch 8 4
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=8 --refs=4 --fps=30 --fsr=30 --nf=300000 --mode=stitching --output_dir="./HMSResults"
-
-
-#Stitch 12 8
-qp=20
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=12 --refs=8 --fps=30 --fsr=30 --nf=300000 --mode=stitching --output_dir="./HMSResults"
-qp=24
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=12 --refs=8 --fps=30 --fsr=30 --nf=300000 --mode=stitching --output_dir="./HMSResults"
-qp=28
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=12 --refs=8 --fps=30 --fsr=30 --nf=300000 --mode=stitching --output_dir="./HMSResults"
-qp=32
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=12 --refs=8 --fps=30 --fsr=30 --nf=300000 --mode=stitching --output_dir="./HMSResults"
-qp=36
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=12 --refs=8 --fps=30 --fsr=30 --nf=300000 --mode=stitching --output_dir="./HMSResults"
-
-#Stitch 16 12
-qp=20
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=16 --refs=12 --fps=30 --fsr=30 --nf=300000 --mode=stitching --output_dir="./HMSResults"
-qp=24
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=16 --refs=12 --fps=30 --fsr=30 --nf=300000 --mode=stitching --output_dir="./HMSResults"
-qp=28
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=16 --refs=12 --fps=30 --fsr=30 --nf=300000 --mode=stitching --output_dir="./HMSResults"
-qp=32
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=16 --refs=12 --fps=30 --fsr=30 --nf=300000 --mode=stitching --output_dir="./HMSResults"
-qp=36
-./Run_HMS_HoldFixPredictRPS --vid="Sample1_h1080p_d30_6" --W=1920 --H=816 --rlist="./OrderedFrames_Sample1_h1080p_d30_6_s352288.txt" --qp=$qp --mcu=16 --mpd=2 --refa=16 --refs=12 --fps=30 --fsr=30 --nf=300000 --mode=stitching --output_dir="./HMSResults"
 
