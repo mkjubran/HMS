@@ -14,6 +14,7 @@ mode=stitching
 path="./HMSResults/"
 W=352
 H=288
+opt=""
 
 for i in "$@"
 do
@@ -74,6 +75,10 @@ case $i in
     W="${i#*=}"
     shift
     ;;
+   -opt=*|--opt=*|-Opt=*|--Opt=*)
+    opt="${i#*=}"
+    shift
+    ;;
     *)
           # unknown option
     ;;
@@ -99,8 +104,13 @@ echo $path
 fi
 
 #find . | xargs chmod 777
+if [[ $opt != "" ]]
+then
+opt="_"$opt
+fi 
 
-HMSResults=$path"/"$fid"_QP"$QP"_MCU"$MaxCUSize"_Depth"$MaxPartitionDepth"_RefA"$Ref_active"_RefS"$Ref_stitch"_fsr"$fsr"_fps"$fps"_"$mode".dat"
+HMSResults=$path"/"$fid"_QP"$QP"_MCU"$MaxCUSize"_Depth"$MaxPartitionDepth"_RefA"$Ref_active"_RefS"$Ref_stitch"_fsr"$fsr"_fps"$fps"_"$mode$opt".dat"
+
 
 InputYUV="../vid/"$fid".yuv"
 InputMP4="../vid/"$fid".mp4"
