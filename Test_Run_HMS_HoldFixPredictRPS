@@ -1,9 +1,14 @@
 #!/bin/bash
 #clear
 
+#vid="Sample3_h1080p"
+#W=1920
+#H=816
+
 vid="Sample3_h1080p_s352288"
 W=352
 H=288
+
 rlist="./OrderedFrames.txt"
 mcu=16
 mpd=2
@@ -11,38 +16,29 @@ nf=300000
 output_dir="../HMSResultsTest"
 
 
+###### Constant QP based (28)
 #Normal 4
-#qp=20;refa=4;refs=0;fps=30;fsr=30;mode=normal;opt="NoIRPS";
+#qp=28;refa=4;refs=0;fps=30;fsr=30;mode=normal;opt="";
 #./Run_HMS_HoldFixPredictRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
 
 #Stitching 8 4
-#qp=20;refa=8;refs=4;fps=30;fsr=30;mode=stitch;opt="NoIRPS";
+#qp=28;refa=8;refs=4;fps=30;fsr=30;mode=stitch;opt="";
 #./Run_HMS_HoldFixPredictRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
 
-#qp=20;refa=8;refs=4;fps=30;fsr=30;mode=stitch;opt="IRPS";
+#Stitching IRPS 8 4
+#qp=28;refa=8;refs=4;fps=30;fsr=30;mode=stitch;opt="IRPS";
 #./Run_HMS_HoldFixPredictRPS_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
 
-## fixed rate variable QP
+## Target Bit Rate 
 #Normal 4
-qp=20;rate=50000;refa=4;refs=0;fps=30;fsr=30;mode=normal;opt="NoIRPS";
-./Run_HMS_HoldFixPredictRPS_Rate --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
+#qp=20;rate=50000;refa=4;refs=0;fps=30;fsr=30;mode=normal;opt="";
+#./Run_HMS_HoldFixPredictRPS_Rate --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
 
 #Stitching 8 4
-qp=20;rate=10000;refa=8;refs=4;fps=30;fsr=30;mode=stitch;opt="IRPS";
+#qp=20;rate=20000;refa=8;refs=4;fps=30;fsr=30;mode=stitch;opt="";
+#./Run_HMS_HoldFixPredictRPS_Rate --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
+
+#Stitching 8 4 IRPS
+qp=20;rate=200000;refa=8;refs=4;fps=30;fsr=30;mode=stitch;opt="IRPS_test";
 ./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
 
-qp=20;rate=50000;refa=8;refs=4;fps=30;fsr=30;mode=stitch;opt="";
-./Run_HMS_HoldFixPredictRPS_Rate --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
-
-qp=20;rate=50000;refa=8;refs=4;fps=30;fsr=30;mode=stitch;opt="IRPS";
-./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
-
-
-qp=20;rate=100000;refa=8;refs=4;fps=30;fsr=30;mode=stitch;opt="IRPS";
-./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
-
-qp=20;rate=200000;refa=8;refs=4;fps=30;fsr=30;mode=stitch;opt="IRPS";
-./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
-
-qp=20;rate=400000;refa=8;refs=4;fps=30;fsr=30;mode=stitch;opt="IRPS";
-./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
