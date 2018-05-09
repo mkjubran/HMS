@@ -1,15 +1,15 @@
 objects/NALread.r.o: \
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/NALread.cpp \
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/NALread.h \
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/CommonDef.h \
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TypeDef.h \
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TComBitStream.h \
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/CommonDef.h \
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/NAL.h
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/NALread.cpp :
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/NALread.h :
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/CommonDef.h :
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TypeDef.h :
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TComBitStream.h :
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/CommonDef.h :
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/NAL.h :
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/NALread.cpp \
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/NALread.h \
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/CommonDef.h \
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TypeDef.h \
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TComBitStream.h \
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/CommonDef.h \
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/NAL.h
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/NALread.cpp :
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/NALread.h :
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/CommonDef.h :
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TypeDef.h :
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TComBitStream.h :
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/CommonDef.h :
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/NAL.h :

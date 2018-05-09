@@ -90,6 +90,7 @@ Void TEncRCSeq::create( Int totalFrames, Int targetBitrate, Int frameRate, Int G
 
   m_numberOfPixel   = m_picWidth * m_picHeight;
   m_targetBits      = (Int64)m_totalFrames * (Int64)m_targetRate / (Int64)m_frameRate;
+  
   m_seqTargetBpp = (Double)m_targetRate / (Double)m_frameRate / (Double)m_numberOfPixel;
   if ( m_seqTargetBpp < 0.03 )
   {
@@ -116,6 +117,7 @@ Void TEncRCSeq::create( Int totalFrames, Int targetBitrate, Int frameRate, Int G
     m_alphaUpdate = 0.4;
     m_betaUpdate  = 0.2;
   }
+   
 
   m_averageBits     = (Int)(m_targetBits / totalFrames);
   Int picWidthInBU  = ( m_picWidth  % m_LCUWidth  ) == 0 ? m_picWidth  / m_LCUWidth  : m_picWidth  / m_LCUWidth  + 1;
@@ -270,6 +272,7 @@ Void TEncRCSeq::updateAfterPic ( Int bits )
 {
   m_bitsLeft -= bits;
   m_framesLeft--;
+ //printf("\n m_bitsLeft=%lldd .. m_framesLeft=%d .. bits=%d",m_bitsLeft,m_framesLeft,bits); //jubran; to debug RC, when the combination of m_bitsLeft and m_framesLeft is very large, RC doens't work properly and the updated QP for next pic is wrong, it could be because the estimated QP will be very small
 }
 
 Void TEncRCSeq::setAllBitRatio( Double basicLambda, Double* equaCoeffA, Double* equaCoeffB )
@@ -303,6 +306,9 @@ Void TEncRCGOP::create( TEncRCSeq* encRCSeq, Int numPic )
 {
   destroy();
   Int targetBits = xEstGOPTargetBits( encRCSeq, numPic );
+
+  //printf("\n2. targetBits=%4d",targetBits); //jubarn
+
 
   if ( encRCSeq->getAdaptiveBits() > 0 && encRCSeq->getLastLambda() > 0.1 )
   {
@@ -453,6 +459,10 @@ Int TEncRCGOP::xEstGOPTargetBits( TEncRCSeq* encRCSeq, Int GOPSize )
   Int averageTargetBitsPerPic = (Int)( encRCSeq->getTargetBits() / encRCSeq->getTotalFrames() );
   Int currentTargetBitsPerPic = (Int)( ( encRCSeq->getBitsLeft() - averageTargetBitsPerPic * (encRCSeq->getFramesLeft() - realInfluencePicture) ) / realInfluencePicture );
   Int targetBits = currentTargetBitsPerPic * GOPSize;
+
+//added by Jubran to deal with Open GOP "all video is one GOP"
+targetBits=averageTargetBitsPerPic*GOPSize;
+//end modification
 
   if ( targetBits < 200 )
   {
@@ -615,6 +625,7 @@ Void TEncRCPic::create( TEncRCSeq* encRCSeq, TEncRCGOP* encRCGOP, Int frameLevel
   m_numberOfLCU      = encRCSeq->getNumberOfLCU();
   m_estPicLambda     = 100.0;
   m_targetBits       = targetBits;
+//printf("\n3.m_targetBits=%4d",m_targetBits); //jubran
   m_estHeaderBits    = estHeaderBits;
   m_bitsLeft         = m_targetBits;
   Int picWidth       = encRCSeq->getPicWidth();
@@ -671,6 +682,7 @@ Double TEncRCPic::estimatePicLambda( list<TEncRCPic*>& listPreviousPictures, Sli
   Double beta          = m_encRCSeq->getPicPara( m_frameLevel ).m_beta;
   Double bpp       = (Double)m_targetBits/(Double)m_numberOfPixel;
   Double estLambda;
+ 
   if (eSliceType == I_SLICE)
   {
     estLambda = calculateLambdaIntra(alpha, beta, pow(m_totalCostIntra/(Double)m_numberOfPixel, BETA1), bpp);
@@ -679,7 +691,9 @@ Double TEncRCPic::estimatePicLambda( list<TEncRCPic*>& listPreviousPictures, Sli
   {
     estLambda = alpha * pow( bpp, beta );
   }
-
+  
+  //printf("\nestLambda=%3.2f ...alpha=%3.2f... bpp=%3.2f ... beta=%3.2f ... m_targetBits=%4d ... m_numberOfPixel=%4d ",estLambda,alpha,bpp,beta,m_targetBits,m_numberOfPixel); //jubran
+  
   Double lastLevelLambda = -1.0;
   Double lastPicLambda   = -1.0;
   Double lastValidLambda = -1.0;
@@ -704,6 +718,7 @@ Double TEncRCPic::estimatePicLambda( list<TEncRCPic*>& listPreviousPictures, Sli
     estLambda = Clip3( lastLevelLambda * pow( 2.0, -3.0/3.0 ), lastLevelLambda * pow( 2.0, 3.0/3.0 ), estLambda );
   }
 
+
   if ( lastPicLambda > 0.0 )
   {
     lastPicLambda = Clip3( 0.1, 2000.0, lastPicLambda );
@@ -725,7 +740,6 @@ Double TEncRCPic::estimatePicLambda( list<TEncRCPic*>& listPreviousPictures, Sli
   }
 
   m_estPicLambda = estLambda;
-
   Double totalWeight = 0.0;
   // initial BU bit allocation weight
   for ( Int i=0; i<m_numberOfLCU; i++ )
@@ -762,7 +776,6 @@ Double TEncRCPic::estimatePicLambda( list<TEncRCPic*>& listPreviousPictures, Sli
 Int TEncRCPic::estimatePicQP( Double lambda, list<TEncRCPic*>& listPreviousPictures )
 {
   Int QP = Int( 4.2005 * log( lambda ) + 13.7122 + 0.5 );
-
   Int lastLevelQP = g_RCInvalidQPValue;
   Int lastPicQP   = g_RCInvalidQPValue;
   Int lastValidQP = g_RCInvalidQPValue;

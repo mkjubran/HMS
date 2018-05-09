@@ -1,17 +1,17 @@
 objects/SyntaxElementParser.d.o: \
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/SyntaxElementParser.cpp \
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/CommonDef.h \
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TypeDef.h \
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TComRom.h \
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/CommonDef.h \
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TComBitStream.h \
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/SyntaxElementParser.h \
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/TDecConformance.h
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/SyntaxElementParser.cpp :
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/CommonDef.h :
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TypeDef.h :
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TComRom.h :
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/CommonDef.h :
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TComBitStream.h :
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/SyntaxElementParser.h :
- /home/mohammad/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/TDecConformance.h :
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/SyntaxElementParser.cpp \
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/CommonDef.h \
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TypeDef.h \
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TComRom.h \
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/CommonDef.h \
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TComBitStream.h \
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/SyntaxElementParser.h \
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/TDecConformance.h
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/SyntaxElementParser.cpp :
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/CommonDef.h :
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TypeDef.h :
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TComRom.h :
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/CommonDef.h :
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibCommon/TComBitStream.h :
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/SyntaxElementParser.h :
+ /s/Downloads/HMStitching/HMS/HMS/build/linux/lib/TLibDecoder/../../../../source/Lib/TLibDecoder/TDecConformance.h :
