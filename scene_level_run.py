@@ -20,6 +20,7 @@ def export_frames(fn):
 
     return lfrm
 
+
 def sliding_window_similarity(win_0, win_1):
 
     def window_similarity(win_0, win_1):
@@ -50,41 +51,45 @@ def sliding_window_similarity(win_0, win_1):
 
     return (max_window_similarity, mean_window_similarity, lwinsim)
 
-
 def content_similarity(img_0, img_1):
 
-    img1 = cv2.imread(img_0, 0)          
-    img2 = cv2.imread(img_1, 0)          
+    img1 = cv2.imread(img_0, 0)
+    img2 = cv2.imread(img_1, 0)
 
     # Initiate SIFT detector
     orb = cv2.ORB_create()
+    print("{} ...... {}\n").format(img_0,img_1)
 
     # find the keypoints and descriptors with SIFT
     kp1, des1 = orb.detectAndCompute(img1,None)
     kp2, des2 = orb.detectAndCompute(img2,None)
 
-    # create BFMatcher object
-    bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+    if (type(des1)==type(des2)):
+    	# create BFMatcher object
+    	bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
     
-    # Match descriptors.
-    matches = bf.match(des1,des2)
-    # pdb.set_trace()
+    	# Match descriptors.
+    	matches = bf.match(des1,des2)
+    	# pdb.set_trace()
     
-    # Sort them in the order of their distance.
-    matches   = sorted(matches, key = lambda x:x.distance)
-    distances = [ _.distance for _ in matches]
-    simind_1    =  np.mean(distances)
+    	# Sort them in the order of their distance.
+    	matches   = sorted(matches, key = lambda x:x.distance)
+    	distances = [ _.distance for _ in matches]
+    	simind_1    =  np.mean(distances)
  
-    # Match descriptors.
-    matches = bf.match(des2,des1)
-    # pdb.set_trace()
+    	# Match descriptors.
+    	matches = bf.match(des2,des1)
+    	# pdb.set_trace()
     
-    # Sort them in the order of their distance.
-    matches   = sorted(matches, key = lambda x:x.distance)
-    distances = [ _.distance for _ in matches]
-    simind_2    =  np.mean(distances)
+    	# Sort them in the order of their distance.
+    	matches   = sorted(matches, key = lambda x:x.distance)
+   	distances = [ _.distance for _ in matches]
+    	simind_2    =  np.mean(distances)
     
-    simind = (simind_1 + simind_2)/float(2)
+    	simind = (simind_1 + simind_2)/float(2)
+    else:
+	#print("dis1={}\n dis2={}\n").format(des1,des2)
+     	simind=1000
 
     # Draw first 10 matches.
     # img3 = cv2.drawMatches(img1,kp1,img2,kp2,matches[:10], flags=2)
@@ -108,19 +113,21 @@ def get_scene_windows(fn):
         fps = 10
         return ((sec_ + min_ * 60 + hor_ * (60^2)) * fps)
 
-    osout = call('scenedetect --input {} --detector threshold --threshold 30'.format(fn))
-    ltimestamps  = osout[0].strip().split('\n')[-1].split(',')
+    #osout = call('scenedetect --input {} --detector threshold --threshold 30'.format(fn))
+    osout = call('scenedetect --input {} --detector content'.format(fn))
+    ltimestamps  = osout[0].strip().split('\n')[-1].split(',')	
     lframestamps = [ framestamp(timestamp) for timestamp in ltimestamps ] 
 
     lwin = [] ; start_framestamp = 1
     for end_framestamp in lframestamps: 
         lwin.append([ 'png/{}.png'.format(i) for i in range(start_framestamp, end_framestamp) ])
-        start_framestamp = end_framestamp
-
+        print(start_framestamp)
+	start_framestamp = end_framestamp
+        
     end_framestamp = len(lfrm) - 1
     lwin.append([ 'png/{}.png'.format(i) for i in range(start_framestamp, end_framestamp) ])
 
-    # pdb.set_trace() 
+    #pdb.set_trace() 
     return lwin
 
 
@@ -128,6 +135,7 @@ if __name__ == '__main__':
 
     # Apply scene detection and get windows to compare
     fn = sys.argv[-1] ; lwin = get_scene_windows(fn)
+    #pdb.set_trace()
     def get_opt_permutation(lwin):
         # matches = content_similarity(sys.argv[-1], sys.argv[-2])
         # sim = sliding_window_similarity(['A.jpg','B.jpg'], ['B.jpg','C.jpg'])

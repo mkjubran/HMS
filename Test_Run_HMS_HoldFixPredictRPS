@@ -31,7 +31,7 @@ output_dir="../HMSResultsTest"
 
 ## Target Bit Rate 
 #Stitching 8 4 IRPS
-qp=20;rate=10000;refa=8;refs=4;fps=30;fsr=30;mode=stitch;opt="IRPS";
+qp=20;rate=400000;refa=8;refs=4;fps=30;fsr=30;mode=stitch;opt="IRPS";
 ./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
 
 qp=20;rate=20000;refa=8;refs=4;fps=30;fsr=30;mode=stitch;opt="IRPS";
@@ -46,6 +46,6 @@ qp=20;rate=100000;refa=8;refs=4;fps=30;fsr=30;mode=stitch;opt="IRPS";
 qp=20;rate=200000;refa=8;refs=4;fps=30;fsr=30;mode=stitch;opt="IRPS";
 ./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
 
-qp=20;rate=400000;refa=8;refs=4;fps=30;fsr=30;mode=stitch;opt="IRPS";
+qp=20;rate=10000;refa=8;refs=4;fps=30;fsr=30;mode=stitch;opt="IRPS";
 ./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
 
