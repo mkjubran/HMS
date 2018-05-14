@@ -107,7 +107,7 @@ def find_scene_cuts(fn):
     cap.release()
     
     scene_list=np.array(scene_list) ;
-    scene_list=scene_list+2;
+    scene_list=scene_list+1;
     #print(scene_list)
 
     win_sc=[];
@@ -141,6 +141,7 @@ if __name__ == '__main__':
     lwinsim = []
     #print(lwin)
     lwin1 = find_scene_cuts(fn) ;
+    print(lwin1)
     lwin1.append('png/1.png')
     lwin_sc = make_windows(lwin1, FRMPERWIN)
     lwinsim=np.full((len(lwin),len(lwin)), INF)
