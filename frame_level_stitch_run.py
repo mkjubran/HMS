@@ -101,13 +101,13 @@ def find_scene_cuts(fn):
     frames_read = scenedetect.detect_scenes(cap, scene_list, detector_list)
 
     # scene_list now contains the frame numbers of scene boundaries.
-    #print(scene_list)
+    print(scene_list)
 
     # Ensure we release the VideoCapture object.
     cap.release()
     
     scene_list=np.array(scene_list) ;
-    scene_list=scene_list+1;
+    scene_list=scene_list+2;
     #print(scene_list)
 
     win_sc=[];
@@ -149,11 +149,16 @@ if __name__ == '__main__':
     # Get global window similarity matrix
     
     lwinsim=comp_similarity(lwin,lwin_sc,lwinsim)
+    
+    Lambda=0.001
+    WeightPicPos=Lambda*(np.transpose(np.full((len(lwin),1),1)*np.array(range(1,len(lwin)+1))))
+    lwinsim=lwinsim+WeightPicPos
 
     #print('\nWindow similarity matrix:') ; print(np.matrix(lwinsim))
     # lwinfreq = [ np.mean(_) for _ in lwinsim ]
     lwin_popularity_index = [ np.mean(_) for _ in lwinsim ]
-    
+    print(lwin_popularity_index)
+
     lwin_opt_sorting = [] ; lwin_opt_sorting.append(np.argmin(lwin_popularity_index))
     current_top_win_index = np.argmin(lwin_popularity_index) 
     current_top_win = lwin[current_top_win_index]
@@ -177,9 +182,12 @@ if __name__ == '__main__':
         lwindissim=comp_similarity(lwin[current_top_win_index],lwin,lwindissim)
         #print('\nWindow dissimilarity matrix:') ; print(np.matrix(lwindissim))
         next_candidate_criterion = [dissimilarity/float(popularity) for dissimilarity, popularity \
-                                        in zip(lwindissim[current_top_win_index], lwin_popularity_index)]
+                                        in zip(np.mean(lwindissim,axis=0), lwin_popularity_index)]  ##consider dissimilarity with all previously selected current_top_win_indexs
 
-	#print(next_candidate_criterion)
+	#next_candidate_criterion = [dissimilarity/float(popularity) for dissimilarity, popularity \
+        #                                in zip(lwindissim[current_top_win_index], lwin_popularity_index)] ##consider dissimilarity with only the current_top_win_index
+
+        #print(next_candidate_criterion)
         # Sorted list indices
         sorted_candidate_criterion = [ _[0] for _ in sorted(enumerate(next_candidate_criterion), key=lambda x:x[1], reverse=True) ]
         #print(sorted_candidate_criterion)
