@@ -71,13 +71,13 @@ SCENE_DETECTOR_DEFAULT = 'threshold'
 TIMECODE_FORMAT_DEFAULT = 'standard'
 
 # Compatibility fix for OpenCV < 3.0
-if (cv2.__version__[0] == '2') or (not cv2.__version__[0] == '3'):
-    cv2.CAP_PROP_FRAME_WIDTH = cv2.cv.CV_CAP_PROP_FRAME_WIDTH
-    cv2.CAP_PROP_FRAME_HEIGHT = cv2.cv.CV_CAP_PROP_FRAME_HEIGHT
-    cv2.CAP_PROP_FPS = cv2.cv.CV_CAP_PROP_FPS
-    cv2.CAP_PROP_POS_MSEC = cv2.cv.CV_CAP_PROP_POS_MSEC
-    cv2.CAP_PROP_POS_FRAMES = cv2.cv.CV_CAP_PROP_POS_FRAMES
-    cv2.CAP_PROP_FRAME_COUNT = cv2.cv.CV_CAP_PROP_FRAME_COUNT
+#if (cv2.__version__[0] == '2') or (not cv2.__version__[0] == '3'):
+#    cv2.CAP_PROP_FRAME_WIDTH = cv2.cv.CV_CAP_PROP_FRAME_WIDTH
+#    cv2.CAP_PROP_FRAME_HEIGHT = cv2.cv.CV_CAP_PROP_FRAME_HEIGHT
+#    cv2.CAP_PROP_FPS = cv2.cv.CV_CAP_PROP_FPS
+#    cv2.CAP_PROP_POS_MSEC = cv2.cv.CV_CAP_PROP_POS_MSEC
+#    cv2.CAP_PROP_POS_FRAMES = cv2.cv.CV_CAP_PROP_POS_FRAMES
+#    cv2.CAP_PROP_FRAME_COUNT = cv2.cv.CV_CAP_PROP_FRAME_COUNT
 
 
 def get_available_detectors():

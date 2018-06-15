@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2, os, sys, subprocess, pdb
 import scenedetect, re
+import datetime, math
 
 FRMPERWIN = 1 ; INF = 999
 
@@ -31,7 +32,7 @@ def window_similarity(win_0, win_1):
            lfrmsim.append(content_similarity(win_0[0], win_1))
         else:
            lfrmsim.append(content_similarity(win_0[0], win_1[0]))
-
+        
         return np.mean(lfrmsim)
 
 def content_similarity(img_0, img_1):
@@ -54,6 +55,7 @@ def content_similarity(img_0, img_1):
     	# Match descriptors.
     	matches = bf.match(des1,des2)
     	# pdb.set_trace()
+        #print("simind_1 matches={}").format(matches)
 
     	# Sort them in the order of their distance.
     	matches   = sorted(matches, key = lambda x:x.distance)
@@ -62,19 +64,26 @@ def content_similarity(img_0, img_1):
     	#print("simind_1={}\n").format(simind_1)
 
     	# Match descriptors.
-    	matches = bf.match(des2,des1)
+    	#matches = bf.match(des2,des1)
     	# pdb.set_trace()
 
     	# Sort them in the order of their distance.
-    	matches   = sorted(matches, key = lambda x:x.distance)
-    	distances = [ _.distance for _ in matches]
-    	simind_2    =  np.mean(distances)
+    	#matches   = sorted(matches, key = lambda x:x.distance)
+        #print("simind_2 matches={}").format(matches)
 
+    	#distances = [ _.distance for _ in matches]
+    	#simind_2    =  np.mean(distances)
+        
+        if math.isnan(simind_1):
+          simind_1=1000
+
+        simind_2=simind_1
     	simind = (simind_1 + simind_2)/float(2)
-	#print("dis1={}\n dis2={}\n").format(des1,des2)
+        #print("simind={}").format(simind)
+	#print("dis1={}\n dis2={}...{}\n").format(des1,des2,simind)
     else:
-	#print("dis1={}\n dis2={}\n").format(des1,des2)
-     	simind=1000
+        simind=1000
+	#print("dis1={}\n dis2={}...{}\n").format(des1,des2,simind)
 
     # Draw first 10 matches.
     #img3 = cv2.drawMatches(img1,kp1,img2,kp2,matches[:10], flags=2)
@@ -119,8 +128,9 @@ def find_scene_cuts(fn):
 def comp_similarity(lwin_,lwin_sc_,lwinsim):
     #print(type(lwin_))
     for win in lwin_:
-        #lwinsim_ = []        
-        print('{}').format(win)
+        #lwinsim_ = []
+        now = datetime.datetime.now()
+        print('{} ... {}').format(win,now.strftime("%Y-%m-%d %H:%M:%S"))
         for win_sc in lwin_sc_:
           s=re.search('(?<=/)\w+', str(win))
           iwin=int(s.group(0))
@@ -142,16 +152,17 @@ if __name__ == '__main__':
     #print(lwin)
     lwin1 = find_scene_cuts(fn) ;
     print(lwin1)
+    print("Number of SC frames").format(len(lwin1))
     lwin1.append('png/1.png')
     lwin_sc = make_windows(lwin1, FRMPERWIN)
     lwinsim=np.full((len(lwin),len(lwin)), INF)
     lwindissim=np.full((len(lwin),len(lwin)), INF)
     # Get global window similarity matrix
-    
+    print("Computing similarity between SC and all frames")
     lwinsim=comp_similarity(lwin,lwin_sc,lwinsim)
     
-    Lambda=0.001
-    WeightPicPos=Lambda*(np.transpose(np.full((len(lwin),1),1)*np.array(range(1,len(lwin)+1))))
+    LambdaPoP=0.001
+    WeightPicPos=LambdaPoP*(np.transpose(np.full((len(lwin),1),1)*np.array(range(1,len(lwin)+1))))
     lwinsim=lwinsim+WeightPicPos
 
     #print('\nWindow similarity matrix:') ; print(np.matrix(lwinsim))
