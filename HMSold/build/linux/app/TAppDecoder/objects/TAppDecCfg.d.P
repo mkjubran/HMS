@@ -1,0 +1,23 @@
+objects/TAppDecCfg.d.o: \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/App/TAppDecoder/TAppDecCfg.cpp \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/App/TAppDecoder/TAppDecCfg.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/CommonDef.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/TypeDef.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/Lib/TAppCommon/program_options_lite.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/TComChromaFormat.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/CommonDef.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/TComRectangle.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/ContextTables.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/TComRom.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/Debug.h
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/App/TAppDecoder/TAppDecCfg.cpp :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/App/TAppDecoder/TAppDecCfg.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/CommonDef.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/TypeDef.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/Lib/TAppCommon/program_options_lite.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/TComChromaFormat.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/CommonDef.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/TComRectangle.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/ContextTables.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/TComRom.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/app/TAppDecoder/../../../../source/Lib/TLibCommon/Debug.h :

@@ -1,0 +1,15 @@
+objects/NALwrite.d.o: \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibEncoder/NALwrite.cpp \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/NAL.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/CommonDef.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/TypeDef.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/TComBitStream.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibEncoder/NALwrite.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/CommonDef.h
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibEncoder/NALwrite.cpp :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/NAL.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/CommonDef.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/TypeDef.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/TComBitStream.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibEncoder/NALwrite.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibEncoder/../../../../source/Lib/TLibCommon/CommonDef.h :

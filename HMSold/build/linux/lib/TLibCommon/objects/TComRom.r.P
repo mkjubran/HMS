@@ -1,0 +1,35 @@
+objects/TComRom.r.o: \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComRom.cpp \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComRom.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/CommonDef.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TypeDef.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComDataCU.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComMotionInfo.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComMv.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComSlice.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComList.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComChromaFormat.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComRectangle.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/ContextTables.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/Debug.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/CommonDef.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComRdCost.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComPattern.h \
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComRdCostWeightPrediction.h
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComRom.cpp :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComRom.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/CommonDef.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TypeDef.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComDataCU.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComMotionInfo.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComMv.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComSlice.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComList.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComChromaFormat.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComRectangle.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/ContextTables.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/Debug.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/CommonDef.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComRdCost.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComPattern.h :
+ /data0/Mohd_ALL_JM_MV_CNN/HMStitching/HMS30/HMS/build/linux/lib/TLibCommon/../../../../source/Lib/TLibCommon/TComRdCostWeightPrediction.h :
