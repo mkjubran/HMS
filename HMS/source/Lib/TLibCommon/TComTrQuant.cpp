@@ -2126,6 +2126,7 @@ Void TComTrQuant::xRateDistOptQuant                 (       TComTU       &rTu,
                                                       const ComponentID   compID,
                                                       const QpParam      &cQP  )
 {
+  //printf("\n&cQP=%p\n",(void*)&cQP); //jubran debudging large GOp size (>8700)
   const TComRectangle  & rect             = rTu.getRect(compID);
   const UInt             uiWidth          = rect.width;
   const UInt             uiHeight         = rect.height;

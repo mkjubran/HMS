@@ -37,6 +37,7 @@
 
 #include <time.h>
 #include <iostream>
+#include <sys/resource.h> //added by jubran to check/increase system stack size
 #include "TAppEncTop.h"
 #include "TAppCommon/program_options_lite.h"
 
@@ -51,9 +52,28 @@
 
 int main(int argc, char* argv[])
 {
-
+  //added by jubran to check/increase stack size
+  /*
+  struct rlimit rl;
+  int result;
+  long long HMS_stlimit;
+  result = getrlimit(RLIMIT_STACK, &rl);
+  if (result == 0)
+  {
+    printf("\nStack size is %lld\n",(long long) rl.rlim_cur);
+    HMS_stlimit=rl.rlim_cur;
+    //HMS_stlimit=rl.rlim_cur * 1024L;
+    rl.rlim_cur=HMS_stlimit;
+    result = setrlimit(RLIMIT_STACK, &rl);
+    result = getrlimit(RLIMIT_STACK, &rl);
+    printf("\nStack new size is %lld\n",(long long) rl.rlim_cur);
+  }
+  */
+  //end additions
+  
+  
   TAppEncTop  cTAppEncTop;
- 
+
   // print information
   fprintf( stdout, "\n" );
   fprintf( stdout, "HM software: Encoder Version [%s] (including RExt)", NV_VERSION );

@@ -7,7 +7,7 @@ QP = 20
 MaxCUSize = 16
 MaxPartitionDepth = 2
 
-File Size (.bin) =  Bytes
+File Size (.bin) = 0 Bytes
 
 
 Number of Frames = 1

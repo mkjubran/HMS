@@ -140,7 +140,7 @@ rm -rf encoder.log
 
 if [ $mode = "stitching" ]
 then
-./HMS/bin/TAppEncoderStatic -c ./encoder_HMS.cfg -c ./encoder_HMS_GOP.cfg --InputFile=$InputYUV --SourceWidth=$W --SourceHeight=$H --SAO=0 --QP=$QP --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" --RateControl=1 --TargetBitrate=$rate #|& tee -a encoder.log
+./HMS/bin/TAppEncoderStatic -c ./encoder_HMS.cfg -c ./encoder_HMS_GOP.cfg --InputFile=$InputYUV --SourceWidth=$W --SourceHeight=$H --SAO=0 --QP=$QP --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" --RateControl=1 --TargetBitrate=$rate |& tee -a encoder.log
 else
 ./HM_Original/bin/TAppEncoderStatic -c ./encoder_HMS.cfg -c ./encoder_HMS_GOP.cfg --InputFile=$InputYUV --SourceWidth=$W --SourceHeight=$H --SAO=0 --QP=$QP --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" --RateControl=1 --TargetBitrate=$rate |& tee -a encoder.log
 fi

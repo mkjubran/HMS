@@ -1,4 +1,5 @@
-
-failed to open bitstream file `../vid/HMEncodedVideo.bin' for reading
+Warning: Attempt to decode an empty NAL unit
 
 HM software: Decoder Version [16.17] (including RExt)[Linux][GCC 5.4.0][64 bit] 
+
+ Total Time:        0.000 sec.

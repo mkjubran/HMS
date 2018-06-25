@@ -211,12 +211,12 @@ Void TDecCavlc::parsePPS(TComPPS* pcPPS)
 
   READ_FLAG( uiCode,   "cabac_init_present_flag" );            pcPPS->setCabacInitPresentFlag( uiCode ? true : false );
 
-  READ_UVLC_CHK(uiCode, "num_ref_idx_l0_default_active_minus1", 0, 32); //Jubran was 14 now 64
-  assert(uiCode <= 64); //Jubran was 14 now 64
+  READ_UVLC_CHK(uiCode, "num_ref_idx_l0_default_active_minus1", 0, 128); //Jubran was 14 now 64
+  assert(uiCode <= 1024); //Jubran was 14 now 64
   pcPPS->setNumRefIdxL0DefaultActive(uiCode+1);
 
-  READ_UVLC_CHK(uiCode, "num_ref_idx_l1_default_active_minus1", 0, 32); //Jubran was 14 now 64
-  assert(uiCode <= 64); //Jubran was 14 now 64
+  READ_UVLC_CHK(uiCode, "num_ref_idx_l1_default_active_minus1", 0, 128); //Jubran was 14 now 64
+  assert(uiCode <= 1024); //Jubran was 14 now 64
   pcPPS->setNumRefIdxL1DefaultActive(uiCode+1);
 
   READ_SVLC_CHK(iCode, "init_qp_minus26", std::numeric_limits<Int>::min(), 25 );  pcPPS->setPicInitQPMinus26(iCode);
@@ -762,8 +762,8 @@ Void TDecCavlc::parseSPS(TComSPS* pcSPS)
     READ_FLAG( uiCode, "pcm_loop_filter_disable_flag" );                 pcSPS->setPCMFilterDisableFlag ( uiCode ? true : false );
   }
 
-  READ_UVLC_CHK( uiCode, "num_short_term_ref_pic_sets", 0, 80000 ); // Jubran: increase uiCode length of GOP size
-  assert(uiCode <= 1000000); // Jubran: increase uiCode length of GOP size
+  READ_UVLC_CHK( uiCode, "num_short_term_ref_pic_sets", 0, 100000 ); // Jubran: increase uiCode length of GOP size
+  assert(uiCode <= 100000); // Jubran: increase uiCode length of GOP size
   pcSPS->createRPSList(uiCode);
 
   TComRPSList* rpsList = pcSPS->getRPSList();
