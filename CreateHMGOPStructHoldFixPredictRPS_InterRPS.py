@@ -50,7 +50,12 @@ f.close()
 #ref_pics_active_Stitching=3
 
 iFNums=map(int, FNums)
-iFNums[:] = [int(round(x * fps / fsr)) for x in iFNums]
+iFNums[:] = [(int(round((x-1) * fps / fsr))-1) for x in iFNums]
+iFNums.clip(0, 999999999)
+indexes = np.unique(iFNums, return_index=True)[1]
+[iFNums[index] for index in sorted(indexes)]
+
+
 
 NumFrames=round(len(iFNums)*fps/fsr)
 NumFrames=int(NumFrames)
@@ -85,9 +90,7 @@ ref_pics_RemovedStitching_array=np.delete(ref_pics_RemovedStitching_array,index)
 ref_pics_RemovedStitching_array.sort()
 iFNums_array2=np.concatenate((ref_pics_Stitching_array,ref_pics_RemovedStitching_array), axis=0) #Stitching Frames + Ordered remaining Frames
 
-
 #####
-
 
 ## Building encoding structure for GOP=-1
 ##Frame1: P 1 0 -6.5 0.2590 0 0 1.0 0 0 0 12 12 -1 -2 -3 -4 -5 -6 -7 -8 -9 -10 -11 -12 0
@@ -107,6 +110,7 @@ if GOP == 1:
 	else:
 		for cnt1 in range(NumRefTemp):
 			if cnt1>(NumRefTemp-ref_pics_active_Stitching-1):
+                                print((ref_pics_Stitching_array[cnt1-(NumRefTemp-ref_pics_active_Stitching)]-iFNums_array[cnt]))
 				GOPLine=GOPLine+' '+str(ref_pics_Stitching_array[cnt1-(NumRefTemp-ref_pics_active_Stitching)]-iFNums_array[cnt])
 			else:
 				GOPLine=GOPLine+' '+str(cnt3)

@@ -16,7 +16,7 @@ def call(cmd):
 def export_frames(fn):
     osout = call('rm -rf png'.format(fn))
     osout = call('mkdir png'.format(fn))
-    osout = call('ffmpeg -r 10 -i {} -filter:v select="mod(n\,10)" -r 1 -qp 0 png/%d.png'.format(fn))
+    osout = call('ffmpeg -r 10 -i {} -r 1 -qp 0 png/%d.png'.format(fn))
     #osout = call('ffmpeg -i {} -qp 0 png/%d.png'.format(fn))
     osout = call('ls -v png/*.png') ; lfrm = osout[0]
     osout = call('rm -rf ../vid/out.mp4')
@@ -164,7 +164,8 @@ if __name__ == '__main__':
     # matches = content_similarity(sys.argv[-1], sys.argv[-2])
     # sim = sliding_window_similarity(['A.jpg','B.jpg'], ['B.jpg','C.jpg'])
     fn=sys.argv[-1]
-    lfrm = export_frames(fn) ; 
+    lfrm = export_frames(fn);
+    lfrmdel=lfrm[1];
     lwin = make_windows(lfrm, FRMPERWIN)
     lwinsim = []
     #print(lwin)
