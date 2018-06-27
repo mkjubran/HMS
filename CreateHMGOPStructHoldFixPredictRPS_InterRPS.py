@@ -16,10 +16,10 @@ parser.add_argument('--ranklist', type=str,
 parser.add_argument('--ref_stitch', type=int,
                     help='number of stitching reference frames')
 
-parser.add_argument('--fsr', type=int,
+parser.add_argument('--fsr', type=float,
                     help='frame sample rate (ffmpeg -r ?)')
 
-parser.add_argument('--fps', type=int,
+parser.add_argument('--fps', type=float,
                     help='frame per sec')
 
 parser.add_argument('--ref_active', type=int,
@@ -51,11 +51,6 @@ f.close()
 
 iFNums=map(int, FNums)
 iFNums[:] = [(int(round((x-1) * fps / fsr))-1) for x in iFNums]
-iFNums.clip(0, 999999999)
-indexes = np.unique(iFNums, return_index=True)[1]
-[iFNums[index] for index in sorted(indexes)]
-
-
 
 NumFrames=round(len(iFNums)*fps/fsr)
 NumFrames=int(NumFrames)
@@ -68,6 +63,7 @@ if (mode == "stitching") or (mode == "Stitching") or (mode == "stitch") or (mode
 		GOP=int(GOP/2) * 2
 else:
 	GOP=1
+        ref_pics_active_Stitching=0
 
 fid = open('encoder_HMS_GOP.cfg','w')
 print >> fid, '#======== Coding Structure ============='
@@ -79,6 +75,11 @@ print >> fid, 'ReWriteParamSetsFlag          : 1           # Write parameter set
 print >> fid,''
 
 iFNums_array = np.array(iFNums)
+iFNums_array=iFNums_array.clip(0, 999999999)
+indexes = np.unique(iFNums_array, return_index=True)[1]
+iFNums_array=[iFNums_array[index] for index in sorted(indexes)]
+iFNums_array=np.array(iFNums_array)
+
 ref_pics_Stitching_array=iFNums_array[0:ref_pics_active_Stitching]
 ref_pics_RemovedStitching_array=iFNums_array[ref_pics_active_Stitching:NumFrames]
 
