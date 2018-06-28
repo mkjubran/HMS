@@ -1,0 +1,56 @@
+#!/bin/bash
+# Script that concatenates all the files defined in concat_clips.txt
+
+output_dir="../vid/"
+input_dir="../vid/"
+fps=30
+W=320
+H=240
+opt=""
+
+for i in "$@"
+do
+case $i in
+   -input_dir=*|--input_dir=*)
+    input_dir="${i#*=}"
+    shift
+    ;;
+   -output_dir=*|--output_dir=*)
+    output_dir="${i#*=}"
+    shift
+    ;;
+   -fps=*|--fps=*)
+    fps="${i#*=}"
+    shift
+   y ;;
+   -W=*|--W=*|-w=*|--w=*)
+    W="${i#*=}"
+    shift
+    ;;
+   -H=*|--H=*|-h=*|--h=*)
+    H="${i#*=}"
+    shift
+    ;;
+   -opt=*|--opt=*|-Opt=*|--Opt=*)
+    opt="${i#*=}"
+    shift
+    ;;
+    *)
+          # unknown option
+    ;;
+esac
+done
+#### End Parsing Command Line Parameters
+
+rm -rf $output_dir/output_temp.mp4
+rm -rf $output_dir/output.mp4
+
+ls $input_dir > concat_clips_temp.txt
+#cp concat_clips.txt concat_clips_temp.txt
+sed -i "s@^@file '$input_dir@" concat_clips_temp.txt
+sed -i "s/.avi/.avi'/" concat_clips_temp.txt
+cat concat_clips_temp.txt
+ffmpeg -f concat  -safe 0 -i concat_clips_temp.txt -c copy $output_dir/output_temp.mp4
+ffmpeg -i $output_dir/output_temp.mp4 -strict -2 -vf scale=$W:$H -c:v libx264 -preset ultrafast -qp 0 $output_dir/output.mp4 -hide_banner
+
+
