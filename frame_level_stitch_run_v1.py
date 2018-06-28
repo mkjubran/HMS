@@ -16,7 +16,7 @@ def call(cmd):
 def export_frames(fn):
     osout = call('rm -rf png'.format(fn))
     osout = call('mkdir png'.format(fn))
-    osout = call('ffmpeg -r 10 -i {} -r 1 -qp 0 png/%d.png'.format(fn))
+    osout = call('ffmpeg -r 8 -i {} -r 1 -qp 0 png/%d.png'.format(fn))
     #osout = call('ffmpeg -i {} -qp 0 png/%d.png'.format(fn))
     osout = call('ls -v png/*.png') ; lfrm = osout[0]
     osout = call('rm -rf ../vid/out.mp4')

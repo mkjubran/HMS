@@ -1,17 +1,11 @@
 #!/bin/bash
 #clear
 
-#vid="Sample3_h1080p"
-#W=1920
-#H=816
-
-vid="Video3_h1080p_s352288"
-#vid="Video1_synthesis_3min_s352288_qp0"
+vid="BoxingPunchingBag"
 W=352
 H=288
 
-rlist="./OrderedFrames_Video3_h1080p_s352288_SCLambda0.000.txt"
-#rlist="./OrderedFrames_Video1_synthesis_3min_s352288_qp0.txt"
+rlist="./OrderedFrames_BoxingPunchingBag.txt"
 mcu=16
 mpd=2
 nf=100000
