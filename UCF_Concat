@@ -3,7 +3,7 @@
 
 output_dir="../vid/"
 input_dir="../vid/"
-fps=30
+fps=24
 W=320
 H=240
 output_filename="output"
