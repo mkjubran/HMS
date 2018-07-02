@@ -1,15 +1,14 @@
 Input File (YUV) = ../vid/BoxingPunchingBag_g01_to_g09.yuv
 Input File (MP4) = ../vid/BoxingPunchingBag_g01_to_g09.mp4
 RankListFile = ./OrderedFrames_BoxingPunchingBag_g01_to_g09.txt
-Ref_active = 32
-Ref_stitch = 28
+Ref_active = 30
+Ref_stitch = 26
 QP = 20
 MaxCUSize = 16
 MaxPartitionDepth = 2
 
-File Size (.bin) = 73007 Bytes
+File Size (.bin) =  Bytes
 
-Frame  1: [Y 48.6160dB   U 49.8190dB   V 47.8639dB   YUV 48.6544dB]  ..... Video: [Y 48.6160dB   U 49.8190dB   V 46.8087dB   YUV 48.6544dB]
 
 Number of Frames = 1
 Number of written bytes = 

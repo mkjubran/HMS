@@ -341,25 +341,23 @@ Void TEncTop::encode( Bool flush, TComPicYuv* pcPicYuvOrg, TComPicYuv* pcPicYuvT
     xGetNewPicBuffer( pcPicCurr, ppsID );
     pcPicYuvOrg->copyToPic( pcPicCurr->getPicYuvOrg() );
     pcPicYuvTrueOrg->copyToPic( pcPicCurr->getPicYuvTrueOrg() );
-
     // compute image characteristics
     if ( getUseAdaptiveQP() )
     {
       m_cPreanalyzer.xPreanalyze( dynamic_cast<TEncPic*>( pcPicCurr ) );
     }
   }
-
-  if ((m_iNumPicRcvd == 0) || (!flush && (m_iPOCLast != 0) && (m_iNumPicRcvd != m_iGOPSize) && (m_iGOPSize != 0)))
+  //printf("\n jubran .. debug point #2..m_iNumPicRcvd=%d, m_iGOPSize=%d, flush=%d",m_iNumPicRcvd,m_iGOPSize,flush);
+  printf("Loading POC#%d of %d\n",m_iNumPicRcvd,m_iGOPSize); //added by Jubran
+  if ((m_iNumPicRcvd == 0) || (!flush && (m_iPOCLast != 0) && (m_iNumPicRcvd != m_iGOPSize) && (m_iGOPSize != 0))) // jubran : if true continue coding frames within the same GOP, otherwise finish the current GOP and start new GOP. 
   {
     iNumEncoded = 0;
     return;
   }
-
   if ( m_RCEnableRateControl )
   {
     m_cRateCtrl.initRCGOP( m_iNumPicRcvd );
   }
-
   // compress GOP
 #if JVET_F0064_MSSSIM
   m_cGOPEncoder.compressGOP(m_iPOCLast, m_iNumPicRcvd, m_cListPic, rcListPicYuvRecOut, accessUnitsOut, false, false, snrCSC, m_printFrameMSE, m_printMSSSIM);
@@ -371,7 +369,6 @@ Void TEncTop::encode( Bool flush, TComPicYuv* pcPicYuvOrg, TComPicYuv* pcPicYuvT
   {
     m_cRateCtrl.destroyRCGOP();
   }
-
   iNumEncoded         = m_iNumPicRcvd;
   m_iNumPicRcvd       = 0;
   m_uiNumAllPicCoded += iNumEncoded;
@@ -474,7 +471,6 @@ Void TEncTop::encode(Bool flush, TComPicYuv* pcPicYuvOrg, TComPicYuv* pcPicYuvTr
 #else
       m_cGOPEncoder.compressGOP(m_iPOCLast, m_iNumPicRcvd, m_cListPic, rcListPicYuvRecOut, accessUnitsOut, true, isTff, snrCSC, m_printFrameMSE);
 #endif
-
       iNumEncoded += m_iNumPicRcvd;
       m_uiNumAllPicCoded += m_iNumPicRcvd;
       m_iNumPicRcvd = 0;
@@ -496,7 +492,6 @@ Void TEncTop::encode(Bool flush, TComPicYuv* pcPicYuvOrg, TComPicYuv* pcPicYuvTr
 Void TEncTop::xGetNewPicBuffer ( TComPic*& rpcPic, Int ppsId )
 {
   rpcPic=0;
-
   // At this point, the SPS and PPS can be considered activated - they are copied to the new TComPic.
   const TComPPS *pPPS=(ppsId<0) ? m_ppsMap.getFirstPS() : m_ppsMap.getPS(ppsId);
   assert (pPPS!=0);
@@ -507,7 +502,6 @@ Void TEncTop::xGetNewPicBuffer ( TComPic*& rpcPic, Int ppsId )
   const TComSPS &sps=*pSPS;
 
   TComSlice::sortPicList(m_cListPic);
-
   // use an entry in the buffered list if the maximum number that need buffering has been reached:
   if (m_cListPic.size() >= (UInt)(m_iGOPSize + getMaxDecPicBuffering(MAX_TLAYER-1) + 2) )
   {
@@ -540,7 +534,6 @@ Void TEncTop::xGetNewPicBuffer ( TComPic*& rpcPic, Int ppsId )
       rpcPic=0;
     }
   }
-
   if (rpcPic==0)
   {
     if ( getUseAdaptiveQP() )

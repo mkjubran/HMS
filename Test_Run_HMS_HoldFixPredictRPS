@@ -1,11 +1,12 @@
 #!/bin/bash
 #clear
 
-vid="BoxingPunchingBag_g01_to_g09"
+vid="BoxingPunchingBag_g01_to_g05"
 W=320
 H=240
 
-rlist="./OrderedFrames_BoxingPunchingBag_g01_to_g09.txt"
+rlist="./OrderedFrames_BoxingPunchingBag_g01_to_g05.txt"
+#rlist="./OrderedFrames_BoxingPunchingBag_g01.txt"
 mcu=16
 mpd=2
 nf=100000
@@ -28,7 +29,7 @@ output_dir="../HMSResultsTest"
 ## Target Bit Rate 
 #Stitching 8 4 IRPS
 opt=$vid
-qp=20;rate=400000;refa=30;refs=26;fps=24;fsr=8;mode=stitch;
+qp=20;rate=400000;refa=30;refs=26;fps=24;fsr=3;mode=stitch;
 ./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
 
 qp=20;rate=20000;refa=13;refs=4;fps=30;fsr=30;mode=stitch;
