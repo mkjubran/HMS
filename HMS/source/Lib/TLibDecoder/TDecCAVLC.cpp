@@ -211,11 +211,11 @@ Void TDecCavlc::parsePPS(TComPPS* pcPPS)
 
   READ_FLAG( uiCode,   "cabac_init_present_flag" );            pcPPS->setCabacInitPresentFlag( uiCode ? true : false );
 
-  READ_UVLC_CHK(uiCode, "num_ref_idx_l0_default_active_minus1", 0, 128); //Jubran was 14 now 64
+  READ_UVLC_CHK(uiCode, "num_ref_idx_l0_default_active_minus1", 0, 32); //Jubran was 14 now 64
   assert(uiCode <= 1024); //Jubran was 14 now 64
   pcPPS->setNumRefIdxL0DefaultActive(uiCode+1);
 
-  READ_UVLC_CHK(uiCode, "num_ref_idx_l1_default_active_minus1", 0, 128); //Jubran was 14 now 64
+  READ_UVLC_CHK(uiCode, "num_ref_idx_l1_default_active_minus1", 0, 32); //Jubran was 14 now 64
   assert(uiCode <= 1024); //Jubran was 14 now 64
   pcPPS->setNumRefIdxL1DefaultActive(uiCode+1);
 

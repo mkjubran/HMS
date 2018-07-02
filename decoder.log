@@ -1,5 +1,5 @@
-Warning: Attempt to decode an empty NAL unit
 
 HM software: Decoder Version [16.17] (including RExt)[Linux][GCC 5.4.0][64 bit] 
+POC    0 TId: 0 ( I-SLICE, QP 21 ) [DT  0.007] [L0 ] [L1 ] [:,(unk)] 
 
- Total Time:        0.000 sec.
+ Total Time:        0.095 sec.

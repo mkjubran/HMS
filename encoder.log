@@ -2,11 +2,11 @@
 HM software: Encoder Version [16.17] (including RExt)[Linux][GCC 5.4.0][64 bit] 
 
 
-Input          File                    : ../vid/Video3_h1080p_s352288.yuv
+Input          File                    : ../vid/BoxingPunchingBag_g01_to_g09.yuv
 Bitstream      File                    : ../vid/HMEncodedVideo.bin
 Reconstruction File                    : rec.yuv
-Real     Format                        : 352x288 30Hz
-Internal Format                        : 352x288 30Hz
+Real     Format                        : 320x240 30Hz
+Internal Format                        : 320x240 30Hz
 Sequence PSNR output                   : Linear average only
 Sequence MSE output                    : Disabled
 Frame MSE output                       : Disabled
@@ -28,7 +28,7 @@ Max dQP signaling depth                : 0
 Cb QP Offset                           : 0
 Cr QP Offset                           : 0
 QP adaptation                          : 0 (range=0)
-GOP size                               : 354
+GOP size                               : 5222
 Input bit depth                        : (Y:8, C:8)
 MSB-extended bit depth                 : (Y:8, C:8)
 Internal bit depth                     : (Y:8, C:8)
@@ -67,259 +67,8 @@ Non-environment-variable-controlled macros set as follows:
                                          ME_ENABLE_ROUNDING_OF_MVS =   1
 
 
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
  hierarchical bit allocation is not support for the specified coding structure currently.
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
-
- Memory Allocation at TComYUV ... MAX_NUM_COMPONENT=3
                    Input ChromaFormatIDC =   4:2:0
        Output (internal) ChromaFormatIDC =   4:2:0
 
+POC    0 TId: 0 ( I-SLICE, nQP 19 QP 21 )     262432 bits [Y 48.6160 dB    U 49.8190 dB    V 47.8639 dB] [ET     1 ] [L0 ] [L1 ]

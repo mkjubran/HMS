@@ -61,7 +61,7 @@ class TEncCu;
 // ====================================================================================================================
 
 static const UInt MAX_NUM_REF_LIST_ADAPT_SR=2;
-static const UInt MAX_IDX_ADAPT_SR=129; //Jubran was 33
+static const UInt MAX_IDX_ADAPT_SR=33; //Jubran was 33
 static const UInt NUM_MV_PREDICTORS=3;
 
 /// encoder search class

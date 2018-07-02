@@ -56,5 +56,8 @@ sed -i "s@^@file '$input_dir@" concat_clips_temp.txt
 sed -i "s/.avi/.avi'/" concat_clips_temp.txt
 cat concat_clips_temp.txt
 ffmpeg -f concat  -safe 0 -i concat_clips_temp.txt -c copy $output_dir/output_temp.mp4
-ffmpeg -i $output_dir/output_temp.mp4 -strict -2 -vf scale=$W:$H -c:v libx264 -preset ultrafast -qp 0 $output_dir/$output_filename.mp4 -hide_banner
-ffmpeg -i $output_dir/$output_filename.mp4 -vcodec rawvideo -pix_fmt yuv420p $output_dir/$output_filename.yuv
+ffmpeg -y -r $fps -i $output_dir/output_temp.mp4 -strict -2 -vf scale=$W:$H -c:v libx264 -preset ultrafast -r $fps -qp 0 $output_dir/$output_filename.mp4 -hide_banner
+ffmpeg -y -i $output_dir/$output_filename.mp4 -vcodec rawvideo -pix_fmt yuv420p $output_dir/$output_filename.yuv
+
+
+
