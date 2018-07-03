@@ -1,0 +1,138 @@
+
+HM software: Encoder Version [16.17] (including RExt)[Linux][GCC 5.4.0][64 bit] 
+
+
+Input          File                    : ../vid/BoxingPunchingBag_g01_to_g09.yuv
+Bitstream      File                    : ../vid/HMEncodedVideo.bin
+Reconstruction File                    : rec.yuv
+Real     Format                        : 320x240 30Hz
+Internal Format                        : 320x240 30Hz
+Sequence PSNR output                   : Linear average only
+Sequence MSE output                    : Disabled
+Frame MSE output                       : Disabled
+MS-SSIM output                         : Disabled
+Cabac-zero-word-padding                : Enabled
+Frame/Field                            : Frame based coding
+Frame index                            : 0 - 19 (20 frames)
+Profile                                : main
+CU size / depth / total-depth          : 16 / 2 / 2
+RQT trans. size (min / max)            : 4 / 16
+Max RQT depth inter                    : 3
+Max RQT depth intra                    : 3
+Min PCM size                           : 8
+Motion search range                    : 16
+Intra period                           : -1
+Decoding refresh type                  : 2
+QP                                     : 20
+Max dQP signaling depth                : 0
+Cb QP Offset                           : 0
+Cr QP Offset                           : 0
+QP adaptation                          : 0 (range=0)
+GOP size                               : 1740
+Input bit depth                        : (Y:8, C:8)
+MSB-extended bit depth                 : (Y:8, C:8)
+Internal bit depth                     : (Y:8, C:8)
+PCM sample bit depth                   : (Y:8, C:8)
+Intra reference smoothing              : Enabled
+diff_cu_chroma_qp_offset_depth         : -1
+extended_precision_processing_flag     : Disabled
+implicit_rdpcm_enabled_flag            : Disabled
+explicit_rdpcm_enabled_flag            : Disabled
+transform_skip_rotation_enabled_flag   : Disabled
+transform_skip_context_enabled_flag    : Disabled
+cross_component_prediction_enabled_flag: Disabled
+high_precision_offsets_enabled_flag    : Disabled
+persistent_rice_adaptation_enabled_flag: Disabled
+cabac_bypass_alignment_enabled_flag    : Disabled
+Cost function:                         : Lossy coding (default)
+RateControl                            : 1
+WPMethod                               : 0
+TargetBitrate                          : 400000
+KeepHierarchicalBit                    : 1
+LCULevelRC                             : 1
+UseLCUSeparateModel                    : 1
+InitialQP                              : 0
+ForceIntraQP                           : 0
+CpbSaturation                          : 0
+Max Num Merge Candidates               : 5
+
+TOOL CFG: IBD:0 HAD:1 RDQ:1 RDQTS:1 RDpenalty:0 LQP:0 SQP:0 ASR:0 MinSearchWindow:8 RestrictMESampling:0 FEN:1 ECU:0 FDM:1 CFM:0 ESD:0 RQT:1 TransformSkip:1 TransformSkipFast:1 TransformSkipLog2MaxSize:2 Slice: M=0 SliceSegment: M=0 CIP:0 SAO:0 PCM:0 TransQuantBypassEnabled:0 WPP:0 WPB:0 PME:2  WaveFrontSynchro:0 WaveFrontSubstreams:1 ScalingList:0 TMVPMode:1 AQpS:0 SignBitHidingFlag:1 RecalQP:0
+
+Non-environment-variable-controlled macros set as follows: 
+
+                                RExt__DECODER_DEBUG_BIT_STATISTICS =   0
+                                      RExt__HIGH_BIT_DEPTH_SUPPORT =   0
+                            RExt__HIGH_PRECISION_FORWARD_TRANSFORM =   0
+                                        O0043_BEST_EFFORT_DECODING =   0
+                                         ME_ENABLE_ROUNDING_OF_MVS =   1
+
+
+ hierarchical bit allocation is not support for the specified coding structure currently.
+                   Input ChromaFormatIDC =   4:2:0
+       Output (internal) ChromaFormatIDC =   4:2:0
+
+Loading POC#1 of 1740
+POC    0 TId: 0 ( I-SLICE, nQP 19 QP 21 )     144328 bits [Y 48.6160 dB    U 49.8190 dB    V 47.8639 dB] [ET     1 ] [L0 ] [L1 ]
+Loading POC#1 of 1740
+Loading POC#2 of 1740
+Loading POC#3 of 1740
+Loading POC#4 of 1740
+Loading POC#5 of 1740
+Loading POC#6 of 1740
+Loading POC#7 of 1740
+Loading POC#8 of 1740
+Loading POC#9 of 1740
+Loading POC#10 of 1740
+Loading POC#11 of 1740
+Loading POC#12 of 1740
+Loading POC#13 of 1740
+Loading POC#14 of 1740
+Loading POC#15 of 1740
+Loading POC#16 of 1740
+Loading POC#17 of 1740
+Loading POC#18 of 1740
+Loading POC#19 of 1740
+POC    1 TId: 0 ( P-SLICE, nQP 26 QP 28 )        168 bits [Y 48.6160 dB    U 49.8190 dB    V 47.8639 dB] [ET     0 ] [L0 0 ] [L1 ]
+POC    2 TId: 0 ( P-SLICE, nQP 21 QP 23 )       3592 bits [Y 48.1515 dB    U 49.7420 dB    V 47.6761 dB] [ET     1 ] [L0 1 0 ] [L1 ]
+POC    3 TId: 0 ( P-SLICE, nQP 19 QP 21 )       7496 bits [Y 48.0037 dB    U 50.3076 dB    V 48.0278 dB] [ET     1 ] [L0 2 1 0 ] [L1 ]
+POC    4 TId: 0 ( P-SLICE, nQP 22 QP 20 )      15520 bits [Y 47.2448 dB    U 49.8017 dB    V 47.4291 dB] [ET     1 ] [L0 3 2 1 0 ] [L1 ]
+POC    5 TId: 0 ( P-SLICE, nQP 18 QP 20 )      12288 bits [Y 47.5542 dB    U 50.2277 dB    V 48.1222 dB] [ET     1 ] [L0 4 3 2 1 0 ] [L1 ]
+POC    6 TId: 0 ( P-SLICE, nQP 21 QP 19 )      24728 bits [Y 46.7542 dB    U 49.2671 dB    V 47.0404 dB] [ET     2 ] [L0 5 4 3 2 1 0 ] [L1 ]
+POC    7 TId: 0 ( P-SLICE, nQP 18 QP 20 )      13656 bits [Y 47.0772 dB    U 49.8805 dB    V 47.8260 dB] [ET     1 ] [L0 6 5 4 3 1 0 ] [L1 ]
+POC    8 TId: 0 ( P-SLICE, nQP 17 QP 19 )      13640 bits [Y 47.2469 dB    U 50.0031 dB    V 47.9189 dB] [ET     1 ] [L0 7 6 5 4 3 1 0 ] [L1 ]
+POC    9 TId: 0 ( P-SLICE, nQP 20 QP 19 )      25440 bits [Y 46.4945 dB    U 49.1643 dB    V 46.8857 dB] [ET     2 ] [L0 8 7 6 5 3 1 0 ] [L1 ]
+POC   10 TId: 0 ( P-SLICE, nQP 21 QP 19 )      38440 bits [Y 45.6255 dB    U 47.6627 dB    V 45.8745 dB] [ET     2 ] [L0 9 8 7 6 5 3 1 0 ] [L1 ]
+POC   11 TId: 0 ( P-SLICE, nQP 22 QP 20 )      12336 bits [Y 44.9793 dB    U 47.3080 dB    V 45.1989 dB] [ET     2 ] [L0 10 9 8 7 6 5 3 1 0 ] [L1 ]
+POC   12 TId: 0 ( P-SLICE, nQP 22 QP 20 )      10856 bits [Y 44.9673 dB    U 47.5564 dB    V 45.5354 dB] [ET     1 ] [L0 11 10 9 8 6 5 3 1 0 ] [L1 ]
+POC   13 TId: 0 ( P-SLICE, nQP 20 QP 20 )      10848 bits [Y 45.0421 dB    U 47.8482 dB    V 45.9398 dB] [ET     1 ] [L0 12 11 10 9 8 6 5 3 1 0 ] [L1 ]
+POC   14 TId: 0 ( P-SLICE, nQP 22 QP 20 )      11336 bits [Y 44.8880 dB    U 47.6613 dB    V 45.7460 dB] [ET     1 ] [L0 13 12 11 10 9 8 6 5 3 1 0 ] [L1 ]
+POC   15 TId: 0 ( P-SLICE, nQP 19 QP 21 )      10680 bits [Y 45.1493 dB    U 47.8607 dB    V 46.0611 dB] [ET     1 ] [L0 14 13 12 11 10 9 8 6 5 3 1 0 ] [L1 ]
+POC   16 TId: 0 ( P-SLICE, nQP 19 QP 20 )      10968 bits [Y 45.0137 dB    U 47.7243 dB    V 45.9833 dB] [ET     2 ] [L0 15 14 13 12 10 9 8 6 5 3 1 0 ] [L1 ]
+POC   17 TId: 0 ( P-SLICE, nQP 21 QP 20 )      16280 bits [Y 43.5154 dB    U 46.6199 dB    V 44.8158 dB] [ET     2 ] [L0 16 15 14 13 10 9 8 6 5 3 1 0 ] [L1 ]
+POC   18 TId: 0 ( P-SLICE, nQP 22 QP 21 )       8200 bits [Y 43.4766 dB    U 46.6119 dB    V 44.6842 dB] [ET     2 ] [L0 17 16 15 14 10 9 8 6 5 3 1 0 ] [L1 ]
+POC   19 TId: 0 ( P-SLICE, nQP 22 QP 22 )      10064 bits [Y 43.3372 dB    U 46.4805 dB    V 44.5202 dB] [ET     1 ] [L0 18 17 16 15 10 9 8 6 5 3 1 0 ] [L1 ]
+
+
+SUMMARY --------------------------------------------------------
+	Total Frames |   Bitrate     Y-PSNR    U-PSNR    V-PSNR    YUV-PSNR 
+	       20    a     601.2960   46.0877   48.5683   46.5507   46.2126
+
+
+I Slices--------------------------------------------------------
+	Total Frames |   Bitrate     Y-PSNR    U-PSNR    V-PSNR    YUV-PSNR 
+	        1    i    4329.8400   48.6160   49.8190   47.8639   48.6544
+
+
+P Slices--------------------------------------------------------
+	Total Frames |   Bitrate     Y-PSNR    U-PSNR    V-PSNR    YUV-PSNR 
+	       19    p     405.0568   45.9546   48.5025   46.4815   46.1154
+
+
+B Slices--------------------------------------------------------
+	Total Frames |   Bitrate     Y-PSNR    U-PSNR    V-PSNR    YUV-PSNR 
+	        0    b         -nan      -nan      -nan      -nan      -nan
+
+RVM: 0.000
+Bytes written to file: 50108 (601.296 kbps)
+
+ Total Time:       27.297 sec.

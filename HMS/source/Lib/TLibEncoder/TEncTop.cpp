@@ -34,6 +34,7 @@
 /** \file     TEncTop.cpp
     \brief    encoder class
 */
+ 
 
 #include "TLibCommon/CommonDef.h"
 #include "TEncTop.h"
@@ -502,7 +503,6 @@ Void TEncTop::xGetNewPicBuffer ( TComPic*& rpcPic, Int ppsId )
   const TComSPS &sps=*pSPS;
 
   TComSlice::sortPicList(m_cListPic);
-  // use an entry in the buffered list if the maximum number that need buffering has been reached:
   if (m_cListPic.size() >= (UInt)(m_iGOPSize + getMaxDecPicBuffering(MAX_TLAYER-1) + 2) )
   {
     TComList<TComPic*>::iterator iterPic  = m_cListPic.begin();

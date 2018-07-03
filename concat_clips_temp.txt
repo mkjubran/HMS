@@ -1,2 +1,7 @@
 file '../vid/BoxingPunchingBag/v_BoxingPunchingBag_g01_c01.avi'
 file '../vid/BoxingPunchingBag/v_BoxingPunchingBag_g01_c02.avi'
+file '../vid/BoxingPunchingBag/v_BoxingPunchingBag_g01_c03.avi'
+file '../vid/BoxingPunchingBag/v_BoxingPunchingBag_g01_c04.avi'
+file '../vid/BoxingPunchingBag/v_BoxingPunchingBag_g01_c05.avi'
+file '../vid/BoxingPunchingBag/v_BoxingPunchingBag_g01_c06.avi'
+file '../vid/BoxingPunchingBag/v_BoxingPunchingBag_g01_c07.avi'

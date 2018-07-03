@@ -7,9 +7,29 @@ QP = 20
 MaxCUSize = 16
 MaxPartitionDepth = 2
 
-File Size (.bin) =  Bytes
+File Size (.bin) = 50108 Bytes
 
+Frame  1: [Y 48.6160dB   U 49.8190dB   V 47.8639dB   YUV 48.6544dB]  ..... Video: [Y 48.6160dB   U 49.8190dB   V 46.8087dB   YUV 48.6544dB]
+Frame  2: [Y 48.6160dB   U 49.8190dB   V 47.8639dB   YUV 48.6544dB]  ..... Video: [Y 48.6160dB   U 49.8190dB   V 48.0581dB   YUV 48.6544dB]
+Frame  3: [Y 48.1515dB   U 49.7420dB   V 47.6761dB   YUV 48.2920dB]  ..... Video: [Y 48.4556dB   U 49.7932dB   V 48.5310dB   YUV 48.5302dB]
+Frame  4: [Y 48.0037dB   U 50.3076dB   V 48.0278dB   YUV 48.3167dB]  ..... Video: [Y 48.3381dB   U 49.9162dB   V 49.0226dB   YUV 48.4759dB]
+Frame  5: [Y 47.2448dB   U 49.8017dB   V 47.4291dB   YUV 47.6120dB]  ..... Video: [Y 48.0963dB   U 49.8931dB   V 49.0859dB   YUV 48.2888dB]
+Frame  6: [Y 47.5542dB   U 50.2277dB   V 48.1222dB   YUV 47.9975dB]  ..... Video: [Y 48.0011dB   U 49.9471dB   V 49.3166dB   YUV 48.2389dB]
+Frame  7: [Y 46.7542dB   U 49.2671dB   V 47.0404dB   YUV 47.1345dB]  ..... Video: [Y 47.7995dB   U 49.8432dB   V 49.1869dB   YUV 48.0629dB]
+Frame  8: [Y 47.0772dB   U 49.8805dB   V 47.8260dB   YUV 47.5622dB]  ..... Video: [Y 47.7024dB   U 49.8478dB   V 49.3399dB   YUV 47.9970dB]
+Frame  9: [Y 47.2469dB   U 50.0031dB   V 47.9189dB   YUV 47.7151dB]  ..... Video: [Y 47.6494dB   U 49.8648dB   V 49.4209dB   YUV 47.9648dB]
+Frame 10: [Y 46.4945dB   U 49.1643dB   V 46.8857dB   YUV 46.9084dB]  ..... Video: [Y 47.5190dB   U 49.7894dB   V 49.3148dB   YUV 47.8468dB]
+Frame 11: [Y 45.6255dB   U 47.6627dB   V 45.8745dB   YUV 45.9485dB]  ..... Video: [Y 47.3085dB   U 49.5469dB   V 48.9767dB   YUV 47.6356dB]
+Frame 12: [Y 44.9793dB   U 47.3080dB   V 45.1989dB   YUV 45.3291dB]  ..... Video: [Y 47.0589dB   U 49.3094dB   V 48.7705dB   YUV 47.3891dB]
+Frame 13: [Y 44.9673dB   U 47.5564dB   V 45.5354dB   YUV 45.4022dB]  ..... Video: [Y 46.8570dB   U 49.1464dB   V 48.6895dB   YUV 47.1995dB]
+Frame 14: [Y 45.0421dB   U 47.8482dB   V 45.9398dB   YUV 45.5504dB]  ..... Video: [Y 46.6990dB   U 49.0396dB   V 48.6495dB   YUV 47.0585dB]
+Frame 15: [Y 44.8880dB   U 47.6613dB   V 45.7460dB   YUV 45.3870dB]  ..... Video: [Y 46.5517dB   U 48.9328dB   V 48.5612dB   YUV 46.9247dB]
+Frame 16: [Y 45.1493dB   U 47.8607dB   V 46.0611dB   YUV 45.6503dB]  ..... Video: [Y 46.4495dB   U 48.8575dB   V 48.5288dB   YUV 46.8331dB]
+Frame 17: [Y 45.0137dB   U 47.7243dB   V 45.9833dB   YUV 45.5233dB]  ..... Video: [Y 46.3505dB   U 48.7820dB   V 48.4677dB   YUV 46.7441dB]
+Frame 18: [Y 43.5154dB   U 46.6199dB   V 44.8158dB   YUV 44.1114dB]  ..... Video: [Y 46.1338dB   U 48.6290dB   V 48.2618dB   YUV 46.5475dB]
+Frame 19: [Y 43.4766dB   U 46.6119dB   V 44.6842dB   YUV 44.0622dB]  ..... Video: [Y 45.9451dB   U 48.4960dB   V 48.1568dB   YUV 46.3745dB]
+Frame 20: [Y 43.3372dB   U 46.4805dB   V 44.5202dB   YUV 43.9201dB]  ..... Video: [Y 45.7700dB   U 48.3696dB   V 48.0464dB   YUV 46.2126dB]
 
-Number of Frames = 1
-Number of written bytes = 
-Bit Rate =  kbps
+Number of Frames = 20
+Number of written bytes = 50108
+Bit Rate = 601.296 kbps
