@@ -3,7 +3,8 @@
 
 output_dir="../vid/"
 input_dir="../vid/"
-fps=24
+infps=24
+outfps=24
 W=320
 H=240
 output_filename="output"
@@ -24,10 +25,14 @@ case $i in
     output_filename="${i#*=}"
     shift
     ;;
-   -fps=*|--fps=*)
-    fps="${i#*=}"
+   -infps=*|--infps=*)
+    infps="${i#*=}"
     shift
-   y ;;
+    ;;
+   -outfps=*|--outfps=*)
+    outfps="${i#*=}"
+    shift
+    ;;
    -W=*|--W=*|-w=*|--w=*)
     W="${i#*=}"
     shift
@@ -56,7 +61,7 @@ sed -i "s@^@file '$input_dir@" concat_clips_temp.txt
 sed -i "s/.avi/.avi'/" concat_clips_temp.txt
 cat concat_clips_temp.txt
 ffmpeg -f concat  -safe 0 -i concat_clips_temp.txt -c copy $output_dir/output_temp.mp4
-ffmpeg -y -r $fps -i $output_dir/output_temp.mp4 -strict -2 -vf scale=$W:$H -c:v libx264 -preset ultrafast -r $fps -qp 0 $output_dir/$output_filename.mp4 -hide_banner
+ffmpeg -y -r $infps -i $output_dir/output_temp.mp4 -strict -2 -vf scale=$W:$H -c:v libx264 -preset ultrafast -r $outfps -qp 0 $output_dir/$output_filename.mp4 -hide_banner
 ffmpeg -y -i $output_dir/$output_filename.mp4 -vcodec rawvideo -pix_fmt yuv420p $output_dir/$output_filename.yuv
 
 

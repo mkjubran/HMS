@@ -4,8 +4,12 @@ RankListFile = ./OrderedFrames_BoxingPunchingBag_g01_to_g09.txt
 Ref_active = 30
 Ref_stitch = 26
 QP = 20
+Rate = 400000
+FPS = 24
+Fsr = 24
 MaxCUSize = 16
 MaxPartitionDepth = 2
+Mode = stitching
 
 File Size (.bin) = 50108 Bytes
 
