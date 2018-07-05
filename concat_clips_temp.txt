@@ -1,4 +1,4 @@
+file '../vid//cropped//v_BoxingPunchingBag_g01_c03.avi'
 file '../vid//cropped//v_BoxingPunchingBag_g01_c04.avi'
 file '../vid//cropped//v_BoxingPunchingBag_g01_c02.avi'
 file '../vid//cropped//v_BoxingPunchingBag_g01_c01.avi'
-file '../vid//cropped//v_BoxingPunchingBag_g01_c03.avi'

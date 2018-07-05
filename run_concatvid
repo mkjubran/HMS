@@ -11,7 +11,7 @@ W=320
 H=240
 vidd=1
 ctmin=1
-ctmax=2
+ctmax=9
 
 
 python ./concatvid.py --input_dir=$input_dir --output_dir=$output_dir --output_filename=$output_filename --infps=$infps --outfps=$outfps --fsr=$fsr --W=$W --H=$H --vidd=$vidd --ctmin=$ctmin --ctmax=$ctmax

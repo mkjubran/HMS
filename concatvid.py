@@ -1,9 +1,7 @@
 import numpy as np
 import os,sys, subprocess, pdb
-import datetime, math
-import argparse
-import random
-import ntpath
+import datetime, math, time
+import argparse, random, ntpath, re
 
 from os import listdir
 from os.path import isfile, join   
@@ -69,6 +67,15 @@ def call(cmd):
     (out, err) = proc.communicate()
     return (out, err)
 
+def getLength(filename):
+  result = subprocess.Popen(["ffprobe", filename],
+  stdout = subprocess.PIPE, stderr = subprocess.STDOUT)
+  duration_Line=[x for x in result.stdout.readlines() if "Duration" in x]
+  duration_Line_array=re.split(' |,',str(duration_Line))
+  x = time.strptime(str(duration_Line_array[3]).split('.')[0],'%H:%M:%S')
+  tsec = datetime.timedelta(hours=x.tm_hour,minutes=x.tm_min,seconds=x.tm_sec).total_seconds()
+  return int(tsec)
+
 if __name__ == '__main__':
     
     inputvideofilesOrig = [f for f in listdir(input_dir) if isfile(join(input_dir, f))]
@@ -78,17 +85,27 @@ if __name__ == '__main__':
     for Idx in randIdx:
         inputvideofiles.append(inputvideofilesOrig[Idx])
   
+    clipslenOrig=[]
+    for videofile in inputvideofiles:
+        clipslenOrig.append(getLength(input_dir+videofile))  
+    #print('total length of all videos is {} mins'.format(float(np.sum(np.array(clipslenOrig)))/60))
+    #time.sleep(5)
+
     cnt=0
     clipslen=np.random.randint(ctmin, ctmax,len(inputvideofiles))
-    while (clipslen.sum()/60 < vidd):
+    while ((float(np.sum(clipslen))/60 > vidd) or (float(np.sum(clipslen))/60 < 0.9*vidd)) :
         clipslen=np.random.randint(ctmin, ctmax+1,len(inputvideofiles))
+        x=(clipslen<clipslenOrig)+0
+        clipslen=np.multiply(x,clipslen)+np.multiply(np.absolute(x-1),clipslenOrig)
         cnt=cnt+1
         if (cnt > 9999):
-            print('requested video duration can not be achieved, increase ctmax or add more video clips')
+            print('requested video duration can not be achieved, due to \n(1) reuqested video duration \n(2) the clips cropping margin (ctmin,ctmax)\n(3) of available video clipss')
+            time.sleep(5)
             break
     
+    #print(clipslenOrig)
     #print(clipslen)
-   
+    
     osout = call('rm -rf {}/cropped/'.format(output_dir))
     osout = call('mkdir {}/cropped/'.format(output_dir))
     input_dir_cropped=output_dir+'/cropped/'
@@ -111,4 +128,10 @@ if __name__ == '__main__':
     osout = call('ffmpeg -y -i {}/{}.mp4 -vcodec rawvideo -pix_fmt yuv420p {}/{}.yuv'.format(output_dir,output_filename,output_dir,output_filename))
     print('{}/{}.mp4 is generated'.format(output_dir,output_filename))
     print('{}/{}.yuv is generated'.format(output_dir,output_filename))
+    
+    print('======= summary =======')
+    print('{}/{}.mp4 is generated'.format(output_dir,output_filename))
+    print('{}/{}.yuv is generated'.format(output_dir,output_filename))
+    print('Total length of all video clips is {} mins'.format(float(np.sum(np.array(clipslenOrig)))/60))
+    print('Total length of the generated mp4 video is {} mins'.format(float(getLength(output_dir+output_filename+'.mp4'))/60))
 
