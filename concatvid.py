@@ -26,9 +26,6 @@ parser.add_argument('--infps', type=int,
 parser.add_argument('--outfps', type=int,
                     help='output frames per second')
 
-parser.add_argument('--fsr', type=int,
-                    help='frames sampling rate')
-
 parser.add_argument('--W', type=int,
                     help='video width')
 
@@ -53,7 +50,6 @@ output_dir=args.output_dir;
 output_filename=args.output_filename;
 infps=args.infps;
 outfps=args.outfps;
-fsr=args.fsr;
 width=args.W;
 hight=args.H;
 vidd=args.vidd;
@@ -93,18 +89,20 @@ if __name__ == '__main__':
 
     cnt=0
     clipslen=np.random.randint(ctmin, ctmax,len(inputvideofiles))
-    while ((float(np.sum(clipslen))/60 > vidd) or (float(np.sum(clipslen))/60 < 0.9*vidd)) :
-        clipslen=np.random.randint(ctmin, ctmax+1,len(inputvideofiles))
-        x=(clipslen<clipslenOrig)+0
-        clipslen=np.multiply(x,clipslen)+np.multiply(np.absolute(x-1),clipslenOrig)
-        cnt=cnt+1
-        if (cnt > 9999):
-            print('requested video duration can not be achieved, due to \n(1) reuqested video duration \n(2) the clips cropping margin (ctmin,ctmax)\n(3) of available video clipss')
-            time.sleep(5)
-            break
-    
-    #print(clipslenOrig)
-    #print(clipslen)
+    if (float(np.sum(clipslenOrig))/60 < vidd):
+        clipslen=clipslenOrig
+        print('The requested video duration ({} mins) is greater than the sum of duration of all video clips ({} mins), all clips are concatenated'.format(vidd,float(np.sum(clipslenOrig))/60))
+        time.sleep(5)
+    else:
+        while ((float(np.sum(clipslen))/60 > vidd) or (float(np.sum(clipslen))/60 < 0.9*vidd)) :
+           clipslen=np.random.randint(ctmin, ctmax+1,len(inputvideofiles))
+           x=(clipslen<clipslenOrig)+0
+           clipslen=np.multiply(x,clipslen)+np.multiply(np.absolute(x-1),clipslenOrig)
+           cnt=cnt+1
+           if (cnt > 99999):
+               print('requested video duration can not be achieved, due to \n(1) reuqested video duration \n(2) the clips cropping margin (ctmin,ctmax)\n(3) of available video clipss')
+               time.sleep(5)
+               break
     
     osout = call('rm -rf {}/cropped/'.format(output_dir))
     osout = call('mkdir {}/cropped/'.format(output_dir))
@@ -132,6 +130,7 @@ if __name__ == '__main__':
     print('======= summary =======')
     print('{}/{}.mp4 is generated'.format(output_dir,output_filename))
     print('{}/{}.yuv is generated'.format(output_dir,output_filename))
+    print('Number of concatenated vido clips are {}'.format(len(clipslenOrig)))
     print('Total length of all video clips is {} mins'.format(float(np.sum(np.array(clipslenOrig)))/60))
     print('Total length of the generated mp4 video is {} mins'.format(float(getLength(output_dir+output_filename+'.mp4'))/60))
 

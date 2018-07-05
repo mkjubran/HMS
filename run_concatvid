@@ -6,7 +6,6 @@ input_dir="../vid/BoxingPunchingBag/"
 output_filename="output"
 infps=24
 outfps=8
-fsr=1
 W=320
 H=240
 vidd=1
@@ -14,4 +13,4 @@ ctmin=1
 ctmax=9
 
 
-python ./concatvid.py --input_dir=$input_dir --output_dir=$output_dir --output_filename=$output_filename --infps=$infps --outfps=$outfps --fsr=$fsr --W=$W --H=$H --vidd=$vidd --ctmin=$ctmin --ctmax=$ctmax
+python ./concatvid.py --input_dir=$input_dir --output_dir=$output_dir --output_filename=$output_filename --infps=$infps --outfps=$outfps --W=$W --H=$H --vidd=$vidd --ctmin=$ctmin --ctmax=$ctmax
