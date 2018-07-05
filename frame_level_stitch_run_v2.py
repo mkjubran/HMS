@@ -147,16 +147,16 @@ def comp_similarity(lwin_,lwin_sc_,lwinsim):
           #lwinsim[iwin_sc-1][iwin-1]=lwinsim[iwin-1][iwin_sc-1]
     return lwinsim
 
-def comp_dissimilarity(lwin_,lwin_sc_,lwinsim):
-    for win in lwin_:
+def comp_dissimilarity(lwin_r,lwin_c,lwinsim):
+    for win_r in lwin_r:
         now = datetime.datetime.now()
-        print('{} ... {}').format(win,now.strftime("%Y-%m-%d %H:%M:%S"))
-        for win_sc in lwin_sc_:
-          s=re.search('(?<=/)\w+', str(win))
-          iwin=int(s.group(0))
-          s=re.search('(?<=/)\w+', str(win_sc))
-          iwin_sc=int(s.group(0))
-          lwinsim[iwin-1][iwin_sc-1]=window_similarity(win, win_sc)
+        print('{} ... {}').format(win_r,now.strftime("%Y-%m-%d %H:%M:%S"))
+        for win_c in lwin_c:
+          s=re.search('(?<=/)\w+', str(win_r))
+          iwin_r=int(s.group(0))
+          s=re.search('(?<=/)\w+', str(win_c))
+          iwin_c=int(s.group(0))
+          lwinsim[iwin_r-1][iwin_c-1]=window_similarity(win_r, win_c)
     return lwinsim
 
 
@@ -172,7 +172,7 @@ if __name__ == '__main__':
     #lwin1 = find_scene_cuts(fn) ;
     lwin1 = find_scene_cuts('../vid/out.mp4') ;
     print(lwin1)
-    print("Number of SC frames").format(len(lwin1))
+    print("Number of SC frames is {}").format(len(lwin1))
     lwin1.append('png/1.png')
     lwin_sc = make_windows(lwin1, FRMPERWIN)
     lwinsim=np.full((len(lwin),len(lwin)), INF)
@@ -181,7 +181,7 @@ if __name__ == '__main__':
     print("Computing similarity between SC and all frames")
     lwinsim=comp_similarity(lwin,lwin_sc,lwinsim)
     
-    LambdaPoP=0.00
+    LambdaPoP=0.000001
     WeightPicPos=LambdaPoP*(np.transpose(np.full((len(lwin),1),1)*np.array(range(1,len(lwin)+1))))
     #lwinsimNorm=lwinsim/np.matrix.max(lwinsim)
     np.set_printoptions(threshold=np.nan)
@@ -195,7 +195,7 @@ if __name__ == '__main__':
     #pdb.set_trace()
     #print('\nWindow similarity matrix:') ; print(np.matrix(lwinsim))
     lwin_popularity_index = [ np.mean(_) for _ in lwinsim ]
-    print(lwin_popularity_index)
+    #print(lwin_popularity_index)
     #lwin_popularity_index = np.mean(lwinsim,1)
     #print(lwin_popularity_index)
     #pdb.set_trace()
@@ -203,7 +203,7 @@ if __name__ == '__main__':
     current_top_win_index = np.argmin(lwin_popularity_index) 
     current_top_win = lwin[current_top_win_index]
     #print('{}....{}').format(current_top_win_index,current_top_win)
-    
+    print('Producing Popularity-Dissimilarity List')
     for i in range(0, len(lwin_sc)):
 	#print('i={}....{}').format(i,current_top_win_index)
         # lwinsim_ = []
@@ -220,9 +220,12 @@ if __name__ == '__main__':
         # Make choice criterion list
         #pdb.set_trace()
         lwindissim=comp_dissimilarity(lwin[current_top_win_index],lwin,lwindissim)
+        lwindissimNorm=((lwindissim.astype(float))/np.amax(np.amax(lwindissim)))
+        #print(np.mean(lwindissimNorm,axis=1))
+        #print(np.mean(lwindissimNorm,axis=0))
         #print('\nWindow dissimilarity matrix:') ; print(np.matrix(lwindissim))
         next_candidate_criterion = [dissimilarity/float(popularity) for dissimilarity, popularity \
-                                        in zip(np.mean(lwindissim,axis=0), lwin_popularity_index)]  ##consider dissimilarity with all previously selected current_top_win_indexs
+                                        in zip(np.mean(lwindissimNorm,axis=0), lwin_popularity_index)]  ##consider dissimilarity with all previously selected current_top_win_indexs
 
 	#next_candidate_criterion = [dissimilarity/float(popularity) for dissimilarity, popularity \
         #                                in zip(lwindissim[current_top_win_index], lwin_popularity_index)] ##consider dissimilarity with only the current_top_win_index
