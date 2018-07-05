@@ -2935,20 +2935,20 @@ Void TEncSearch::predInterSearch( TComDataCU* pcCU, TComYuv* pcOrgYuv, TComYuv* 
 
   TComMv       cMv[2];
   TComMv       cMvBi[2];
-  TComMv       cMvTemp[2][33]; //Jubran was 33
+  TComMv       cMvTemp[2][65]; //Jubran was 33
 
   Int          iNumPart    = pcCU->getNumPartitions();
   Int          iNumPredDir = pcCU->getSlice()->isInterP() ? 1 : 2;
 
-  TComMv       cMvPred[2][33]; //Jubran was 33
+  TComMv       cMvPred[2][65]; //Jubran was 33
 
-  TComMv       cMvPredBi[2][33]; //Jubran was 33
-  Int          aaiMvpIdxBi[2][33]; //Jubran was 33
+  TComMv       cMvPredBi[2][65]; //Jubran was 33
+  Int          aaiMvpIdxBi[2][65]; //Jubran was 33
 
-  Int          aaiMvpIdx[2][33]; //Jubran was 33
-  Int          aaiMvpNum[2][33]; //Jubran was 33
+  Int          aaiMvpIdx[2][65]; //Jubran was 33
+  Int          aaiMvpNum[2][65]; //Jubran was 33
 
-  AMVPInfo     aacAMVPInfo[2][33]; //Jubran was 33
+  AMVPInfo     aacAMVPInfo[2][65]; //Jubran was 33
 
   Int          iRefIdx[2]={0,0}; //If un-initialized, may cause SEGV in bi-directional prediction iterative stage.
   Int          iRefIdxBi[2];
