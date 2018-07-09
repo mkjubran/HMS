@@ -94,7 +94,7 @@ if __name__ == '__main__':
         print('The requested video duration ({} mins) is greater than the sum of duration of all video clips ({} mins), all clips are concatenated'.format(vidd,float(np.sum(clipslenOrig))/60))
         time.sleep(5)
     else:
-        while ((float(np.sum(clipslen))/60 > vidd) or (float(np.sum(clipslen))/60 < 0.9*vidd)) :
+        while ((float(np.sum((clipslen)))/60 > vidd) or (float(np.sum((clipslen)))/60 < 0.9*vidd)) :
            clipslen=np.random.randint(ctmin, ctmax+1,len(inputvideofiles))
            x=(clipslen<clipslenOrig)+0
            clipslen=np.multiply(x,clipslen)+np.multiply(np.absolute(x-1),clipslenOrig)
@@ -103,13 +103,22 @@ if __name__ == '__main__':
                print('requested video duration can not be achieved, due to \n(1) reuqested video duration \n(2) the clips cropping margin (ctmin,ctmax)\n(3) of available video clipss')
                time.sleep(5)
                break
+
+    clipstart=np.random.randint(0,ctmax,len(inputvideofiles))
+    for cnt in range(len(clipslenOrig)):
+           if ((clipstart[cnt]+clipslen[cnt])>clipslenOrig[cnt]):
+                 if (clipslen[cnt]==clipslenOrig[cnt]):
+                     clipstart[cnt]=0
+                 else:
+                     clipstart[cnt]=np.random.randint(0,(clipslenOrig[cnt]-clipslen[cnt]),1)
+           
     
     osout = call('rm -rf {}/cropped/'.format(output_dir))
     osout = call('mkdir {}/cropped/'.format(output_dir))
     input_dir_cropped=output_dir+'/cropped/'
     for cnt in range(len(clipslen)):
         clipname=inputvideofiles[cnt]
-        osout = call('ffmpeg -y -i {}/{} -ss 00:00:00  -t {} {}/{}'.format(input_dir,clipname,str(datetime.timedelta(seconds=clipslen[cnt])),input_dir_cropped,clipname))
+        osout = call('ffmpeg -y -i {}/{} -ss {}  -t {} {}/{}'.format(input_dir,clipname,str(datetime.timedelta(seconds=clipstart[cnt])),str(datetime.timedelta(seconds=clipslen[cnt])),input_dir_cropped,clipname))
 
     thefile = open('concat_clips_temp.txt', 'w')
     for videofile in inputvideofiles:
