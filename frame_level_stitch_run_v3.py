@@ -16,11 +16,11 @@ def call(cmd):
 def export_frames(fn):
     osout = call('rm -rf png'.format(fn))
     osout = call('mkdir png'.format(fn))
-    osout = call('ffmpeg -r 8 -i {} -r 1 -qp 0 png/%d.png'.format(fn))
+    osout = call('ffmpeg -r 8 -i {} -r 1 -qp 0 png/%d.png'.format(fn))  ##downsampling to 8:1
 
     #osout = call('rm -rf pngall'.format(fn))
     #osout = call('mkdir pngall'.format(fn))
-    #osout = call('ffmpeg -r 1 -i {} -r 1 -qp 0 pngall/%d.png'.format(fn))
+    #osout = call('ffmpeg -r 1 -i {} -r 1 -qp 0 pngall/%d.png'.format(fn)) ##no downsampling 1:1
 
 
     #osout = call('ffmpeg -i {} -qp 0 png/%d.png'.format(fn))
@@ -123,7 +123,7 @@ def find_scene_cuts(fn):
     frames_read = scenedetect.detect_scenes(cap, scene_list, detector_list)
 
     # scene_list now contains the frame numbers of scene boundaries.
-    print(scene_list)
+    #print(scene_list)
 
     # Ensure we release the VideoCapture object.
     cap.release()
@@ -156,6 +156,22 @@ def comp_similarity(lwin_,lwin_sc_,lwinsim):
           #lwinsim[iwin_sc-1][iwin-1]=lwinsim[iwin-1][iwin_sc-1]
     return lwinsim
 
+def map_to_downsampled(lwin):
+    print(type(lwin))
+    lwindownSampled = []
+    lwindownSampledint = []
+    for win in lwin:    
+        s=re.search('(?<=/)\w+', str(win))
+        iwin=int(s.group(0))
+        iwin=iwin-1
+        lwindownSampledint.append(int(math.ceil(iwin/8)+3))  ##downsampling to 8:1
+
+    lwindownSampledint=np.unique(np.array(lwindownSampledint))
+
+    for iwin in lwindownSampledint:    
+        lwindownSampled.append('png/'+str(iwin)+'.png')
+    return lwindownSampled
+
 def comp_dissimilarity(lwin_r,lwin_c,lwinsim):
     for win_r in lwin_r:
         now = datetime.datetime.now()
@@ -178,10 +194,13 @@ if __name__ == '__main__':
     lwin = make_windows(lfrm, FRMPERWIN)
     lwinsim = []
     #print(lwin)
-    #lwin1 = find_scene_cuts(fn) ;
-    lwin1 = find_scene_cuts('../vid/out.mp4') ;
+    lwin1 = find_scene_cuts(fn) ;
+    #lwin1 = find_scene_cuts('../vid/out.mp4') ;
+    lwin1=map_to_downsampled(lwin1)
     print(lwin1)
     print("Number of SC frames is {}").format(len(lwin1))
+    
+    #quit()
     lwin1.append('png/1.png')
     lwin_sc = make_windows(lwin1, FRMPERWIN)
     lwinsim=np.full((len(lwin),len(lwin)), INF)

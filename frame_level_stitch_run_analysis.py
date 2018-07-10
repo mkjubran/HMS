@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2, os, sys, subprocess, pdb
 import scenedetect, re
-import datetime, math
+import datetime, math, time
 
 FRMPERWIN = 1 ; INF = 999
 
@@ -16,8 +16,17 @@ def call(cmd):
 def export_frames(fn):
     osout = call('rm -rf png'.format(fn))
     osout = call('mkdir png'.format(fn))
-    osout = call('ffmpeg -i {} -qp 0 png/%d.png'.format(fn))
-    osout = call('ls -v png/*.png') ; lfrm = osout[0] 
+    osout = call('ffmpeg -r 8 -i {} -r 1 -qp 0 png/%d.png'.format(fn))  ##downsampling to 8:1
+
+    #osout = call('rm -rf pngall'.format(fn))
+    #osout = call('mkdir pngall'.format(fn))
+    #osout = call('ffmpeg -r 1 -i {} -r 1 -qp 0 pngall/%d.png'.format(fn)) ##no downsampling 1:1
+
+
+    #osout = call('ffmpeg -i {} -qp 0 png/%d.png'.format(fn))
+    osout = call('ls -v png/*.png') ; lfrm = osout[0]
+    osout = call('rm -rf ../vid/out.mp4')
+    osout = call('ffmpeg -start_number 0 -i "png/%d.png" -c:v libx264 -vf "fps=25,format=yuv420p" ../vid/out.mp4') 
     lfrm = lfrm.split('\n')[0:-1]
 
     return lfrm
@@ -42,6 +51,7 @@ def content_similarity(img_0, img_1):
 
     # Initiate SIFT detector
     orb = cv2.ORB_create()
+    #orb = cv2.ORB()
     #print("{} ...... {}\n").format(img_0,img_1)
 
     # find the keypoints and descriptors with SIFT
@@ -98,25 +108,28 @@ def make_windows(lfrm, numfrmwin):
     return lwin
 
 def find_scene_cuts(fn):
+
     scene_list = []		# Modified by detect_scenes(...) below.
     
     cap = cv2.VideoCapture(fn)	
     # Make sure to check cap.isOpened() before continuing!
 
     # Usually use one detector, but multiple can be used.
-    detector_list = [scenedetect.ContentDetector()]
+    detector_list = [scenedetect.ContentDetector(min_scene_len = 1)]
+    #detector_list = [scenedetect.ContentDetector(threshold = 30,min_scene_len = 1)]
+    #detector_list = [scenedetect.ThresholdDetector(threshold = 1, min_percent = 0.95, min_scene_len = 1)]
 
 
     frames_read = scenedetect.detect_scenes(cap, scene_list, detector_list)
 
     # scene_list now contains the frame numbers of scene boundaries.
-    print(scene_list)
+    #print(scene_list)
 
     # Ensure we release the VideoCapture object.
     cap.release()
     
     scene_list=np.array(scene_list) ;
-    scene_list=scene_list+2;
+    scene_list=scene_list+1;
     #print(scene_list)
 
     win_sc=[];
@@ -137,22 +150,57 @@ def comp_similarity(lwin_,lwin_sc_,lwinsim):
           s=re.search('(?<=/)\w+', str(win_sc))
           iwin_sc=int(s.group(0))
           #lwinsim[iwin-1][iwin_sc-1]=sliding_window_similarity(win, win_sc)[0]
-	  lwinsim[iwin-1][iwin_sc-1]=window_similarity(win, win_sc)
+	  #if iwin >= iwin_sc:
+          lwinsim[iwin-1][iwin_sc-1]=window_similarity(win, win_sc)
 	  #print('{}..&..{}=..{}').format(win,win_sc,lwinsim[iwin-1][iwin_sc-1])
           #lwinsim[iwin_sc-1][iwin-1]=lwinsim[iwin-1][iwin_sc-1]
     return lwinsim
+
+def map_to_downsampled(lwin):
+    print(type(lwin))
+    lwindownSampled = []
+    lwindownSampledint = []
+    for win in lwin:    
+        s=re.search('(?<=/)\w+', str(win))
+        iwin=int(s.group(0))
+        iwin=iwin-1
+        lwindownSampledint.append(int(math.ceil(iwin/8)+3))  ##downsampling to 8:1
+
+    lwindownSampledint=np.unique(np.array(lwindownSampledint))
+
+    for iwin in lwindownSampledint:    
+        lwindownSampled.append('png/'+str(iwin)+'.png')
+    return lwindownSampled
+
+def comp_dissimilarity(lwin_r,lwin_c,lwinsim):
+    for win_r in lwin_r:
+        now = datetime.datetime.now()
+        print('{} ... {}').format(win_r,now.strftime("%Y-%m-%d %H:%M:%S"))
+        for win_c in lwin_c:
+          s=re.search('(?<=/)\w+', str(win_r))
+          iwin_r=int(s.group(0))
+          s=re.search('(?<=/)\w+', str(win_c))
+          iwin_c=int(s.group(0))
+          lwinsim[iwin_r-1][iwin_c-1]=window_similarity(win_r, win_c)
+    return lwinsim
+
 
 if __name__ == '__main__':
     # matches = content_similarity(sys.argv[-1], sys.argv[-2])
     # sim = sliding_window_similarity(['A.jpg','B.jpg'], ['B.jpg','C.jpg'])
     fn=sys.argv[-1]
-    lfrm = export_frames(fn) ; 
+    lfrm = export_frames(fn);
+    lfrmdel=lfrm[1];
     lwin = make_windows(lfrm, FRMPERWIN)
     lwinsim = []
     #print(lwin)
     lwin1 = find_scene_cuts(fn) ;
+    #lwin1 = find_scene_cuts('../vid/out.mp4') ;
+    lwin1=map_to_downsampled(lwin1)
     print(lwin1)
-    print("Number of SC frames").format(len(lwin1))
+    print("Number of SC frames is {}").format(len(lwin1))
+    
+    #quit()
     lwin1.append('png/1.png')
     lwin_sc = make_windows(lwin1, FRMPERWIN)
     lwinsim=np.full((len(lwin),len(lwin)), INF)
@@ -161,20 +209,29 @@ if __name__ == '__main__':
     print("Computing similarity between SC and all frames")
     lwinsim=comp_similarity(lwin,lwin_sc,lwinsim)
     
-    LambdaPoP=0.001
+    LambdaPoP=0.000001
     WeightPicPos=LambdaPoP*(np.transpose(np.full((len(lwin),1),1)*np.array(range(1,len(lwin)+1))))
-    lwinsim=lwinsim+WeightPicPos
+    #lwinsimNorm=lwinsim/np.matrix.max(lwinsim)
+    np.set_printoptions(threshold=np.nan)
+    #print(lwinsim.shape)
+    #print(np.amax(np.amax(lwinsim)))
+    
+    lwinsim=((lwinsim.astype(float))/np.amax(np.amax(lwinsim)))+WeightPicPos
+    #print(np.mean(lwinsim,0))
+    
 
+    #pdb.set_trace()
     #print('\nWindow similarity matrix:') ; print(np.matrix(lwinsim))
-    # lwinfreq = [ np.mean(_) for _ in lwinsim ]
     lwin_popularity_index = [ np.mean(_) for _ in lwinsim ]
-    print(lwin_popularity_index)
-
+    #print(lwin_popularity_index)
+    #lwin_popularity_index = np.mean(lwinsim,1)
+    #print(lwin_popularity_index)
+    #pdb.set_trace()
     lwin_opt_sorting = [] ; lwin_opt_sorting.append(np.argmin(lwin_popularity_index))
     current_top_win_index = np.argmin(lwin_popularity_index) 
     current_top_win = lwin[current_top_win_index]
     #print('{}....{}').format(current_top_win_index,current_top_win)
-    
+    print('Producing Popularity-Dissimilarity List')
     for i in range(0, len(lwin_sc)):
 	#print('i={}....{}').format(i,current_top_win_index)
         # lwinsim_ = []
@@ -190,10 +247,13 @@ if __name__ == '__main__':
 
         # Make choice criterion list
         #pdb.set_trace()
-        lwindissim=comp_similarity(lwin[current_top_win_index],lwin,lwindissim)
+        lwindissim=comp_dissimilarity(lwin[current_top_win_index],lwin,lwindissim)
+        lwindissimNorm=((lwindissim.astype(float))/np.amax(np.amax(lwindissim)))
+        #print(np.mean(lwindissimNorm,axis=1))
+        #print(np.mean(lwindissimNorm,axis=0))
         #print('\nWindow dissimilarity matrix:') ; print(np.matrix(lwindissim))
         next_candidate_criterion = [dissimilarity/float(popularity) for dissimilarity, popularity \
-                                        in zip(np.mean(lwindissim,axis=0), lwin_popularity_index)]  ##consider dissimilarity with all previously selected current_top_win_indexs
+                                        in zip(np.mean(lwindissimNorm,axis=0), lwin_popularity_index)]  ##consider dissimilarity with all previously selected current_top_win_indexs
 
 	#next_candidate_criterion = [dissimilarity/float(popularity) for dissimilarity, popularity \
         #                                in zip(lwindissim[current_top_win_index], lwin_popularity_index)] ##consider dissimilarity with only the current_top_win_index

@@ -89,6 +89,8 @@ if __name__ == '__main__':
 
     cnt=0
     clipslen=np.random.randint(ctmin, ctmax,len(inputvideofiles))
+    x=(clipslen<clipslenOrig)+0
+    clipslen=np.multiply(x,clipslen)+np.multiply(np.absolute(x-1),clipslenOrig)
     if (float(np.sum(clipslenOrig))/60 < vidd):
         clipslen=clipslenOrig
         print('The requested video duration ({} mins) is greater than the sum of duration of all video clips ({} mins), all clips are concatenated'.format(vidd,float(np.sum(clipslenOrig))/60))
@@ -107,6 +109,7 @@ if __name__ == '__main__':
     clipstart=np.random.randint(0,ctmax,len(inputvideofiles))
     for cnt in range(len(clipslenOrig)):
            if ((clipstart[cnt]+clipslen[cnt])>clipslenOrig[cnt]):
+                 print('{}...{}...{}').format(clipstart[cnt],clipslen[cnt],clipslenOrig[cnt])
                  if (clipslen[cnt]==clipslenOrig[cnt]):
                      clipstart[cnt]=0
                  else:
