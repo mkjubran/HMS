@@ -145,9 +145,9 @@ rm -rf encoder.log
 
 if [ $mode = "stitching" ]
 then
-./HMS/bin/TAppEncoderStatic -c ./encoder_HMS.cfg -c ./encoder_HMS_GOP.cfg --InputFile=$InputYUV --SourceWidth=$W --SourceHeight=$H --SAO=0 --QP=$QP --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" --RateControl=1 --TargetBitrate=$rate |& tee -a encoder.log
+./HMS/bin/TAppEncoderStatic -c ./encoder_HMS.cfg -c ./encoder_HMS_GOP.cfg --InputFile=$InputYUV --SourceWidth=$W --SourceHeight=$H --SAO=0 --QP=$QP --FrameRate=$fps --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" --RateControl=1 --TargetBitrate=$rate |& tee -a encoder.log
 else
-./HM_Original/bin/TAppEncoderStatic -c ./encoder_HMS.cfg -c ./encoder_HMS_GOP.cfg --InputFile=$InputYUV --SourceWidth=$W --SourceHeight=$H --SAO=0 --QP=$QP --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" --RateControl=1 --TargetBitrate=$rate |& tee -a encoder.log
+./HM_Original/bin/TAppEncoderStatic -c ./encoder_HMS.cfg -c ./encoder_HMS_GOP.cfg --InputFile=$InputYUV --SourceWidth=$W --SourceHeight=$H --SAO=0 --QP=$QP --FrameRate=$fps --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" --RateControl=1 --TargetBitrate=$rate |& tee -a encoder.log
 fi
 
 file_size=`du -b "../vid/HMEncodedVideo.bin" | cut -f1`
@@ -181,14 +181,14 @@ do
   IFS=' :()' read -r -a HMSLine_array2 <<< "$HMSLine"
   if [[ "${HMSLine_array2[1]}" == *"written"* ]]
   then
-    WrittenBytes=$(echo ${HMSLine_array2[4]} | tr -d ' ')
+    WrittenBites=$(echo ${HMSLine_array2[4]} | tr -d ' ')
     BitRate=$(echo ${HMSLine_array2[5]} | tr -d ' ')
   fi
 done < <(paste "./encoder.log")
 
 echo "" >> $HMSResults
 echo "Number of Frames = "$((NumFrame + 1)) >> $HMSResults
-echo "Number of written bytes = "$WrittenBytes >> $HMSResults
+echo "Number of written bites = "$WrittenBites >> $HMSResults
 echo "Bit Rate = "$BitRate" kbps" >> $HMSResults
 
 rm temp.txt

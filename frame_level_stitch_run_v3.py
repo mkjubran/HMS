@@ -115,7 +115,7 @@ def find_scene_cuts(fn):
     # Make sure to check cap.isOpened() before continuing!
 
     # Usually use one detector, but multiple can be used.
-    detector_list = [scenedetect.ContentDetector(min_scene_len = 1)]
+    detector_list = [scenedetect.ContentDetector()]
     #detector_list = [scenedetect.ContentDetector(threshold = 30,min_scene_len = 1)]
     #detector_list = [scenedetect.ThresholdDetector(threshold = 1, min_percent = 0.95, min_scene_len = 1)]
 
@@ -194,7 +194,7 @@ if __name__ == '__main__':
     lwin = make_windows(lfrm, FRMPERWIN)
     lwinsim = []
     #print(lwin)
-    lwin1 = find_scene_cuts(fn) ;
+    lwin1 = find_scene_cuts(fn);
     #lwin1 = find_scene_cuts('../vid/out.mp4') ;
     lwin1=map_to_downsampled(lwin1)
     print(lwin1)
@@ -282,7 +282,9 @@ if __name__ == '__main__':
     print('\nOPTIMAL HEVC GOP ORDER:') ; print(lwin_opt_sorting)
 
     ## Added by Jubran
-    fid = open('OrderedFrames.txt','w')
+    fname=fn.split('/')[2]
+    fname=fname[0:(len(fname)-4)]
+    fid = open('OrderedFrames_'+fname+'.txt','w')
     for FNum in lwin_opt_sorting:
     	print >> fid, FNum
     #pdb.set_trace()

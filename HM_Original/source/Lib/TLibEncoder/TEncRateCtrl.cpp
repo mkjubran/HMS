@@ -453,6 +453,8 @@ Int TEncRCGOP::xEstGOPTargetBits( TEncRCSeq* encRCSeq, Int GOPSize )
   Int averageTargetBitsPerPic = (Int)( encRCSeq->getTargetBits() / encRCSeq->getTotalFrames() );
   Int currentTargetBitsPerPic = (Int)( ( encRCSeq->getBitsLeft() - averageTargetBitsPerPic * (encRCSeq->getFramesLeft() - realInfluencePicture) ) / realInfluencePicture );
   Int targetBits = currentTargetBitsPerPic * GOPSize;
+  
+  //printf("jubran targetBits=%d, encRCSeq->getBitsLeft()=%lld, averageTargetBitsPerPic=%d, encRCSeq->getFramesLeft()=%d, realInfluencePicture=%d\n",targetBits,encRCSeq->getBitsLeft(),averageTargetBitsPerPic,encRCSeq->getFramesLeft(),realInfluencePicture); //added by jubran for testing 
 
   if ( targetBits < 200 )
   {
