@@ -2,8 +2,8 @@
 # Script that concatenates all the files defined in concat_clips.txt
 
 output_dir="../vid/"
-input_dir="../vid/UCFSamplesShort/"
-output_filename="BoxPunchSkyDivingShort"
+input_dir="../vid/UCF_c08_g72_clips402/"
+output_filename="UCF_c08_g72_clips402"
 infps=24
 outfps=8
 W=320
