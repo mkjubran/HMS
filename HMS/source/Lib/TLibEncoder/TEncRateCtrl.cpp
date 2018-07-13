@@ -461,7 +461,7 @@ Int TEncRCGOP::xEstGOPTargetBits( TEncRCSeq* encRCSeq, Int GOPSize )
   Int targetBits = currentTargetBitsPerPic * GOPSize;
 
 //added by Jubran to deal with Open GOP "all video is one GOP"
-targetBits=averageTargetBitsPerPic*GOPSize;
+//targetBits=averageTargetBitsPerPic*GOPSize;
 //end modification
 
   if ( targetBits < 200 )
