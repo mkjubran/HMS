@@ -11,11 +11,11 @@ import matplotlib.pyplot as plt
 parser = argparse.ArgumentParser(description='Optional app description')
 
 # Optional argument
-parser.add_argument('--fn1', type=str,
-                    help='file name of first Rate_PSNR file')
+parser.add_argument('--fcodec', type=str,
+                    help='file name of HM Rate_PSNR log file')
 
-parser.add_argument('--fn2', type=str,
-                    help='file name of second Rate_PSNR file')
+parser.add_argument('--fsift', type=str,
+                    help='file name to be used to read saved np arrays, must be the mp4 file used to get the np arrays')
 
 args = parser.parse_args()
 
@@ -69,39 +69,54 @@ def Get_TotalPSNR(fname):
 
 if __name__ == '__main__':
    ##Inputs
-   fname1=args.fn1;
-   fname2=args.fn2;
+   fcodec=args.fcodec;
+   fsift=args.fsift;
    #np.set_printoptions(threshold=np.nan)
-   
+
+######### Procesing Codec info
+   fcodec_FNum_Rate_PSNR=Get_FNum_Rate_PSNR(fcodec)
+
+# read the over all: Number of Frames, Rate, PSNR
+   TotalRatefn1=Get_TotalRate(fcodec)
+   TotalPSNRfn1=Get_TotalPSNR(fcodec)
+   print("fcodec: Rate={}kbps, PSNR={}dB").format(TotalRatefn1,TotalPSNRfn1)
+
+######### Processing SIFT info
+   fname=fsift.split('/')[2]
+   fname=fname[0:(len(fname)-4)]
+   lwinBeforedownSampledint=np.load((fname+'_SceneCutFramesBeforeDownSampling.npy'))
+   lwindownSampledint=np.load((fname+'_SceneCutFrames.npy'))
+   lwinsim=np.load((fname+'_lwinsim.npy'))
+   lwinsimNormalizedWeighted=np.load((fname+'_lwinsimNormalizedWeighted.npy'))
+   lwindissim=np.load((fname+'_lwindissim.npy'))
+   lwindissimNorm=np.load((fname+'_lwindissimNormalized.npy'))
+    
+   lwinBeforedownSampledintplot=[1 if _ in lwinBeforedownSampledint else 0 for _ in fcodec_FNum_Rate_PSNR[:,0]]
+   lwindownSampledintplot=[1 if _ in lwindownSampledint else 0 for _ in fcodec_FNum_Rate_PSNR[:,0]]
+   lwinsimplot=[1 if _ in lwinsim else 0 for _ in fcodec_FNum_Rate_PSNR[:,0]]
+   lwinsimNormalizedWeightedplot=[1 if _ in lwinsimNormalizedWeighted else 0 for _ in fcodec_FNum_Rate_PSNR[:,0]]
+   lwindissimplot=[1 if _ in lwindissim else 0 for _ in fcodec_FNum_Rate_PSNR[:,0]]
+   lwindissimNormplot=[1 if _ in lwindissimNorm else 0 for _ in fcodec_FNum_Rate_PSNR[:,0]]
+######### Plotting   
+   plt.figure()
+   plt.subplot(4, 1, 1)
+   plt.plot(fcodec_FNum_Rate_PSNR[:,0],lwindownSampledintplot,"*r-")
+   plt.subplot(4, 1, 2)
+   plt.plot(fcodec_FNum_Rate_PSNR[:,0],lwinBeforedownSampledintplot,"*b-")
+   plt.show()
+
+   plt.figure()
    plt.subplot(2, 1, 1)
-   f1_FNum_Rate_PSNR=Get_FNum_Rate_PSNR(fname1)
-   plt.plot(f1_FNum_Rate_PSNR[:,0],f1_FNum_Rate_PSNR[:,1],"r-")
-   f2_FNum_Rate_PSNR=Get_FNum_Rate_PSNR(fname2)
-   plt.plot(f2_FNum_Rate_PSNR[:,0],f2_FNum_Rate_PSNR[:,1],"b-")
-   plt.legend(['fn1','fn2'])
-   #plt.title('Comparing 2 videos')
+   plt.plot(fcodec_FNum_Rate_PSNR[:,0],fcodec_FNum_Rate_PSNR[:,1],"r-")
+   plt.legend(['fn1'])
    plt.xlabel('Frame Number')
    plt.ylabel('Frame Size (kbits)')
 
 
    plt.subplot(2, 1, 2)
-   f1_FNum_Rate_PSNR=Get_FNum_Rate_PSNR(fname1)
-   plt.plot(f1_FNum_Rate_PSNR[:,0],f1_FNum_Rate_PSNR[:,2],"r-")
-   f2_FNum_Rate_PSNR=Get_FNum_Rate_PSNR(fname2)
-   plt.plot(f2_FNum_Rate_PSNR[:,0],f2_FNum_Rate_PSNR[:,2],"b-")
-   plt.legend(['fn1','fn2'])
-   #plt.title('Comparing 2 videos')
+   plt.plot(fcodec_FNum_Rate_PSNR[:,0],fcodec_FNum_Rate_PSNR[:,2],"r-")
+   plt.legend(['fcodec'])
    plt.xlabel('Frame Number')
    plt.ylabel('PSNR (dB)')
+
    #plt.show()
-
-## read the over all: Number of Frames, Rate, PSNR
-   TotalRatefn1=Get_TotalRate(fname1)
-   TotalPSNRfn1=Get_TotalPSNR(fname1)
-   print("Fn1: Rate={}kbps, PSNR={}dB").format(TotalRatefn1,TotalPSNRfn1)
-
-   TotalRatefn2=Get_TotalRate(fname2)
-   TotalPSNRfn2=Get_TotalPSNR(fname2)
-   print("Fn2: Rate={}kbps, PSNR={}dB").format(TotalRatefn2,TotalPSNRfn2)
-
-   plt.show()

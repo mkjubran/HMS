@@ -156,18 +156,23 @@ def comp_similarity(lwin_,lwin_sc_,lwinsim):
           #lwinsim[iwin_sc-1][iwin-1]=lwinsim[iwin-1][iwin_sc-1]
     return lwinsim
 
-def map_to_downsampled(lwin):
+def map_to_downsampled(lwin,fname):
     print(type(lwin))
     lwindownSampled = []
     lwindownSampledint = []
+    lwinBeforedownSampledint = []
     for win in lwin:    
         s=re.search('(?<=/)\w+', str(win))
         iwin=int(s.group(0))
         iwin=iwin-1
-        lwindownSampledint.append(int(math.ceil(iwin/8)+3))  ##downsampling to 8:1
+        lwinBeforedownSampledint.append(int(math.ceil(iwin)+1))   ##before downsampling
+        lwindownSampledint.append(int(math.ceil(iwin/8)+3))       ##downsampling to 8:1
 
     lwindownSampledint=np.unique(np.array(lwindownSampledint))
+    lwinBeforedownSampledint=np.array(lwinBeforedownSampledint)
 
+    np.save((fname+'_SceneCutFramesBeforeDownSampling'),(lwinBeforedownSampledint-1))
+    np.save((fname+'_SceneCutFrames'),(lwindownSampledint-1))
     for iwin in lwindownSampledint:    
         lwindownSampled.append('png/'+str(iwin)+'.png')
     return lwindownSampled
@@ -184,11 +189,13 @@ def comp_dissimilarity(lwin_r,lwin_c,lwinsim):
           lwinsim[iwin_r-1][iwin_c-1]=window_similarity(win_r, win_c)
     return lwinsim
 
-
 if __name__ == '__main__':
     # matches = content_similarity(sys.argv[-1], sys.argv[-2])
     # sim = sliding_window_similarity(['A.jpg','B.jpg'], ['B.jpg','C.jpg'])
     fn=sys.argv[-1]
+    fname=fn.split('/')[2]
+    fname=fname[0:(len(fname)-4)]
+    
     lfrm = export_frames(fn);
     lfrmdel=lfrm[1];
     lwin = make_windows(lfrm, FRMPERWIN)
@@ -196,11 +203,10 @@ if __name__ == '__main__':
     #print(lwin)
     lwin1 = find_scene_cuts(fn);
     #lwin1 = find_scene_cuts('../vid/out.mp4') ;
-    lwin1=map_to_downsampled(lwin1)
+    lwin1=map_to_downsampled(lwin1,fname)
     print(lwin1)
     print("Number of SC frames is {}").format(len(lwin1))
     
-    #quit()
     lwin1.append('png/1.png')
     lwin_sc = make_windows(lwin1, FRMPERWIN)
     lwinsim=np.full((len(lwin),len(lwin)), INF)
@@ -215,8 +221,9 @@ if __name__ == '__main__':
     np.set_printoptions(threshold=np.nan)
     #print(lwinsim.shape)
     #print(np.amax(np.amax(lwinsim)))
-    
+    np.save((fname+'_lwinsim'),lwinsim)
     lwinsim=((lwinsim.astype(float))/np.amax(np.amax(lwinsim)))+WeightPicPos
+    np.save((fname+'_lwinsimNormalizedWeighted'),lwinsim)
     #print(np.mean(lwinsim,0))
     
 
@@ -274,7 +281,8 @@ if __name__ == '__main__':
                current_top_win_index = next_candidate
                break
         print(lwin_opt_sorting)
-
+    np.save((fname+'_lwindissim'),lwindissim)
+    np.save((fname+'_lwindissimNormalized'),lwindissimNorm)
     for i in range(0, len(lwin)):
       if i not in lwin_opt_sorting:
                lwin_opt_sorting.append(i)
@@ -282,8 +290,6 @@ if __name__ == '__main__':
     print('\nOPTIMAL HEVC GOP ORDER:') ; print(lwin_opt_sorting)
 
     ## Added by Jubran
-    fname=fn.split('/')[2]
-    fname=fname[0:(len(fname)-4)]
     fid = open('OrderedFrames_'+fname+'.txt','w')
     for FNum in lwin_opt_sorting:
     	print >> fid, FNum
