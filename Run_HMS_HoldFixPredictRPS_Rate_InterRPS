@@ -140,14 +140,23 @@ echo "" >> $HMSResults
 rm -rf ./encoder_HMS_GOP.cfg
 python CreateHMGOPStructHoldFixPredictRPS_InterRPS.py --ranklist $RankListFile --ref_active $Ref_active --ref_stitch $Ref_stitch --mode $mode --fsr $fsr --fps $fps
 
+
+if [ $rate = 0 ]
+then
+RateControl=0
+else
+RateControl=1
+fi
+
 rm -rf "../vid/HMEncodedVideo.bin"
 rm -rf encoder.log
 
+
 if [ $mode = "stitching" ]
 then
-./HMS/bin/TAppEncoderStatic -c ./encoder_HMS.cfg -c ./encoder_HMS_GOP.cfg --InputFile=$InputYUV --SourceWidth=$W --SourceHeight=$H --SAO=0 --QP=$QP --FrameRate=$fps --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" --RateControl=1 --TargetBitrate=$rate |& tee -a encoder.log
+./HMS/bin/TAppEncoderStatic -c ./encoder_HMS.cfg -c ./encoder_HMS_GOP.cfg --InputFile=$InputYUV --SourceWidth=$W --SourceHeight=$H --SAO=0 --QP=$QP --FrameRate=$fps --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" --RateControl=$RateControl --TargetBitrate=$rate |& tee -a encoder.log
 else
-./HM_Original/bin/TAppEncoderStatic -c ./encoder_HMS.cfg -c ./encoder_HMS_GOP.cfg --InputFile=$InputYUV --SourceWidth=$W --SourceHeight=$H --SAO=0 --QP=$QP --FrameRate=$fps --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" --RateControl=1 --TargetBitrate=$rate |& tee -a encoder.log
+./HM_Original/bin/TAppEncoderStatic -c ./encoder_HMS.cfg -c ./encoder_HMS_GOP.cfg --InputFile=$InputYUV --SourceWidth=$W --SourceHeight=$H --SAO=0 --QP=$QP --FrameRate=$fps --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" --RateControl=$RateControl --TargetBitrate=$rate |& tee -a encoder.log
 fi
 
 file_size=`du -b "../vid/HMEncodedVideo.bin" | cut -f1`

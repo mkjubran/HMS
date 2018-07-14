@@ -1,46 +1,69 @@
 #!/bin/bash
 #clear
 
-vid="UCF_c08_g40_clips227"
+vid="UCF_c02_g02_clips12"
 W=320
 H=240
 
-rlist="./OrderedFrames_UCF_c08_g40_clips227.txt"
+rlist="./OrderedFrames_UCF_c02_g02_clips12.txt"
 mcu=16
 mpd=2
 nf=600
-output_dir="../HMSResults"
+output_dir="../HMSResults_UCF_c02_g02_clips12"
+
+## Target Bit Rate 
+opt=$vid
+qp=20;rate=50000;refa=32;refs=28;fps=8;fsr=1;mode=stitch;
+#./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
+
+qp=20;rate=50000;refa=4;refs=0;fps=8;fsr=1;mode=normal;
+#./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
+
+
+qp=20;rate=100000;refa=32;refs=28;fps=8;fsr=1;mode=stitch;
+#./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
+
+qp=20;rate=100000;refa=4;refs=0;fps=8;fsr=1;mode=normal;
+#./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
+
+qp=20;rate=200000;refa=32;refs=28;fps=8;fsr=1;mode=stitch;
+#./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
+
+qp=20;rate=200000;refa=4;refs=0;fps=8;fsr=1;mode=normal;
+#./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
+
+qp=20;rate=400000;refa=32;refs=28;fps=8;fsr=1;mode=stitch;
+#./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
+
+qp=20;rate=400000;refa=4;refs=0;fps=8;fsr=1;mode=normal;
+#./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
 
 
 ###### Constant QP based (28)
-#Normal 4
-#qp=28;refa=4;refs=0;fps=30;fsr=30;mode=normal;opt="";
-#./Run_HMS_HoldFixPredictRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
-
-#Stitching 8 4
-#qp=28;refa=8;refs=4;fps=30;fsr=30;mode=stitch;opt="";
-#./Run_HMS_HoldFixPredictRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
-
-#Stitching IRPS 8 4
-#qp=28;refa=8;refs=4;fps=30;fsr=30;mode=stitch;opt="IRPS";
-#./Run_HMS_HoldFixPredictRPS_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
-
-## Target Bit Rate 
-#Stitching 8 4 IRPS
 opt=$vid
-#qp=20;rate=400000;refa=32;refs=28;fps=8;fsr=1;mode=stitch;
+qp=24;rate=0;refa=32;refs=28;fps=8;fsr=1;mode=stitch;
 #./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
 
-#qp=20;rate=200000;refa=32;refs=28;fps=8;fsr=1;mode=stitch;
+qp=24;rate=0;refa=4;refs=0;fps=8;fsr=1;mode=normal;
 #./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
 
-#qp=20;rate=100000;refa=32;refs=28;fps=8;fsr=1;mode=stitch;
+qp=30;rate=0;refa=32;refs=28;fps=8;fsr=1;mode=stitch;
 #./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
 
-#qp=20;rate=50000;refa=32;refs=28;fps=8;fsr=1;mode=stitch;
+qp=30;rate=0;refa=4;refs=0;fps=8;fsr=1;mode=normal;
 #./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
 
-qp=20;rate=10000;refa=4;refs=0;fps=8;fsr=1;mode=normal;
-./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
+qp=36;rate=0;refa=32;refs=28;fps=8;fsr=1;mode=stitch;
+#./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
+
+qp=36;rate=0;refa=4;refs=0;fps=8;fsr=1;mode=normal;
+#./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
+
+
+qp=42;rate=0;refa=32;refs=28;fps=8;fsr=1;mode=stitch;
+#./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
+
+qp=42;rate=0;refa=4;refs=0;fps=8;fsr=1;mode=normal;
+#./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
 
 
