@@ -93,6 +93,7 @@ if __name__ == '__main__':
     clipslen=np.multiply(x,clipslen)+np.multiply(np.absolute(x-1),clipslenOrig)
     if (float(np.sum(clipslenOrig))/60 < vidd):
         clipslen=clipslenOrig
+        print(clipslenOrig)
         print('The requested video duration ({} mins) is greater than the sum of duration of all video clips ({} mins), all clips are concatenated'.format(vidd,float(np.sum(clipslenOrig))/60))
         time.sleep(5)
     else:
@@ -108,13 +109,13 @@ if __name__ == '__main__':
 
     clipstart=np.random.randint(0,ctmax,len(inputvideofiles))
     for cnt in range(len(clipslenOrig)):
+           #print('{}...{}...{}...{}').format(cnt,clipstart[cnt],clipslen[cnt],clipslenOrig[cnt])
            if ((clipstart[cnt]+clipslen[cnt])>clipslenOrig[cnt]):
-                 print('{}...{}...{}').format(clipstart[cnt],clipslen[cnt],clipslenOrig[cnt])
                  if (clipslen[cnt]==clipslenOrig[cnt]):
                      clipstart[cnt]=0
                  else:
                      clipstart[cnt]=np.random.randint(0,(clipslenOrig[cnt]-clipslen[cnt]),1)
-           
+           print('{}...{}...{}...{}').format(cnt,clipstart[cnt],clipslen[cnt],clipslenOrig[cnt])
     
     osout = call('rm -rf {}/cropped/'.format(output_dir))
     osout = call('mkdir {}/cropped/'.format(output_dir))
