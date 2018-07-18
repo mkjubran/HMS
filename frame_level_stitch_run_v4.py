@@ -3,8 +3,24 @@ import matplotlib.pyplot as plt
 import cv2, os, sys, subprocess, pdb
 import scenedetect, re
 import datetime, math, time
+import argparse
 
 FRMPERWIN = 1 ; INF = 999
+
+# Instantiate the parser
+parser = argparse.ArgumentParser(description='Optional app description')
+
+# Optional argument
+parser.add_argument('--f', type=str,
+                    help='file name')
+
+parser.add_argument('--fsr', type=float,
+                    help='frame sample rate (ffmpeg -r ?)')
+
+args = parser.parse_args()
+
+fn=args.f;
+fsr=args.fsr;
 
 def call(cmd):
     # proc = subprocess.Popen(["cat", "/etc/services"], stdout=subprocess.PIPE, shell=True)
@@ -14,21 +30,24 @@ def call(cmd):
     return (out, err)
 
 def export_frames(fn):
-    osout = call('rm -rf png'.format(fn))
-    osout = call('mkdir png'.format(fn))
-    osout = call('ffmpeg -r 8 -i {} -r 1 -qp 0 png/%d.png'.format(fn))  ##downsampling to 8:1
 
-    #osout = call('rm -rf pngall'.format(fn))
-    #osout = call('mkdir pngall'.format(fn))
-    #osout = call('ffmpeg -r 1 -i {} -r 1 -qp 0 pngall/%d.png'.format(fn)) ##no downsampling 1:1
+    osout = call('rm -rf pngall')
+    osout = call('mkdir pngall')
+    osout = call('ffmpeg -r 1 -i {} -r 1 -qp 0 pngall/%d.png'.format(fn)) ##no downsampling 1:1
 
-
-    #osout = call('ffmpeg -i {} -qp 0 png/%d.png'.format(fn))
-    osout = call('ls -v png/*.png') ; lfrm = osout[0]
-    osout = call('rm -rf ../vid/out.mp4')
-    osout = call('ffmpeg -start_number 0 -i "png/%d.png" -c:v libx264 -vf "fps=25,format=yuv420p" ../vid/out.mp4') 
+    osout = call('ls -v pngall/*.png') ; lfrmall = osout[0]
+    lfrmall = lfrmall.split('\n')[0:-1]
+    
+    osout = call('rm -rf pngDS')
+    osout = call('mkdir pngDS')
+    for cnt in range(len(lfrmall)):
+        if ((cnt) % fsr) == 0:
+             osout = call('cp -rf pngall/{}.png pngDS/{}.png'.format((cnt+1),int((cnt/fsr)+1)))
+ 
+    osout = call('ls -v pngDS/*.png') ; lfrm = osout[0]
     lfrm = lfrm.split('\n')[0:-1]
-
+    osout = call('rm -rf ../vid/out.mp4')
+    osout = call('ffmpeg -start_number 0 -i "pngDS/%d.png" -c:v libx264 -vf "fps=25,format=yuv420p" ../vid/out.mp4')
     return lfrm
 
 def window_similarity(win_0, win_1):
@@ -157,16 +176,14 @@ def comp_similarity(lwin_,lwin_sc_,lwinsim):
     return lwinsim
 
 def map_to_downsampled(lwin,fname):
-    print(lwin)
     lwindownSampled = []
     lwindownSampledint = []
     lwinBeforedownSampledint = []
     for win in lwin:    
         s=re.search('(?<=/)\w+', str(win))
         iwin=int(s.group(0))
-        iwin=iwin-1
-        lwinBeforedownSampledint.append(int(math.ceil(iwin)+1))   ##before downsampling
-        lwindownSampledint.append(int(math.ceil(iwin/8)+3))       ##downsampling to 8:1
+        lwinBeforedownSampledint.append(int(math.ceil(iwin)))   ##before downsampling
+        lwindownSampledint.append(int(math.ceil((iwin-1)/fsr)+1)) ##downsampling to 8:1
 
     lwindownSampledint=np.unique(np.array(lwindownSampledint))
     lwinBeforedownSampledint=np.array(lwinBeforedownSampledint)
@@ -190,9 +207,7 @@ def comp_dissimilarity(lwin_r,lwin_c,lwinsim):
     return lwinsim
 
 if __name__ == '__main__':
-    # matches = content_similarity(sys.argv[-1], sys.argv[-2])
-    # sim = sliding_window_similarity(['A.jpg','B.jpg'], ['B.jpg','C.jpg'])
-    fn=sys.argv[-1]
+    #fn=sys.argv[-1]
     fname=fn.split('/')[2]
     fname=fname[0:(len(fname)-4)]
     
@@ -203,6 +218,7 @@ if __name__ == '__main__':
     #print(lwin)
     lwin1 = find_scene_cuts(fn);
     #lwin1 = find_scene_cuts('../vid/out.mp4') ;
+    print(lwin1)
     lwin1=map_to_downsampled(lwin1,fname)
     print(lwin1)
     print("Number of SC frames is {}").format(len(lwin1))
