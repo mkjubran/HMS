@@ -14,13 +14,17 @@ parser = argparse.ArgumentParser(description='Optional app description')
 parser.add_argument('--f', type=str,
                     help='file name')
 
-parser.add_argument('--fsr', type=float,
+parser.add_argument('--fsr', type=int,
                     help='frame sample rate (ffmpeg -r ?)')
+
+parser.add_argument('--fps', type=int,
+                    help='frame rate (ffmpeg -r ?)')
 
 args = parser.parse_args()
 
 fn=args.f;
 fsr=args.fsr;
+fps=args.fps;
 
 def call(cmd):
     # proc = subprocess.Popen(["cat", "/etc/services"], stdout=subprocess.PIPE, shell=True)
@@ -41,13 +45,13 @@ def export_frames(fn):
     osout = call('rm -rf pngDS')
     osout = call('mkdir pngDS')
     for cnt in range(len(lfrmall)):
-        if ((cnt) % fsr) == 0:
-             osout = call('cp -rf pngall/{}.png pngDS/{}.png'.format((cnt+1),int((cnt/fsr)+1)))
+        if ((cnt) % (fps/fsr)) == 0:
+             osout = call('cp -rf pngall/{}.png pngDS/{}.png'.format((cnt+1),int((cnt/(fps/fsr))+1)))
  
     osout = call('ls -v pngDS/*.png') ; lfrm = osout[0]
     lfrm = lfrm.split('\n')[0:-1]
     osout = call('rm -rf ../vid/out.mp4')
-    osout = call('ffmpeg -start_number 0 -i "pngDS/%d.png" -c:v libx264 -vf "fps=25,format=yuv420p" ../vid/out.mp4')
+    osout = call('ffmpeg -start_number 0 -i "pngDS/%d.png" -c:v libx264 -vf "fps={},format=yuv420p" ../vid/out.mp4'.format(fps))
     return lfrm
 
 def window_similarity(win_0, win_1):
@@ -183,7 +187,7 @@ def map_to_downsampled(lwin,fname):
         s=re.search('(?<=/)\w+', str(win))
         iwin=int(s.group(0))
         lwinBeforedownSampledint.append(int(math.ceil(iwin)))   ##before downsampling
-        lwindownSampledint.append(int(math.ceil((iwin-1)/fsr)+1)) ##downsampling to 8:1
+        lwindownSampledint.append(int(math.ceil((iwin-1)/(fps/fsr))+1)) ##downsampling to 8:1
 
     lwindownSampledint=np.unique(np.array(lwindownSampledint))
     lwinBeforedownSampledint=np.array(lwinBeforedownSampledint)
@@ -306,7 +310,7 @@ if __name__ == '__main__':
     print('\nOPTIMAL HEVC GOP ORDER:') ; print(lwin_opt_sorting)
 
     ## Added by Jubran
-    fid = open('OrderedFrames_'+fname+'.txt','w')
+    fid = open('OrderedFrames_'+fname+'_fps'+str(fps)+'_fsr'+str(fsr)+'.txt','w')
     for FNum in lwin_opt_sorting:
     	print >> fid, FNum
     #pdb.set_trace()
