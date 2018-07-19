@@ -1,4 +1,24 @@
 
-failed to open bitstream file `../vid/HMEncodedVideo.bin' for reading
-
 HM software: Decoder Version [16.17] (including RExt)[Linux][GCC 5.4.0][64 bit] 
+POC    0 TId: 0 ( I-SLICE, QP 27 ) [DT  0.005] [L0 ] [L1 ] [:,(unk)] 
+POC    1 TId: 0 ( I-SLICE, QP 31 ) [DT  0.004] [L0 ] [L1 ] [:,(unk)] 
+POC    2 TId: 0 ( P-SLICE, QP 43 ) [DT  0.001] [L0 1 ] [L1 ] [:,(unk)] 
+POC    3 TId: 0 ( P-SLICE, QP 46 ) [DT  0.001] [L0 1 ] [L1 ] [:,(unk)] 
+POC    4 TId: 0 ( P-SLICE, QP 50 ) [DT  0.001] [L0 1 ] [L1 ] [:,(unk)] 
+POC    5 TId: 0 ( P-SLICE, QP 51 ) [DT  0.001] [L0 1 ] [L1 ] [:,(unk)] 
+POC    6 TId: 0 ( P-SLICE, QP 51 ) [DT  0.001] [L0 1 ] [L1 ] [:,(unk)] 
+POC    7 TId: 0 ( P-SLICE, QP 51 ) [DT  0.001] [L0 1 ] [L1 ] [:,(unk)] 
+POC    8 TId: 0 ( P-SLICE, QP 51 ) [DT  0.002] [L0 1 ] [L1 ] [:,(unk)] 
+POC    9 TId: 0 ( P-SLICE, QP 51 ) [DT  0.001] [L0 1 ] [L1 ] [:,(unk)] 
+POC   10 TId: 0 ( P-SLICE, QP 51 ) [DT  0.001] [L0 1 ] [L1 ] [:,(unk)] 
+POC   11 TId: 0 ( P-SLICE, QP 51 ) [DT  0.001] [L0 1 ] [L1 ] [:,(unk)] 
+POC   12 TId: 0 ( P-SLICE, QP 51 ) [DT  0.002] [L0 1 ] [L1 ] [:,(unk)] 
+POC   13 TId: 0 ( P-SLICE, QP 51 ) [DT  0.002] [L0 1 ] [L1 ] [:,(unk)] 
+POC   14 TId: 0 ( P-SLICE, QP 51 ) [DT  0.002] [L0 1 ] [L1 ] [:,(unk)] 
+POC   15 TId: 0 ( P-SLICE, QP 51 ) [DT  0.002] [L0 1 ] [L1 ] [:,(unk)] 
+POC   16 TId: 0 ( P-SLICE, QP 51 ) [DT  0.001] [L0 1 ] [L1 ] [:,(unk)] 
+POC   17 TId: 0 ( P-SLICE, QP 51 ) [DT  0.001] [L0 1 ] [L1 ] [:,(unk)] 
+POC   18 TId: 0 ( P-SLICE, QP 51 ) [DT  0.001] [L0 1 ] [L1 ] [:,(unk)] 
+POC   19 TId: 0 ( P-SLICE, QP 51 ) [DT  0.001] [L0 1 ] [L1 ] [:,(unk)] 
+
+ Total Time:        0.073 sec.
