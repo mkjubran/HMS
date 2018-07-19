@@ -86,7 +86,7 @@ then
 opt="_"$opt
 fi
 
-HMSResults=$path"/RatePerFrame_"$fid"_QP"$QP"_rate"$rate"_MCU"$MaxCUSize"_Depth"$MaxPartitionDepth"_RefA"$Ref_active"_RefS"$Ref_stitch"_fsr"$fsr"_fps"$fps"_"$mode$opt".dat"
+HMSResults=$path"/RatePerFrame_"$fid"_fps"$fps"_QP"$QP"_rate"$rate"_MCU"$MaxCUSize"_Depth"$MaxPartitionDepth"_GOP"$GOP"_SF"$stitch_frame"_"$opt".dat"
 echo $HMSResults
 
 InputYUV="../vid/"$fid".yuv"
@@ -118,7 +118,7 @@ fi
 rm -rf "../vid/HMEncodedVideo.bin"
 rm -rf encoder.log
 
-./HMS/bin/TAppEncoderStatic -c ./encoder_HMS.cfg -c ./encoder_HMS_GOP.cfg --InputFile=$InputYUV --SourceWidth=$W --SourceHeight=$H --SAO=0 --QP=$QP --FrameRate=$fps --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" --RateControl=$RateControl --TargetBitrate=$rate #|& tee -a encoder.log
+./HMS/bin/TAppEncoderStatic -c ./encoder_HMS.cfg -c ./encoder_HMS_GOP.cfg --InputFile=$InputYUV --SourceWidth=$W --SourceHeight=$H --SAO=0 --QP=$QP --FrameRate=$fps --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" --RateControl=$RateControl --TargetBitrate=$rate |& tee -a encoder.log
 
 file_size=`du -b "../vid/HMEncodedVideo.bin" | cut -f1`
 echo "File Size (.bin) = "$file_size" Bytes" >> $HMSResults

@@ -61,9 +61,9 @@ def Get_TotalPSNR(fname):
    ## get rate and PSNR
    for cnt in range(len(fl)):
       L=fl[cnt].split()
-      if len(L)>0:
-         if ((L[0][0:5]=='Frame') and (L[1]=='[Y')):
-             TotalPSNR=float(L[18].split('d')[0])+0
+      if (len(L)>19):
+         if ((L[0][0:5]=='Frame')):# and (L[1]=='[Y')):
+             TotalPSNR=float(L[19].split('d')[0])+0
    return TotalPSNR
 
 
@@ -75,6 +75,7 @@ if __name__ == '__main__':
 
 ######### Procesing Codec info
    fcodec_FNum_Rate_PSNR=Get_FNum_Rate_PSNR(fcodec)
+   #print(fcodec_FNum_Rate_PSNR)
 
 # read the over all: Number of Frames, Rate, PSNR
    TotalRatefn1=Get_TotalRate(fcodec)
@@ -100,23 +101,23 @@ if __name__ == '__main__':
 ######### Plotting   
    plt.figure()
    plt.subplot(4, 1, 1)
-   plt.plot(fcodec_FNum_Rate_PSNR[:,0],lwindownSampledintplot,"*r-")
+   plt.plot(range(len(fcodec_FNum_Rate_PSNR[:,0])),lwindownSampledintplot,"-r*")
    plt.subplot(4, 1, 2)
-   plt.plot(fcodec_FNum_Rate_PSNR[:,0],lwinBeforedownSampledintplot,"*b-")
-   plt.show()
+   plt.plot(range(len(fcodec_FNum_Rate_PSNR[:,0])),lwinBeforedownSampledintplot,"-b*")
 
    plt.figure()
    plt.subplot(2, 1, 1)
-   plt.plot(fcodec_FNum_Rate_PSNR[:,0],fcodec_FNum_Rate_PSNR[:,1],"r-")
+   plt.plot(fcodec_FNum_Rate_PSNR[:,0],fcodec_FNum_Rate_PSNR[:,1],"-ro")
    plt.legend(['fn1'])
    plt.xlabel('Frame Number')
    plt.ylabel('Frame Size (kbits)')
 
 
    plt.subplot(2, 1, 2)
-   plt.plot(fcodec_FNum_Rate_PSNR[:,0],fcodec_FNum_Rate_PSNR[:,2],"r-")
+   plt.plot(fcodec_FNum_Rate_PSNR[:,0],fcodec_FNum_Rate_PSNR[:,2],"-ro")
    plt.legend(['fcodec'])
    plt.xlabel('Frame Number')
    plt.ylabel('PSNR (dB)')
 
+   plt.show()
    #plt.show()
