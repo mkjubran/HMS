@@ -34,7 +34,6 @@ def call(cmd):
     return (out, err)
 
 def export_frames(fn):
-
     osout = call('rm -rf pngall')
     osout = call('mkdir pngall')
     osout = call('ffmpeg -r 1 -i {} -r 1 -qp 0 pngall/%d.png'.format(fn)) ##no downsampling 1:1
@@ -55,17 +54,17 @@ def export_frames(fn):
     return lfrm
 
 def window_similarity(win_0, win_1):
-        lfrmsim = []
-        if (type(win_0) == str and type(win_1) == str):
-           lfrmsim.append(content_similarity(win_0, win_1))
-        elif (type(win_0) == str and type(win_1) <> str):
-           lfrmsim.append(content_similarity(win_0, win_1[0]))
-        elif (type(win_0) <> str and type(win_1) == str):
-           lfrmsim.append(content_similarity(win_0[0], win_1))
-        else:
-           lfrmsim.append(content_similarity(win_0[0], win_1[0]))
+    lfrmsim = []
+    if (type(win_0) == str and type(win_1) == str):
+       lfrmsim.append(content_similarity(win_0, win_1))
+    elif (type(win_0) == str and type(win_1) <> str):
+       lfrmsim.append(content_similarity(win_0, win_1[0]))
+    elif (type(win_0) <> str and type(win_1) == str):
+       lfrmsim.append(content_similarity(win_0[0], win_1))
+    else:
+       lfrmsim.append(content_similarity(win_0[0], win_1[0]))
         
-        return np.mean(lfrmsim)
+    return np.mean(lfrmsim)
 
 def content_similarity(img_0, img_1):
     
@@ -198,6 +197,7 @@ def map_to_downsampled(lwin,fname):
         lwindownSampled.append('png/'+str(iwin)+'.png')
     return lwindownSampled
 
+
 def comp_dissimilarity(lwin_r,lwin_c,lwinsim):
     for win_r in lwin_r:
         now = datetime.datetime.now()
@@ -307,8 +307,8 @@ if __name__ == '__main__':
       if i not in lwin_opt_sorting:
                lwin_opt_sorting.append(i)
   
-    print('\nOPTIMAL HEVC GOP ORDER:') ; print(lwin_opt_sorting)
-
+    print('\nOPTIMAL HEVC GOP ORDER at Downsampled space:') ; print(lwin_opt_sorting)
+ 
     ## Added by Jubran
     fid = open('OrderedFrames_'+fname+'_fps'+str(fps)+'_fsr'+str(fsr)+'.txt','w')
     for FNum in lwin_opt_sorting:

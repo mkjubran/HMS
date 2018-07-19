@@ -56,8 +56,6 @@ f.close()
 iFNums=map(int, FNums)
 print(iFNums)
 
-#iFNums[:] = [(int(round((x-1) * fps / fsr))-1) for x in iFNums]
-
 iFNums[:] = [(int(round((x) * fps / fsr))) for x in iFNums]
 
 print(iFNums)
