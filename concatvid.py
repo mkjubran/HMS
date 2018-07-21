@@ -122,7 +122,7 @@ if __name__ == '__main__':
     input_dir_cropped=output_dir+'/cropped/'
     for cnt in range(len(clipslen)):
         clipname=inputvideofiles[cnt]
-        osout = call('ffmpeg -y -i {}/{} -ss {}  -t {} {}/{}'.format(input_dir,clipname,str(datetime.timedelta(seconds=clipstart[cnt])),str(datetime.timedelta(seconds=clipslen[cnt])),input_dir_cropped,clipname))
+        osout = call('ffmpeg -y -i {}/{} -ss {}  -t {} -c:v libx264 -preset ultrafast -qp 0 -strict -2 {}/{}'.format(input_dir,clipname,str(datetime.timedelta(seconds=clipstart[cnt])),str(datetime.timedelta(seconds=clipslen[cnt])),input_dir_cropped,clipname))
 
     thefile = open('concat_clips_temp.txt', 'w')
     for videofile in inputvideofiles:
@@ -130,10 +130,10 @@ if __name__ == '__main__':
     thefile.close() 
 
     osout = call('rm {}/output_temp.mp4'.format(output_dir))
-    osout = call('ffmpeg -f concat  -safe 0 -i concat_clips_temp.txt -c copy {}/output_temp.mp4'.format(output_dir))
+    osout = call('ffmpeg -f concat  -safe 0 -i concat_clips_temp.txt -c:v libx264 -strict -2 -crf 0 -c copy {}/output_temp.mp4'.format(output_dir))
 
     osout = call('rm {}/{}.mp4'.format(output_dir,output_filename))
-    osout = call('ffmpeg -y -r {} -i {}/output_temp.mp4 -strict -2 -vf scale={}:{} -c:v libx264 -preset ultrafast -r {} -qp 0 {}/{}.mp4 -hide_banner'.format(infps,output_dir,width,hight,outfps,output_dir,output_filename))
+    osout = call('ffmpeg -y -r {} -i {}/output_temp.mp4 -strict -2 -vf scale={}:{} -strict -2 -c:v libx264 -preset ultrafast -r {} -qp 0 {}/{}.mp4 -hide_banner'.format(infps,output_dir,width,hight,outfps,output_dir,output_filename))
    
     osout = call('rm {}/{}.yuv'.format(output_dir,output_filename))
     osout = call('ffmpeg -y -i {}/{}.mp4 -vcodec rawvideo -pix_fmt yuv420p {}/{}.yuv'.format(output_dir,output_filename,output_dir,output_filename))

@@ -2,15 +2,15 @@
 # Script that concatenates all the files defined in concat_clips.txt
 
 output_dir="../vid/"
-input_dir="../vid/UCF_c02_g02_clips12/2parts/"
-output_filename="UCF_c02_g02_clips12_2parts"
+input_dir="../vid/HD_CIF/"
+output_filename="HD_W352_H240_fps4_vid9_r2"
 infps=24
-outfps=8
-W=320
-H=240
+outfps=4
+W=352 #1920
+H=240 #1080
 vidd=800
-ctmin=10
-ctmax=12
+ctmin=1000
+ctmax=1100
 
 
 python ./concatvid.py --input_dir=$input_dir --output_dir=$output_dir --output_filename=$output_filename --infps=$infps --outfps=$outfps --W=$W --H=$H --vidd=$vidd --ctmin=$ctmin --ctmax=$ctmax

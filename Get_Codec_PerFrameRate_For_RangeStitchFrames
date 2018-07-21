@@ -32,8 +32,12 @@ case $i in
     MaxPartitionDepth="${i#*=}"
     shift
     ;;
-    -stitch_frame=*|--stitch_frame=*)
-    stitch_frame="${i#*=}"
+    -first_stitch_frame=*|--first_stitch_frame=*)
+    first_stitch_frame="${i#*=}"
+    shift
+    ;;
+    -last_stitch_frame=*|--last_stitch_frame=*)
+    last_stitch_frame="${i#*=}"
     shift
     ;;
     -nf=*|--nf=*)
@@ -75,8 +79,8 @@ GOP=$FramesToBeEncoded
 
 if [[ ! -e "$path" ]]
 then
-mkdir $path
 echo $path
+mkdir $path
 fi
 
 #find . | xargs chmod 777
@@ -86,11 +90,28 @@ then
 opt="_"$opt
 fi
 
+stitch_frame=$first_stitch_frame
+
+while [ $stitch_frame -le $last_stitch_frame ]
+do
 HMSResults=$path"/RatePerFrame_"$fid"_fps"$fps"_QP"$QP"_rate"$rate"_MCU"$MaxCUSize"_Depth"$MaxPartitionDepth"_GOP"$GOP"_SF"$stitch_frame"_"$opt".dat"
 echo $HMSResults
 
 InputYUV="../vid/"$fid".yuv"
 InputMP4="../vid/"$fid".mp4"
+
+
+echo "Input File (YUV) = "$InputYUV
+echo "Input File (MP4) = "$InputMP4
+echo "Number of frames = GOP = "$FramesToBeEncoded
+echo "first_stitch_frame = "$first_stitch_frame
+echo "last_stitch_frame = "$last_stitch_frame
+echo "stitch_frame = "$stitch_frame
+echo "QP = "$QP
+echo "Rate = "$rate
+echo "fps = "$fps
+echo "MaxCUSize = "$MaxCUSize
+echo "MaxPartitionDepth = "$MaxPartitionDepth
 
 
 rm $HMSResults
@@ -115,21 +136,21 @@ else
 RateControl=1
 fi
 
-rm -rf "../vid/HMEncodedVideo.bin"
+rm -rf "HMEncodedVideo.bin"
 rm -rf encoder.log
 
-./HMS/bin/TAppEncoderStatic -c ./encoder_HMS.cfg -c ./encoder_HMS_GOP.cfg --InputFile=$InputYUV --SourceWidth=$W --SourceHeight=$H --SAO=0 --QP=$QP --FrameRate=$fps --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" --RateControl=$RateControl --TargetBitrate=$rate |& tee -a encoder.log
+./HMS/bin/TAppEncoderStatic -c ./encoder_HMS.cfg -c ./encoder_HMS_GOP.cfg --InputFile=$InputYUV --SourceWidth=$W --SourceHeight=$H --SAO=0 --QP=$QP --FrameRate=$fps --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="HMEncodedVideo.bin" --RateControl=$RateControl --TargetBitrate=$rate |& tee -a encoder.log
 
-file_size=`du -b "../vid/HMEncodedVideo.bin" | cut -f1`
+file_size=`du -b "HMEncodedVideo.bin" | cut -f1`
 echo "File Size (.bin) = "$file_size" Bytes" >> $HMSResults
 echo "" >> $HMSResults
 
-rm -rf "../vid/HMDecodedVideo_Stitching.yuv"
+rm -rf "HMDecodedVideo_Stitching.yuv"
 rm -rf decoder.log
 
-./HMS/bin/TAppDecoderStatic --BitstreamFile="../vid/HMEncodedVideo.bin" --ReconFile="../vid/HMDecodedVideo_Stitching.yuv" |& tee -a decoder.log
+./HMS/bin/TAppDecoderStatic --BitstreamFile="HMEncodedVideo.bin" --ReconFile="HMDecodedVideo_Stitching.yuv" |& tee -a decoder.log
 
-python ./Quality/measure.py  $InputYUV ../vid/HMDecodedVideo_Stitching.yuv $W $H >> $HMSResults 
+python ./Quality/measure.py  $InputYUV HMDecodedVideo_Stitching.yuv $W $H >> $HMSResults 
 
 ## Parsing the Number of frames, size of bitstream, and size of motion info from the $JMFrameStatsOrigFileName
 NumFrame=0
@@ -159,3 +180,5 @@ echo "Bit Rate = "$BitRate" kbps" >> $HMSResults
 rm temp.txt
 mv $HMSResults temp.txt
 cat temp.txt encoder.log >> $HMSResults
+stitch_frame=$((stitch_frame + 1))
+done

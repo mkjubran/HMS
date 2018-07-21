@@ -14,7 +14,7 @@ output_dir="../HMSResults_UCF_c02_g02_clips12"
 ## Target Bit Rate 
 opt=$vid
 qp=20;rate=50000;refa=32;refs=28;fps=8;fsr=1;mode=stitch;
-#./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
+./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt
 
 qp=20;rate=50000;refa=4;refs=0;fps=8;fsr=1;mode=normal;
 #./Run_HMS_HoldFixPredictRPS_Rate_InterRPS --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt

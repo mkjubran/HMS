@@ -70,7 +70,7 @@ if __name__ == '__main__':
         while ((starttime+clipslenInc)<=clipslenOrig[cnt]):
            clipname=inputvideofiles[cnt]
            #print("input_dir={},clipname={},starttime={},clipslen={},input_dir_cropped={},clipname={},cntInc={}").format(input_dir,clipname,str(datetime.timedelta(seconds=starttime)),str(datetime.timedelta(seconds=(starttime+clipslenInc))),output_dir,clipname.split('.')[0],cntInc)
-           osout = call('ffmpeg -y -i {}/{} -ss {}  -t {} {}/{}_split{}.avi'.format(input_dir,clipname,str(datetime.timedelta(seconds=starttime)),str(datetime.timedelta(seconds=(starttime+clipslenInc))),output_dir,clipname.split('.')[0],cntInc))
+           osout = call('ffmpeg -y -i {}/{} -ss {}  -t {} -c:v libx264 -crf 0 {}/{}_split{}.avi'.format(input_dir,clipname,str(datetime.timedelta(seconds=starttime)),str(datetime.timedelta(seconds=(starttime+clipslenInc))),output_dir,clipname.split('.')[0],cntInc))
            starttime=starttime+clipslenInc
            cntInc=cntInc+1
            

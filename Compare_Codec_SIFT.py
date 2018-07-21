@@ -100,21 +100,23 @@ if __name__ == '__main__':
    lwindissimNormplot=[1 if _ in lwindissimNorm else 0 for _ in fcodec_FNum_Rate_PSNR[:,0]]
 ######### Plotting   
    plt.figure()
-   plt.subplot(4, 1, 1)
+   plt.subplot(2, 1, 1)
    plt.plot(range(len(fcodec_FNum_Rate_PSNR[:,0])),lwindownSampledintplot,"-r*")
-   plt.subplot(4, 1, 2)
+   plt.xlabel('Frame Number')
+   plt.subplot(2, 1, 2)
    plt.plot(range(len(fcodec_FNum_Rate_PSNR[:,0])),lwinBeforedownSampledintplot,"-b*")
+   plt.xlabel('Frame Number')
 
    plt.figure()
    plt.subplot(2, 1, 1)
-   plt.plot(fcodec_FNum_Rate_PSNR[:,0],fcodec_FNum_Rate_PSNR[:,1],"-ro")
-   plt.legend(['fn1'])
+   plt.plot(fcodec_FNum_Rate_PSNR[:,0],fcodec_FNum_Rate_PSNR[:,1],"ro")
+   plt.legend(['fcodec'])
    plt.xlabel('Frame Number')
    plt.ylabel('Frame Size (kbits)')
 
 
    plt.subplot(2, 1, 2)
-   plt.plot(fcodec_FNum_Rate_PSNR[:,0],fcodec_FNum_Rate_PSNR[:,2],"-ro")
+   plt.plot(fcodec_FNum_Rate_PSNR[:,0],fcodec_FNum_Rate_PSNR[:,2],"ro")
    plt.legend(['fcodec'])
    plt.xlabel('Frame Number')
    plt.ylabel('PSNR (dB)')
