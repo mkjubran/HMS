@@ -3,12 +3,12 @@
 
 output_dir="../vid/"
 input_dir="../vid/HD_CIF/"
-output_filename="HD_W352_H240_fps4_vid9_r2"
+output_filename="HD_W352_H288_fps4_vid4_r2"
 infps=24
 outfps=4
 W=352 #1920
-H=240 #1080
-vidd=800
+H=288 #1080
+vidd=8000
 ctmin=1000
 ctmax=1100
 

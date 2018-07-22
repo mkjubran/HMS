@@ -97,8 +97,8 @@ do
 HMSResults=$path"/RatePerFrame_"$fid"_fps"$fps"_QP"$QP"_rate"$rate"_MCU"$MaxCUSize"_Depth"$MaxPartitionDepth"_GOP"$GOP"_SF"$stitch_frame"_"$opt".dat"
 echo $HMSResults
 
-InputYUV="../vid/"$fid".yuv"
-InputMP4="../vid/"$fid".mp4"
+InputYUV="./"$fid".yuv"
+InputMP4="./"$fid".mp4"
 
 
 echo "Input File (YUV) = "$InputYUV

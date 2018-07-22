@@ -3,22 +3,25 @@ clear
 cd ..
 
 # must edit
-fid="UCF_c02_g02_clips02_r10"
+fid="HD_W352_H288_fps4_vid4_r2"
 QP=20
 MaxCUSize=16
 MaxPartitionDepth=2
-FramesToBeEncoded=840
-FramesToBeStitched=2
+FramesToBeEncoded=40
+FramesToBeStitched=4
 fps=8
 path="../HMSResultsPerFrame/"
 W=320
-H=240
+H=288
 rate=0
 opt=""
 #%%%%%
-N=1; 				#Number of Parallel Processes 
+N=2; 				#Number of Parallel Processes 
 #%%%%
 
+cp ./vid/$fid.yuv ./HMS/. &
+cp ./vid/$fid.mp4 ./HMS/. &
+wait
 cnt=0;
 Inc=$((FramesToBeStitched/N));
 Inc2=$((FramesToBeStitched%N));
@@ -39,6 +42,7 @@ then
 echo "cann't remove HMSM$i to start a fresh coding, try to remove it and then run the code again"
 exit -1; 
 fi
+
 
 cp -r HMS HMS$i &
 i=$((i+1));
@@ -70,3 +74,4 @@ i=$((i+1));
 done
 wait
 
+rm ./HMS/$fid.yuv
