@@ -7,8 +7,9 @@ fid="HD_W352_H288_fps4_vid4_r2"
 QP=20
 MaxCUSize=16
 MaxPartitionDepth=2
-FramesToBeEncoded=40
-FramesToBeStitched=4
+FramesToBeEncoded=2100
+FramesToBeStitched_start=30
+FramesToBeStitched_end=90
 fps=8
 path="../HMSResultsPerFrame/"
 W=320
@@ -16,13 +17,15 @@ H=288
 rate=0
 opt=""
 #%%%%%
-N=2; 				#Number of Parallel Processes 
+N=5; 				#Number of Parallel Processes 
 #%%%%
+
+FramesToBeStitched_end=$((FramesToBeStitched_end-FramesToBeStitched_start+1))
 
 cp ./vid/$fid.yuv ./HMS/. &
 cp ./vid/$fid.mp4 ./HMS/. &
 wait
-cnt=0;
+cnt=$FramesToBeStitched_start;
 Inc=$((FramesToBeStitched/N));
 Inc2=$((FramesToBeStitched%N));
 if [ $Inc2 -gt 0 ];
