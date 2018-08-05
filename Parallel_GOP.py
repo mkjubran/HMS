@@ -6,6 +6,9 @@ import os, sys, subprocess, pdb
 import argparse
 import ConfigParser
 
+INF = 999
+
+##################################################################
 ## Parse configuration Parameters from the configuration file
 def main(argv=None):
     # Do argv default this way, as doing it in the functional
@@ -45,22 +48,66 @@ def main(argv=None):
     args = parser.parse_args(remaining_argv)
     return(args)
 
+##################################################################
+## read frame numbers from Rank List File
+def read_ranklist():
+   ## read priority list
+   with open(RankListFile) as f:
+       FNums = f.readlines()
+   f.close()
+   iFNums=map(int, FNums)
+
+   ## get total number of frames
+   NumFrames=round(len(iFNums))
+   NumFrames=int(NumFrames)
+   return(iFNums,NumFrames)
+
+##################################################################
+## convert iFNums from vector to matrix such that each colomn is a separate GOP
+def Create_Parallel_GOP_Matrix():
+   Parallel_GOP_Matrix=np.ones((GOP,int(NumFrames/GOP)), dtype=int)*INF
+   num_ref_pics_active_Stitching_vec=np.ones((int(NumFrames/GOP)), dtype=int)*0
+   for cnt1 in range(int(NumFrames/GOP)):
+      for cnt2 in range(len(ref_pics_active_Stitching)):
+         if ref_pics_active_Stitching[cnt2]<((cnt1+1)*GOP):
+            Parallel_GOP_Matrix[cnt2,cnt1]=ref_pics_active_Stitching[cnt2]
+            num_ref_pics_active_Stitching_vec[cnt1]=cnt2
+   return(Parallel_GOP_Matrix,num_ref_pics_active_Stitching_vec)
+
+
+##################################################################
+## Main Body
 if __name__ == "__main__":
     args=main()
 
     ##Inputs
     RankListFile=args.ranklistfile;
-    ref_pics_active_Max=args.ref_pics_active_max;
-    ref_pics_active_Stitching=args.ref_pics_active_stitching;
+    num_ref_pics_active_Max=int(args.num_ref_pics_active_max);
+    num_ref_pics_active_Stitching=int(args.num_ref_pics_active_stitching);
     mode=args.mode;
-    fps=args.fps;
-    
-    print('ref_pics_active_Max={}, ref_pics_active_Stitching={}').format(ref_pics_active_Max,ref_pics_active_Stitching) 
+    fps=int(args.fps);
+    GOP=int(args.gop);
     fsr=fps
+
+    if num_ref_pics_active_Stitching>num_ref_pics_active_Max:
+        num_ref_pics_active_Stitching=num_ref_pics_active_Max
+    
+    if GOP<(2*num_ref_pics_active_Max):
+        GOP=2*num_ref_pics_active_Max
+
+    (iFNums,NumFrames)=read_ranklist();
+    iFNums=np.array(iFNums)
+    ref_pics_active_Stitching=iFNums[0:(num_ref_pics_active_Stitching-1)]
+    ref_pics_active_Stitching=np.sort(ref_pics_active_Stitching)
+    print(iFNums)
+    print(ref_pics_active_Stitching)
+    (Parallel_GOP_Matrix,num_ref_pics_active_Stitching_vec)=Create_Parallel_GOP_Matrix();
+    print(Parallel_GOP_Matrix)
+    print(num_ref_pics_active_Stitching_vec)
+
   
 '''
-if ref_pics_active_Stitching>ref_pics_active_Max:
-   ref_pics_active_Stitching=ref_pics_active_Max
+
 
 def Build_encoding_struct_GOP_1():
 ## Building encoding structure for GOP=-1
