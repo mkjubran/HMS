@@ -63,7 +63,7 @@ def read_ranklist():
    return(iFNums,NumFrames)
 
 ##################################################################
-## convert iFNums from vector to matrix such that each colomn is a separate GOP
+## convert iFNums from vector to matrix such that each row is a separate GOP
 def Create_Distributed_GOP_Matrix():
    NotAlloc_Frames=np.arange(0,NumFrames)
    for val in ref_pics_active_Stitching:
@@ -71,7 +71,6 @@ def Create_Distributed_GOP_Matrix():
       NotAlloc_Frames=np.delete(NotAlloc_Frames,idx)
    
    Distributed_GOP_Matrix=np.ones((GOP,0), dtype=int)
-   print(np.shape(Distributed_GOP_Matrix)) 
    while len(NotAlloc_Frames)>0:
        Distributed_GOP_Vec=np.empty(0)
        ref_pics_active_Stitching_temp=ref_pics_active_Stitching
@@ -90,33 +89,7 @@ def Create_Distributed_GOP_Matrix():
        if len(Distributed_GOP_Vec)==GOP:
               Distributed_GOP_Matrix=np.append(Distributed_GOP_Matrix,Distributed_GOP_Vec)
    Distributed_GOP_Matrix=np.reshape(Distributed_GOP_Matrix,(int(len(Distributed_GOP_Matrix)/GOP),GOP))
-   print(Distributed_GOP_Matrix)
-   
-
-
-   Distributed_GOP_Matrix=np.ones((GOP,), dtype=int)*INF
-   #num_ref_pics_active_Stitching_vec=np.ones((int(NumFrames/GOP)), dtype=int)*0
-   
-   
-   #cnt_ref=0
-   #cnt_NotAlloc=0
-   #if ref_pics_active_Stitching[0]<NotAlloc_Frames[0]:
-   #   Distributed_GOP_Vec=ref_pics_active_Stitching[0]
-   #   cnt_ref=cnt_ref+1
-   #else:
-   #   Distributed_GOP_Vec=NotAlloc_Frames[0]
-   #   cnt_NotAlloc=cnt_NotAlloc+1
-   #print(Distributed_GOP_Vec)
-   #while len(Distributed_GOP_Vec)<GOP
-   #   if 
-
-   #for cnt1 in range(int(NumFrames/GOP)):
-   #   for cnt2 in range(len(ref_pics_active_Stitching)):
-   #      if ref_pics_active_Stitching[cnt2]<((cnt1+1)*GOP):
-   #         Distributed_GOP_Matrix[cnt2,cnt1]=ref_pics_active_Stitching[cnt2]
-   #         num_ref_pics_active_Stitching_vec[cnt1]=cnt2
-   #return(Distributed_GOP_Matrix,num_ref_pics_active_Stitching_vec)
-   print(Distributed_GOP_Matrix)
+   return(Distributed_GOP_Matrix)
 
 ##################################################################
 ## Main Body
@@ -140,11 +113,12 @@ if __name__ == "__main__":
 
     (iFNums,NumFrames)=read_ranklist();
     iFNums=np.array(iFNums)
-    ref_pics_active_Stitching=iFNums[0:(num_ref_pics_active_Stitching-1)]
+    ref_pics_active_Stitching=iFNums[0:(num_ref_pics_active_Stitching)]
     ref_pics_active_Stitching=np.sort(ref_pics_active_Stitching)
     print(iFNums)
     print(ref_pics_active_Stitching)
-    Create_Distributed_GOP_Matrix();
+    Distributed_GOP_Matrix=Create_Distributed_GOP_Matrix();
+    print(Distributed_GOP_Matrix)
     #(Distributed_GOP_Matrix,num_ref_pics_active_Stitching_vec)=Create_Distributed_GOP_Matrix();
     #print(Distributed_GOP_Matrix)
     #print(num_ref_pics_active_Stitching_vec)
