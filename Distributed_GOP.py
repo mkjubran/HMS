@@ -91,6 +91,31 @@ def Create_Distributed_GOP_Matrix():
    Distributed_GOP_Matrix=np.reshape(Distributed_GOP_Matrix,(int(len(Distributed_GOP_Matrix)/GOP),GOP))
    return(Distributed_GOP_Matrix)
 
+def call(cmd):
+    # proc = subprocess.Popen(["cat", "/etc/services"], stdout=subprocess.PIPE, shell=True)
+    proc = subprocess.Popen(cmd, \
+                   stdout=subprocess.PIPE, shell=True)
+    (out, err) = proc.communicate()
+    return (out, err)
+
+def export_frames(fn):
+    osout = call('rm -rf ../Split_Video')
+    osout = call('mkdir ../Split_Video')
+    osout = call('mkdir ../Split_Video/pngall')
+    osout = call('ffmpeg -r 1 -i {} -r 1 -qp 0 ../Split_Video/pngall/%d.png'.format(fn))
+    return 
+
+
+def Split_Video_GOP(Distributed_GOP_Matrix):
+    for cnt_row in range(np.shape(Distributed_GOP_Matrix)[0]):
+        osout = call('rm -rf ../Split_Video/Part{}'.format(cnt_row))
+        osout = call('mkdir ../Split_Video/Part{}'.format(cnt_row))
+        for cnt_col in range(np.shape(Distributed_GOP_Matrix)[1]):
+            osout = call('cp -rf ../Split_Video/pngall/{}.png ../Split_Video/Part{}/{}.png'.format(int(Distributed_GOP_Matrix[cnt_row,cnt_col]+1),cnt_row,int(cnt_col+1)))
+        osout = call('ffmpeg -start_number 0 -i ../Split_Video/Part{}/%d.png -c:v libx264 -vf "fps=25,format=yuv420p" -qp 0 ../Split_Video/Part{}/Part{}.mp4'.format(cnt_row,cnt_row,cnt_row))
+        osout = call('ffmpeg -y -i ../Split_Video/Part{}/Part{}.mp4 -vcodec rawvideo -pix_fmt yuv420p -qp 0 ../Split_Video/Part{}/Part{}.yuv'.format(cnt_row,cnt_row,cnt_row,cnt_row))
+    return
+
 ##################################################################
 ## Main Body
 if __name__ == "__main__":
@@ -100,6 +125,8 @@ if __name__ == "__main__":
     RankListFile=args.ranklistfile;
     num_ref_pics_active_Max=int(args.num_ref_pics_active_max);
     num_ref_pics_active_Stitching=int(args.num_ref_pics_active_stitching);
+    vid=args.vid;
+
     mode=args.mode;
     fps=int(args.fps);
     GOP=int(args.gop);
@@ -123,7 +150,8 @@ if __name__ == "__main__":
     #print(Distributed_GOP_Matrix)
     #print(num_ref_pics_active_Stitching_vec)
 
-  
+    export_frames(vid)
+    Split_Video_GOP(Distributed_GOP_Matrix)
 '''
 
 
