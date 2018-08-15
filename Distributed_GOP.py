@@ -71,9 +71,11 @@ def Create_Distributed_GOP_Matrix():
       NotAlloc_Frames=np.delete(NotAlloc_Frames,idx)
    
    Distributed_GOP_Matrix=np.ones((GOP,0), dtype=int)
+   ref_pics_in_Distributed_GOP_Matrix=np.empty(0)
    while len(NotAlloc_Frames)>0:
        Distributed_GOP_Vec=np.empty(0)
        ref_pics_active_Stitching_temp=ref_pics_active_Stitching
+       ref_pics_added=0;
        while len(Distributed_GOP_Vec)<GOP:
           if len(NotAlloc_Frames)==0:
               break
@@ -83,13 +85,15 @@ def Create_Distributed_GOP_Matrix():
           elif ref_pics_active_Stitching_temp[0]<NotAlloc_Frames[0]: 
               Distributed_GOP_Vec=np.append(Distributed_GOP_Vec,ref_pics_active_Stitching_temp[0])
               ref_pics_active_Stitching_temp=np.delete(ref_pics_active_Stitching_temp,0)
+              ref_pics_added=ref_pics_added+1
           else:
               Distributed_GOP_Vec=np.append(Distributed_GOP_Vec,NotAlloc_Frames[0])
               NotAlloc_Frames=np.delete(NotAlloc_Frames,0)
        if len(Distributed_GOP_Vec)==GOP:
               Distributed_GOP_Matrix=np.append(Distributed_GOP_Matrix,Distributed_GOP_Vec)
+       ref_pics_in_Distributed_GOP_Matrix=np.append(ref_pics_in_Distributed_GOP_Matrix,ref_pics_added)
    Distributed_GOP_Matrix=np.reshape(Distributed_GOP_Matrix,(int(len(Distributed_GOP_Matrix)/GOP),GOP))
-   return(Distributed_GOP_Matrix)
+   return(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
 
 def call(cmd):
     # proc = subprocess.Popen(["cat", "/etc/services"], stdout=subprocess.PIPE, shell=True)
@@ -116,6 +120,87 @@ def Split_Video_GOP(Distributed_GOP_Matrix):
         osout = call('ffmpeg -y -i ../Split_Video/Part{}/Part{}.mp4 -vcodec rawvideo -pix_fmt yuv420p -qp 0 ../Split_Video/Part{}/Part{}.yuv'.format(cnt_row,cnt_row,cnt_row,cnt_row))
     return
 
+
+def Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix):
+        Pcnt=1;
+    	Abs_ref_pics_Stitching_array_Distributed=ref_pics_active_Stitching[0:int(ref_pics_in_Distributed_GOP_Matrix[Pcnt])]
+    	#num_ref_pics_active_Stitching_Distributed=len(Abs_ref_pics_Stitching_array_Distributed)
+        num_ref_pics_active_Stitching_Distributed=len(ref_pics_active_Stitching)
+    	NumFrames_Distributed=GOP
+    	num_ref_pics_active_Max_Distributed=num_ref_pics_active_Max
+        
+        ref_pics_Stitching_array_Distributed=[];
+        relative_ref_value=0
+        if Pcnt>0:
+           for Abs_ref_value in Abs_ref_pics_Stitching_array_Distributed:
+              if Abs_ref_value <= Distributed_GOP_Matrix[Pcnt-1][GOP-1]:
+                  ref_pics_Stitching_array_Distributed=np.append(ref_pics_Stitching_array_Distributed,relative_ref_value)
+                  relative_ref_value=relative_ref_value+1
+              else:
+                  ref_pics_Stitching_array_Distributed=np.append(ref_pics_Stitching_array_Distributed,Abs_ref_value)
+        else:
+           ref_pics_Stitching_array_Distributed=Abs_ref_pics_Stitching_array_Distributed
+        
+        ref_pics_Stitching_array_Distributed=ref_pics_Stitching_array_Distributed.astype(int)
+        print('Stitching Frames in the Ref Picture set: Global Frame Values = {}').format(Abs_ref_pics_Stitching_array_Distributed)
+        print('Stitching Frames in the Ref Picture set: Relative to this GOP = {}').format(ref_pics_Stitching_array_Distributed)
+
+
+    	##write config files header
+    	fid = open('encoder_HMS_GOP_'+str(Pcnt)+'.cfg','w')
+    	print >> fid, '#======== Coding Structure ============='
+    	print >> fid, 'IntraPeriod                   : -1           # Period of I-Frame ( -1 = only first)'
+    	print >> fid, 'DecodingRefreshType           : 2           # Random Accesss 0:none, 1:CRA, 2:IDR, 3:Recovery Point SEI'
+    	print >> fid, 'GOPSize                       : '+str(GOP)+'           # GOP Size (number of B slice = GOPSize-1)'
+    	print >> fid, 'ReWriteParamSetsFlag          : 1           # Write parameter sets with every IRAP'
+    	'#        Type POC QPoffset QPOffsetModelOff QPOffsetModelScale CbQPoffset CrQPoffset QPfactor tcOffsetDiv2 betaOffsetDiv2 temporal_id #ref_pics_active #ref_pics reference pictures     predict     deltaRPS' '#ref_idcs reference idcs'
+    	print >> fid,''
+      
+        fid.write('#Stitching Frames in the Ref Picture set: Global Frame Values = %s\n' % Abs_ref_pics_Stitching_array_Distributed)
+        fid.write('#Stitching Frames in the Ref Picture set: Relative to this GOP = %s\n' % ref_pics_Stitching_array_Distributed)
+    	print >> fid,''
+
+    	## Buidling encoding structure for Stitching mode
+    	ref_pics_stitch_to_use_Distributed=[]
+    	if 0 in ref_pics_Stitching_array_Distributed:
+	    if num_ref_pics_active_Stitching_Distributed>0:
+	        ref_pics_stitch_to_use_Distributed=np.append(ref_pics_stitch_to_use_Distributed,0)
+
+    	ref_pics_Distributed=[]
+    	for cnt in range(1,NumFrames_Distributed):
+	   ref_pics_notstitch_to_use_Distributed=[]
+	   ref_pics_old_Distributed=ref_pics_Distributed
+	   ref_pics_Distributed=[]
+	   reference_idcs_Distributed=[]
+	   cnt2=cnt-1
+	   ref_pics_Distributed=np.append(ref_pics_notstitch_to_use_Distributed,ref_pics_stitch_to_use_Distributed)
+           #print(ref_pics_Distributed)
+	   while len(ref_pics_notstitch_to_use_Distributed)<num_ref_pics_active_Max_Distributed-num_ref_pics_active_Stitching_Distributed:
+	      ref_pics_notstitch_to_use_Distributed=np.append(ref_pics_notstitch_to_use_Distributed,cnt2)
+	      ref_pics_Distributed=np.append(ref_pics_notstitch_to_use_Distributed,ref_pics_stitch_to_use_Distributed)
+	      ref_pics_Distributed=np.unique(ref_pics_Distributed)
+	      cnt2=cnt2-1
+	   ref_pics_Distributed=np.sort(ref_pics_Distributed)
+	   ref_pics_Distributed=ref_pics_Distributed[ref_pics_Distributed>=0]
+	   ref_pics_Distributed=ref_pics_Distributed[::-1]
+           #print(ref_pics_Distributed)
+
+	   if cnt in ref_pics_Stitching_array_Distributed:
+	      if len(ref_pics_stitch_to_use_Distributed) < num_ref_pics_active_Stitching_Distributed: 
+	         ref_pics_stitch_to_use_Distributed=np.append(ref_pics_stitch_to_use_Distributed,cnt)
+	
+	   GOPLine='Frame' + str(cnt) + ': P '+ str(cnt) +' 0 -6.5 0.2590 0 0 1.0 0 0 0 '+ str(len(ref_pics_Distributed)) + ' ' + str(len(ref_pics_Distributed))
+	   for cnt1 in range(len(ref_pics_Distributed)):
+	      GOPLine=GOPLine+' '+str(int(ref_pics_Distributed[cnt1]-cnt))
+	   if cnt == 1:
+	      GOPLine=GOPLine+' 0'
+	   else:	
+	      GOPLine=GOPLine+' 2 0'
+			
+           print >> fid, GOPLine
+	
+        fid.close()
+
 ##################################################################
 ## Main Body
 if __name__ == "__main__":
@@ -132,6 +217,10 @@ if __name__ == "__main__":
     GOP=int(args.gop);
     fsr=fps
 
+    if GOP%2!=0:
+        GOP=int(GOP/2) * 2
+
+
     if num_ref_pics_active_Stitching>num_ref_pics_active_Max:
         num_ref_pics_active_Stitching=num_ref_pics_active_Max
     
@@ -142,135 +231,14 @@ if __name__ == "__main__":
     iFNums=np.array(iFNums)
     ref_pics_active_Stitching=iFNums[0:(num_ref_pics_active_Stitching)]
     ref_pics_active_Stitching=np.sort(ref_pics_active_Stitching)
-    print(iFNums)
-    print(ref_pics_active_Stitching)
-    Distributed_GOP_Matrix=Create_Distributed_GOP_Matrix();
-    print(Distributed_GOP_Matrix)
-    #(Distributed_GOP_Matrix,num_ref_pics_active_Stitching_vec)=Create_Distributed_GOP_Matrix();
+    
+    (Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)=Create_Distributed_GOP_Matrix();
+    #export_frames(vid)
+    #Split_Video_GOP(Distributed_GOP_Matrix)
     #print(Distributed_GOP_Matrix)
-    #print(num_ref_pics_active_Stitching_vec)
+    #print(ref_pics_active_Stitching)
+    #print(ref_pics_in_Distributed_GOP_Matrix)
 
-    export_frames(vid)
-    Split_Video_GOP(Distributed_GOP_Matrix)
-'''
+    Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
 
-
-def Build_encoding_struct_GOP_1():
-## Building encoding structure for GOP=-1
-	cnt=0
-	GOPLine=''
-	cnt3=-1
-	NumRefTemp=ref_pics_active_Max
-	GOPLine='Frame1: P 1 0 -6.5 0.2590 0 0 1.0 0 0 0 '+ str(ref_pics_active_Max) + ' ' + str(ref_pics_active_Max)
-	for cnt1 in range(NumRefTemp):
-		if cnt1>(NumRefTemp-ref_pics_active_Stitching-1):
-                        print((ref_pics_Stitching_array[cnt1-(NumRefTemp-ref_pics_active_Stitching)]-iFNums_array[cnt]))
-			GOPLine=GOPLine+' '+str(ref_pics_Stitching_array[cnt1-(NumRefTemp-ref_pics_active_Stitching)]-iFNums_array[cnt])
-		else:
-			GOPLine=GOPLine+' '+str(cnt3)
-			cnt3=cnt3-1	
-
-	GOPLine=GOPLine+' 0'
-	print >> fid, GOPLine
-	f.close()
-
-def Build_encoding_struct_stitch():
-	## Buidling encoding structure for Stitching mode
-	ref_pics_stitch_to_use=[]
-	if 0 in ref_pics_Stitching_array:
-		if ref_pics_active_Stitching>0:
-			ref_pics_stitch_to_use=np.append(ref_pics_stitch_to_use,0)
-
-	ref_pics=[]
-	for cnt in range(1,NumFrames):
-		ref_pics_notstitch_to_use=[]
-		ref_pics_old=ref_pics
-		ref_pics=[]
-		reference_idcs=[]
-		cnt2=cnt-1
-		ref_pics=np.append(ref_pics_notstitch_to_use,ref_pics_stitch_to_use)
-		while len(ref_pics_notstitch_to_use)<ref_pics_active_Max-ref_pics_active_Stitching:
-			ref_pics_notstitch_to_use=np.append(ref_pics_notstitch_to_use,cnt2)
-			ref_pics=np.append(ref_pics_notstitch_to_use,ref_pics_stitch_to_use)
-			ref_pics=np.unique(ref_pics)
-			cnt2=cnt2-1
-		ref_pics=np.sort(ref_pics)
-		ref_pics=ref_pics[ref_pics>=0]
-		ref_pics=ref_pics[::-1]
-
-		if cnt in ref_pics_Stitching_array:
-			if len(ref_pics_stitch_to_use) < ref_pics_active_Stitching: 
-				ref_pics_stitch_to_use=np.append(ref_pics_stitch_to_use,cnt)
-	
-		GOPLine='Frame' + str(cnt) + ': P '+ str(cnt) +' 0 -6.5 0.2590 0 0 1.0 0 0 0 '+ str(len(ref_pics)) + ' ' + str(len(ref_pics))
-		for cnt1 in range(len(ref_pics)):
-			GOPLine=GOPLine+' '+str(int(ref_pics[cnt1]-cnt))
-	
-		if cnt == 1:
-			GOPLine=GOPLine+' 0'
-		else:	
-			GOPLine=GOPLine+' 2 0'
-			
-		print >> fid, GOPLine
-	
-	f.close()
-
-if __name__ == '__main__':
-
-   ## read priority list
-   with open(args.ranklist) as f:
-       FNums = f.readlines()
-   f.close()
-   iFNums=map(int, FNums)
-
-   ## get total number of frames
-   NumFrames=round(len(iFNums))
-   NumFrames=int(NumFrames)
-
-   ## set GOP value based on mode type
-   if (mode == "stitching") or (mode == "Stitching") or (mode == "stitch") or (mode == "Stitch"):
-   	GOP=NumFrames
-   	if GOP%2==0:
-   		GOP=GOP-2
-	else:
-		GOP=int(GOP/2) * 2
-   else:
-	GOP=1
-        ref_pics_active_Stitching=0
-
-   ##write config files header
-   fid = open('encoder_HMS_GOP.cfg','w')
-   print >> fid, '#======== Coding Structure ============='
-   print >> fid, 'IntraPeriod                   : -1           # Period of I-Frame ( -1 = only first)'
-   print >> fid, 'DecodingRefreshType           : 2           # Random Accesss 0:none, 1:CRA, 2:IDR, 3:Recovery Point SEI'
-   print >> fid, 'GOPSize                       : '+str(GOP)+'           # GOP Size (number of B slice = GOPSize-1)'
-   print >> fid, 'ReWriteParamSetsFlag          : 1           # Write parameter sets with every IRAP'
-   '#        Type POC QPoffset QPOffsetModelOff QPOffsetModelScale CbQPoffset CrQPoffset QPfactor tcOffsetDiv2 betaOffsetDiv2 temporal_id #ref_pics_active #ref_pics reference pictures     predict     deltaRPS' '#ref_idcs reference idcs'
-   print >> fid,''
-
-   ## Produce iFNums_array2 [stitching frames ordered; other frames ordered]
-   iFNums_array = np.array(iFNums)
-   iFNums_array=iFNums_array.clip(0, 999999999)
-   indexes = np.unique(iFNums_array, return_index=True)[1]
-   iFNums_array=[iFNums_array[index] for index in sorted(indexes)]
-   iFNums_array=np.array(iFNums_array)
-
-   ref_pics_Stitching_array=iFNums_array[0:ref_pics_active_Stitching]
-   ref_pics_RemovedStitching_array=iFNums_array[ref_pics_active_Stitching:NumFrames]
-
-   ref_pics_RemovedStitching_array=np.array(range(0,NumFrames))
-   index=np.where(np.isin(ref_pics_RemovedStitching_array,ref_pics_Stitching_array))
-   ref_pics_RemovedStitching_array=np.delete(ref_pics_RemovedStitching_array,index)
-
-   ref_pics_RemovedStitching_array.sort()
-   iFNums_array2=np.concatenate((ref_pics_Stitching_array,ref_pics_RemovedStitching_array), axis=0) #Stitching Frames + Ordered remaining Frames
-   #print(iFNums_array2)
-
-   ## Write GOP structure to config file
-
-   if GOP == 1:
-      Build_encoding_struct_GOP_1()
-   else:
-      Build_encoding_struct_stitch()
-'''
 

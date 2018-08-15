@@ -65,8 +65,8 @@ def Build_encoding_struct_GOP_1():
 def Build_encoding_struct_stitch():
 	## Buidling encoding structure for Stitching mode
 	ref_pics_stitch_to_use=[]
-	if 0 in ref_pics_Stitching_array:
-		if ref_pics_active_Stitching>0:
+	if 0 in num_ref_pics_Stitching_array:
+		if num_ref_pics_active_Stitching>0:
 			ref_pics_stitch_to_use=np.append(ref_pics_stitch_to_use,0)
 
 	ref_pics=[]
