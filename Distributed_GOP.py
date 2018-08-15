@@ -122,7 +122,8 @@ def Split_Video_GOP(Distributed_GOP_Matrix):
 
 
 def Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix):
-        Pcnt=1;
+    for Pcnt in range(np.shape(Distributed_GOP_Matrix)[0]):
+        print('GOP#{}'.format(Pcnt))
     	Abs_ref_pics_Stitching_array_Distributed=ref_pics_active_Stitching[0:int(ref_pics_in_Distributed_GOP_Matrix[Pcnt])]
     	#num_ref_pics_active_Stitching_Distributed=len(Abs_ref_pics_Stitching_array_Distributed)
         num_ref_pics_active_Stitching_Distributed=len(ref_pics_active_Stitching)
@@ -147,7 +148,7 @@ def Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Mat
 
 
     	##write config files header
-    	fid = open('encoder_HMS_GOP_'+str(Pcnt)+'.cfg','w')
+    	fid = open('../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg'.format(Pcnt,Pcnt),'w')
     	print >> fid, '#======== Coding Structure ============='
     	print >> fid, 'IntraPeriod                   : -1           # Period of I-Frame ( -1 = only first)'
     	print >> fid, 'DecodingRefreshType           : 2           # Random Accesss 0:none, 1:CRA, 2:IDR, 3:Recovery Point SEI'
