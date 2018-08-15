@@ -97,8 +97,9 @@ def Create_Distributed_GOP_Matrix():
 
 def call(cmd):
     # proc = subprocess.Popen(["cat", "/etc/services"], stdout=subprocess.PIPE, shell=True)
-    proc = subprocess.Popen(cmd, \
-                   stdout=subprocess.PIPE, shell=True)
+    #proc = subprocess.Popen(cmd, \
+    #               stdout=subprocess.PIPE, shell=True)
+    proc = subprocess.Popen(cmd,stdout=subprocess.PIPE, shell=True)
     (out, err) = proc.communicate()
     return (out, err)
 
@@ -168,7 +169,7 @@ def Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Mat
 	        ref_pics_stitch_to_use_Distributed=np.append(ref_pics_stitch_to_use_Distributed,0)
 
     	ref_pics_Distributed=[]
-    	for cnt in range(1,NumFrames_Distributed):
+    	for cnt in range(1,NumFrames_Distributed+1):
 	   ref_pics_notstitch_to_use_Distributed=[]
 	   ref_pics_old_Distributed=ref_pics_Distributed
 	   ref_pics_Distributed=[]
@@ -199,8 +200,26 @@ def Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Mat
 	      GOPLine=GOPLine+' 2 0'
 			
            print >> fid, GOPLine
-	
+
+	fid.write('\n#Note: The number of frames in the particitioned video is equal to GOP (Frame#0, Frame#1, .... Frame#(GOP-1)) and thus the line Frmae#GOP in this file will not be used to encode any frame, it is added to comply with the required format of HEVC GOP structure')
         fid.close()
+
+
+def Encoder_decode_video(Distributed_GOP_Matrix):
+    
+    #for Pcnt in range(np.shape(Distributed_GOP_Matrix)[0]):
+    for Pcnt in range(2):
+         InputYUV='../Split_Video/Part{}/Part{}.yuv'.format(Pcnt,Pcnt)
+         BitstreamFile='../Split_Video/Part{}/HMEncodedVideo.bin'.format(Pcnt)
+         osout = call('rm -rf ../Split_Video/Part{}/HMEncodedVideo.bin'.format(Pcnt))
+         osout = call('rm -rf ../Split_Video/Part{}/encoder.log'.format(Pcnt))
+         osout = call('cp -f ./encoder_HMS.cfg ../Split_Video/Part{}/encoder_HMS.cfg'.format(Pcnt))
+         
+         print('./HMS/bin/TAppEncoderStatic -c ../Split_Video/Part{}/encoder_HMS.cfg -c ../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={}'.format(Pcnt,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
+    
+         osout = call('./HMS/bin/TAppEncoderStatic -c ../Split_Video/Part{}/encoder_HMS.cfg -c ../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={}'.format(Pcnt,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
+         print(osout)
+##         osout = call('./HMS/bin/TAppEncoderStatic -c ../Split_Video/Part{}/encoder_HMS.cfg -c ../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={} |& tee -a encoder.log'.format(Pcnt,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
 
 ##################################################################
 ## Main Body
@@ -216,11 +235,20 @@ if __name__ == "__main__":
     mode=args.mode;
     fps=int(args.fps);
     GOP=int(args.gop);
+    Width=int(args.w);
+    Hight=int(args.h);
+    QP=int(args.qp);
+    MaxCUSize=int(args.maxcusize);
+    MaxPartitionDepth=int(args.maxpartitiondepth);
+    RateControl=int(args.ratecontrol);
+    rate=int(args.rate);
+
+
+    
     fsr=fps
 
     if GOP%2!=0:
         GOP=int(GOP/2) * 2
-
 
     if num_ref_pics_active_Stitching>num_ref_pics_active_Max:
         num_ref_pics_active_Stitching=num_ref_pics_active_Max
@@ -236,10 +264,10 @@ if __name__ == "__main__":
     (Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)=Create_Distributed_GOP_Matrix();
     #export_frames(vid)
     #Split_Video_GOP(Distributed_GOP_Matrix)
-    #print(Distributed_GOP_Matrix)
+    print(Distributed_GOP_Matrix)
     #print(ref_pics_active_Stitching)
     #print(ref_pics_in_Distributed_GOP_Matrix)
 
     Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
-
+    Encoder_decode_video(Distributed_GOP_Matrix)
 
