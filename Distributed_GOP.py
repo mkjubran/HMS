@@ -11,7 +11,7 @@ import time
 
 INF = 999
 
-##################################################################
+###--------------------------------------------------------------
 ## Parse configuration Parameters from the configuration file
 def main(argv=None):
     # Do argv default this way, as doing it in the functional
@@ -51,7 +51,7 @@ def main(argv=None):
     args = parser.parse_args(remaining_argv)
     return(args)
 
-##################################################################
+###--------------------------------------------------------------
 ## read frame numbers from Rank List File
 def read_ranklist():
    ## read priority list
@@ -65,7 +65,7 @@ def read_ranklist():
    NumFrames=int(NumFrames)
    return(iFNums,NumFrames)
 
-##################################################################
+###--------------------------------------------------------------
 ## convert iFNums from vector to matrix such that each row is a separate GOP
 def Create_Distributed_GOP_Matrix():
    NotAlloc_Frames=np.arange(0,NumFrames)
@@ -98,6 +98,7 @@ def Create_Distributed_GOP_Matrix():
    Distributed_GOP_Matrix=np.reshape(Distributed_GOP_Matrix,(int(len(Distributed_GOP_Matrix)/GOP),GOP))
    return(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
 
+###--------------------------------------------------------------
 def call(cmd):
     # proc = subprocess.Popen(["cat", "/etc/services"], stdout=subprocess.PIPE, shell=True)
     #proc = subprocess.Popen(cmd, \
@@ -106,10 +107,12 @@ def call(cmd):
     (out, err) = proc.communicate()
     return (out, err)
 
+###--------------------------------------------------------------
 def call_bg(cmd):
     proc = subprocess.Popen(cmd,stdout=subprocess.PIPE, shell=True)
     return proc
 
+###--------------------------------------------------------------
 def export_frames(fn):
     osout = call('rm -rf ../Split_Video')
     osout = call('mkdir ../Split_Video')
@@ -117,7 +120,7 @@ def export_frames(fn):
     osout = call('ffmpeg -r 1 -i {} -r 1 -qp 0 ../Split_Video/pngall/%d.png'.format(fn))
     return 
 
-
+###--------------------------------------------------------------
 def Split_Video_GOP(Distributed_GOP_Matrix):
     for cnt_row in range(np.shape(Distributed_GOP_Matrix)[0]):
         osout = call('rm -rf ../Split_Video/Part{}'.format(cnt_row))
@@ -128,7 +131,7 @@ def Split_Video_GOP(Distributed_GOP_Matrix):
         osout = call('ffmpeg -y -i ../Split_Video/Part{}/Part{}.mp4 -vcodec rawvideo -pix_fmt yuv420p -qp 0 ../Split_Video/Part{}/Part{}.yuv'.format(cnt_row,cnt_row,cnt_row,cnt_row))
     return
 
-
+###--------------------------------------------------------------
 def Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix):
     for Pcnt in range(np.shape(Distributed_GOP_Matrix)[0]):
         print('GOP#{}'.format(Pcnt))
@@ -211,7 +214,7 @@ def Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Mat
 	fid.write('\n#Note: The number of frames in the particitioned video is equal to GOP (Frame#0, Frame#1, .... Frame#(GOP-1)) and thus the line Frmae#GOP in this file will not be used to encode any frame, it is added to comply with the required format of HEVC GOP structure')
         fid.close()
 
-
+###--------------------------------------------------------------
 def Encode_decode_video(Distributed_GOP_Matrix):
     encoderlog=[]
     decoderlog=[]
@@ -271,10 +274,36 @@ def Encode_decode_video(Distributed_GOP_Matrix):
          fid.write(decoderlog[Pcnt2].stdout.read())
          fid.close
     PcntCompleted=[]
-
     return
 
- 
+###--------------------------------------------------------------
+def Combine_encoder_log(Distributed_GOP_Matrix):
+    CombinedLines=[]
+    for cnt_row in range(np.shape(Distributed_GOP_Matrix)[0]):
+        cnt_col=0
+        encoderlogfile='../Split_Video/Part{}/encoderlog.dat'.format(cnt_row)
+        with open(encoderlogfile) as f:
+             Lines = f.readlines()
+        f.close()
+        for cnt in range(len(Lines)):
+            if Lines[cnt][:].split(' ')[0] == 'POC':
+               if (Distributed_GOP_Matrix[cnt_row][cnt_col] > Distributed_GOP_Matrix[cnt_row-1][GOP-1]) or (cnt_row==0):
+                    CombinedLines.append(Lines[cnt][:])
+                    cnt_col=cnt_col+1
+               else:
+                    cnt_col=cnt_col+1
+
+    fid = open('Combined_encoder_log.dat','w')
+    for cnt in range(len(CombinedLines)):
+       templine=CombinedLines[cnt][:].replace("  "," ")
+       templine=templine.replace("  "," ")
+       templine=templine.replace("  "," ")
+       templine=templine.replace("  "," ")
+       templine=templine.split(' ')
+       print('POC {}...{}'.format(cnt,templine[2:22]))
+       fid.write('POC {}...{}\n'.format(cnt,templine[2:22]))
+    fid.close
+
 ##################################################################
 ## Main Body
 if __name__ == "__main__":
@@ -326,5 +355,5 @@ if __name__ == "__main__":
 
     #Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
     #Encode_decode_video(Distributed_GOP_Matrix)
-    
+    Combine_encoder_log(Distributed_GOP_Matrix)    
 
