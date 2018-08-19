@@ -108,8 +108,7 @@ def call(cmd):
 
 def call_bg(cmd):
     proc = subprocess.Popen(cmd,stdout=subprocess.PIPE, shell=True)
-    #(out, err) = proc.communicate()
-    return proc#(out, err)
+    return proc
 
 def export_frames(fn):
     osout = call('rm -rf ../Split_Video')
@@ -216,9 +215,10 @@ def Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Mat
 def Encode_decode_video(Distributed_GOP_Matrix):
     encoderlog=[]
     decoderlog=[]
-    #for Pcnt in range(np.shape(Distributed_GOP_Matrix)[0]):
-    for Pcnt in range(5):
-         print('Encoding Part #{}'.format(Pcnt))
+    PcntCompleted=[]
+    for Pcnt in range(np.shape(Distributed_GOP_Matrix)[0]):
+    #for Pcnt in range(4):
+         print('Encoding GOP#{}'.format(Pcnt))
          InputYUV='../Split_Video/Part{}/Part{}.yuv'.format(Pcnt,Pcnt)
          BitstreamFile='../Split_Video/Part{}/HMEncodedVideo.bin'.format(Pcnt)
          osout = call('rm -rf {}'.format(BitstreamFile))
@@ -228,14 +228,27 @@ def Encode_decode_video(Distributed_GOP_Matrix):
     
          osout=call_bg('./HMS/bin/TAppEncoderStatic -c ../Split_Video/Part{}/encoder_HMS.cfg -c ../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={} &'.format(Pcnt,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
          encoderlog.append(osout)
+         PcntCompleted.append(Pcnt)
          if int(Pcnt % NProcesses) == 0 :
-            encoderlog[Pcnt].stdout.read()
-            
+            for Pcnt2 in PcntCompleted:
+		encoderlogfile='../Split_Video/Part{}/encoderlog.dat'.format(Pcnt2)
+		fid = open(encoderlogfile,'w')
+                fid.write(encoderlog[Pcnt2].stdout.read())
+                fid.close
+            PcntCompleted=[]
 
-    #for Pcnt in range(np.shape(Distributed_GOP_Matrix)[0]):
-    for Pcnt in range(5):
+    for Pcnt2 in PcntCompleted:
+         encoderlogfile='../Split_Video/Part{}/encoderlog.dat'.format(Pcnt2)
+	 fid = open(encoderlogfile,'w')
+         fid.write(encoderlog[Pcnt2].stdout.read())
+         fid.close
+    PcntCompleted=[]
+
+    PcntCompleted=[]
+    for Pcnt in range(np.shape(Distributed_GOP_Matrix)[0]):
+    #for Pcnt in range(4):
          encoderlog[Pcnt].stdout.read()
-         print('Decoding Part #{}'.format(Pcnt))
+         print('Decoding GOP#{}'.format(Pcnt))
          ReconFile='../Split_Video/Part{}/ReconPart{}.yuv'.format(Pcnt,Pcnt)
          BitstreamFile='../Split_Video/Part{}/HMEncodedVideo.bin'.format(Pcnt)
          osout = call('rm -rf {}'.format(ReconFile))
@@ -243,10 +256,23 @@ def Encode_decode_video(Distributed_GOP_Matrix):
          #print('./HMS/bin/TAppDecoderStatic --BitstreamFile="{}" --ReconFile="{}" &'.format(BitstreamFile,ReconFile))
          osout=call_bg('./HMS/bin/TAppDecoderStatic --BitstreamFile="{}" --ReconFile="{}" &'.format(BitstreamFile,ReconFile))
          decoderlog.append(osout)
+	 PcntCompleted.append(Pcnt)
          if int(Pcnt % NProcesses) == 0 :
-            time.sleep(10)
-    
-    return encoderlog
+            for Pcnt2 in PcntCompleted:
+		decoderlogfile='../Split_Video/Part{}/decoderlog.dat'.format(Pcnt2)
+		fid = open(decoderlogfile,'w')
+                fid.write(decoderlog[Pcnt2].stdout.read())
+                fid.close
+            PcntCompleted=[]
+
+    for Pcnt2 in PcntCompleted:
+         decoderlogfile='../Split_Video/Part{}/decoderlog.dat'.format(Pcnt2)
+	 fid = open(decoderlogfile,'w')
+         fid.write(decoderlog[Pcnt2].stdout.read())
+         fid.close
+    PcntCompleted=[]
+
+    return
 
  
 ##################################################################
@@ -298,7 +324,7 @@ if __name__ == "__main__":
     #print(ref_pics_active_Stitching)
     #print(ref_pics_in_Distributed_GOP_Matrix)
 
-    Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
-    RateLog=Encode_decode_video(Distributed_GOP_Matrix)
-    print(RateLog[1].stdout.read())
+    #Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
+    #Encode_decode_video(Distributed_GOP_Matrix)
+    
 
