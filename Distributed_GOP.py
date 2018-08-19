@@ -5,6 +5,9 @@ import numpy as np
 import os, sys, subprocess, pdb
 import argparse
 import ConfigParser
+import time
+
+
 
 INF = 999
 
@@ -102,6 +105,11 @@ def call(cmd):
     proc = subprocess.Popen(cmd,stdout=subprocess.PIPE, shell=True)
     (out, err) = proc.communicate()
     return (out, err)
+
+def call_bg(cmd):
+    proc = subprocess.Popen(cmd,stdout=subprocess.PIPE, shell=True)
+    #(out, err) = proc.communicate()
+    return proc#(out, err)
 
 def export_frames(fn):
     osout = call('rm -rf ../Split_Video')
@@ -205,24 +213,42 @@ def Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Mat
         fid.close()
 
 
-def Encoder_decode_video(Distributed_GOP_Matrix):
-    
+def Encode_decode_video(Distributed_GOP_Matrix):
+    encoderlog=[]
+    decoderlog=[]
     #for Pcnt in range(np.shape(Distributed_GOP_Matrix)[0]):
-    for Pcnt in range(2):
+    for Pcnt in range(5):
+         print('Encoding Part #{}'.format(Pcnt))
          InputYUV='../Split_Video/Part{}/Part{}.yuv'.format(Pcnt,Pcnt)
          BitstreamFile='../Split_Video/Part{}/HMEncodedVideo.bin'.format(Pcnt)
-         osout = call('rm -rf ../Split_Video/Part{}/HMEncodedVideo.bin'.format(Pcnt))
-         osout = call('rm -rf ../Split_Video/Part{}/encoder.log'.format(Pcnt))
+         osout = call('rm -rf {}'.format(BitstreamFile))
          osout = call('cp -f ./encoder_HMS.cfg ../Split_Video/Part{}/encoder_HMS.cfg'.format(Pcnt))
-         
-         print('./HMS/bin/TAppEncoderStatic -c ../Split_Video/Part{}/encoder_HMS.cfg -c ../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={}'.format(Pcnt,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
     
-         print('Pcnt={}'.format(Pcnt))
-         p = subprocess.call('./HMS/bin/TAppEncoderStatic -c ../Split_Video/Part{}/encoder_HMS.cfg -c ../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={} &'.format(Pcnt,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate),shell=True)
+         #print('./HMS/bin/TAppEncoderStatic -c ../Split_Video/Part{}/encoder_HMS.cfg -c ../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={}'.format(Pcnt,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
+    
+         osout=call_bg('./HMS/bin/TAppEncoderStatic -c ../Split_Video/Part{}/encoder_HMS.cfg -c ../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={} &'.format(Pcnt,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
+         encoderlog.append(osout)
+         if int(Pcnt % NProcesses) == 0 :
+            encoderlog[Pcnt].stdout.read()
+            
 
-         #print(osout.translate(None, "(),\"\\n"))
-##         osout = call('./HMS/bin/TAppEncoderStatic -c ../Split_Video/Part{}/encoder_HMS.cfg -c ../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={} |& tee -a encoder.log'.format(Pcnt,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
+    #for Pcnt in range(np.shape(Distributed_GOP_Matrix)[0]):
+    for Pcnt in range(5):
+         encoderlog[Pcnt].stdout.read()
+         print('Decoding Part #{}'.format(Pcnt))
+         ReconFile='../Split_Video/Part{}/ReconPart{}.yuv'.format(Pcnt,Pcnt)
+         BitstreamFile='../Split_Video/Part{}/HMEncodedVideo.bin'.format(Pcnt)
+         osout = call('rm -rf {}'.format(ReconFile))
+         
+         #print('./HMS/bin/TAppDecoderStatic --BitstreamFile="{}" --ReconFile="{}" &'.format(BitstreamFile,ReconFile))
+         osout=call_bg('./HMS/bin/TAppDecoderStatic --BitstreamFile="{}" --ReconFile="{}" &'.format(BitstreamFile,ReconFile))
+         decoderlog.append(osout)
+         if int(Pcnt % NProcesses) == 0 :
+            time.sleep(10)
+    
+    return encoderlog
 
+ 
 ##################################################################
 ## Main Body
 if __name__ == "__main__":
@@ -244,6 +270,8 @@ if __name__ == "__main__":
     MaxPartitionDepth=int(args.maxpartitiondepth);
     RateControl=int(args.ratecontrol);
     rate=int(args.rate);
+    NProcesses=int(args.nprocesses);
+
 
 
     
@@ -271,5 +299,6 @@ if __name__ == "__main__":
     #print(ref_pics_in_Distributed_GOP_Matrix)
 
     Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
-    Encoder_decode_video(Distributed_GOP_Matrix)
+    RateLog=Encode_decode_video(Distributed_GOP_Matrix)
+    print(RateLog[1].stdout.read())
 
