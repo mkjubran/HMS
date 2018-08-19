@@ -293,14 +293,14 @@ def Combine_encoder_log(Distributed_GOP_Matrix):
                else:
                     cnt_col=cnt_col+1
 
-    fid = open('Combined_encoder_log.dat','w')
+    fid = open(Combined_encoder_log,'w')
     for cnt in range(len(CombinedLines)):
        templine=CombinedLines[cnt][:].replace("  "," ")
        templine=templine.replace("  "," ")
        templine=templine.replace("  "," ")
        templine=templine.replace("  "," ")
        templine=templine.split(' ')
-       print('POC {}...{}'.format(cnt,templine[2:22]))
+       #print('POC {}...{}'.format(cnt,templine[2:22]))
        fid.write('POC {}...{}\n'.format(cnt,templine[2:22]))
     fid.close
 
@@ -326,7 +326,7 @@ if __name__ == "__main__":
     RateControl=int(args.ratecontrol);
     rate=int(args.rate);
     NProcesses=int(args.nprocesses);
-
+    Combined_encoder_log=args.combined_encoder_log
 
 
     
@@ -347,13 +347,13 @@ if __name__ == "__main__":
     ref_pics_active_Stitching=np.sort(ref_pics_active_Stitching)
     
     (Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)=Create_Distributed_GOP_Matrix();
-    #export_frames(vid)
-    #Split_Video_GOP(Distributed_GOP_Matrix)
+    export_frames(vid)
+    Split_Video_GOP(Distributed_GOP_Matrix)
     print(Distributed_GOP_Matrix)
     #print(ref_pics_active_Stitching)
     #print(ref_pics_in_Distributed_GOP_Matrix)
 
-    #Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
-    #Encode_decode_video(Distributed_GOP_Matrix)
+    Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
+    Encode_decode_video(Distributed_GOP_Matrix)
     Combine_encoder_log(Distributed_GOP_Matrix)    
 
