@@ -73,11 +73,18 @@ def Create_Distributed_GOP_Matrix():
       idx=np.where(NotAlloc_Frames==val)
       NotAlloc_Frames=np.delete(NotAlloc_Frames,idx)
    
-   Distributed_GOP_Matrix=np.ones((GOP,0), dtype=int)
+   Distributed_GOP_Matrix=[]
    ref_pics_in_Distributed_GOP_Matrix=np.empty(0)
    while len(NotAlloc_Frames)>0:
        Distributed_GOP_Vec=np.empty(0)
        ref_pics_active_Stitching_temp=ref_pics_active_Stitching
+       if len(Distributed_GOP_Matrix) > (GOP-1):
+           cnt=0
+           while len(ref_pics_active_Stitching_temp)<num_ref_pics_active_Max:
+              ref_pics_active_Stitching_temp=np.append(ref_pics_active_Stitching_temp,Distributed_GOP_Matrix[len(Distributed_GOP_Matrix)-cnt-1])
+              ref_pics_active_Stitching_temp=np.unique(ref_pics_active_Stitching_temp)
+              cnt=cnt+1
+              #print('{}...{}...{}..{}'.format(cnt,len(ref_pics_active_Stitching_temp),num_ref_pics_active_Max,Distributed_GOP_Matrix[len(Distributed_GOP_Matrix)-cnt-1]))
        ref_pics_added=0;
        while len(Distributed_GOP_Vec)<GOP:
           if len(NotAlloc_Frames)==0:
@@ -94,6 +101,7 @@ def Create_Distributed_GOP_Matrix():
               NotAlloc_Frames=np.delete(NotAlloc_Frames,0)
        if len(Distributed_GOP_Vec)==GOP:
               Distributed_GOP_Matrix=np.append(Distributed_GOP_Matrix,Distributed_GOP_Vec)
+              
        ref_pics_in_Distributed_GOP_Matrix=np.append(ref_pics_in_Distributed_GOP_Matrix,ref_pics_added)
    Distributed_GOP_Matrix=np.reshape(Distributed_GOP_Matrix,(int(len(Distributed_GOP_Matrix)/GOP),GOP))
    return(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
@@ -366,7 +374,6 @@ if __name__ == "__main__":
     (Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)=Create_Distributed_GOP_Matrix();
     export_frames(vid)
     Split_Video_GOP(Distributed_GOP_Matrix)
-    print(Distributed_GOP_Matrix)
     #print(ref_pics_active_Stitching)
     #print(ref_pics_in_Distributed_GOP_Matrix)
 
