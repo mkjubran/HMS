@@ -314,7 +314,7 @@ def Combine_encoder_log(Distributed_GOP_Matrix):
        templine=templine.replace("  "," ")
        templine=templine.split(' ')
        #print('POC {}...{}'.format(cnt,templine[2:22]))
-       fid.write('POC {}...{}\n'.format(cnt,templine[2:22]))
+       fid.write('POC {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}\n'.format(cnt,str(templine[2]),str(templine[3]),str(templine[4]),str(templine[5]),str(templine[6]),str(templine[7]),str(templine[8]),str(templine[9]),str(templine[10]),str(templine[11]),str(templine[12]),str(templine[13]),str(templine[14]),str(templine[15]),str(templine[16]),str(templine[17]),str(templine[18]),str(templine[19]),str(templine[20]),str(templine[21]),str(templine[22])))
     fid.close
 
 
@@ -326,7 +326,7 @@ def Combine_encoder_log(Distributed_GOP_Matrix):
        templine=templine.replace("  "," ")
        templine=templine.split(' ')
        #print('POC {}...{}'.format(cnt,templine[2:22]))
-       fid.write('POC {}...{}\n'.format(cnt,templine[1:22]))
+       fid.write('POC {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}\n'.format(cnt,str(templine[1]),str(templine[2]),str(templine[3]),str(templine[4]),str(templine[5]),str(templine[6]),str(templine[7]),str(templine[8]),str(templine[9]),str(templine[10]),str(templine[11]),str(templine[12]),str(templine[13]),str(templine[14]),str(templine[15]),str(templine[16]),str(templine[17]),str(templine[18]),str(templine[19]),str(templine[20]),str(templine[21]),str(templine[22])))
     fid.close
 
 ##################################################################
@@ -372,12 +372,14 @@ if __name__ == "__main__":
     ref_pics_active_Stitching=np.sort(ref_pics_active_Stitching)
     
     (Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)=Create_Distributed_GOP_Matrix();
-    export_frames(vid)
-    Split_Video_GOP(Distributed_GOP_Matrix)
+    #export_frames(vid)
+    #Split_Video_GOP(Distributed_GOP_Matrix)
     #print(ref_pics_active_Stitching)
     #print(ref_pics_in_Distributed_GOP_Matrix)
 
-    Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
-    Encode_decode_video(Distributed_GOP_Matrix)
+    #Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
+    #Encode_decode_video(Distributed_GOP_Matrix)
     Combine_encoder_log(Distributed_GOP_Matrix)    
     print(Distributed_GOP_Matrix)
+
+#python ./Quality/measure.py  $InputYUV HMDecodedVideo_Stitching.yuv $W $H
