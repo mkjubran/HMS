@@ -6,6 +6,7 @@ import os, sys, subprocess, pdb
 import argparse
 import ConfigParser
 import time, re
+import math
 
 
 
@@ -304,6 +305,16 @@ def Measure_Rate_PSNR(Distributed_GOP_Matrix):
 
 ###--------------------------------------------------------------
 def Combine_encoder_log(Distributed_GOP_Matrix):
+
+    PIXEL_MAX = 255.0
+    mseY=0
+    mseU=0
+    mseV=0
+    mseYUV=0
+    NumFramesPSNR=0
+
+    NumFramesRate=0
+
     CombinedLinesRate=[]
     CombinedLinesPSNR=[]
     CombinedLinesRateAll=[]
@@ -333,13 +344,45 @@ def Combine_encoder_log(Distributed_GOP_Matrix):
                     cnt_col_Rate=cnt_col_Rate+1
             
             if (((re.split(' |:',templine)[0]) == 'Frame') and ((re.split(' |:',templine)[3]) == '[Y')):   
+               PSNRYFrame=re.split(' |:',templine)[4]
+               PSNRUFrame=re.split(' |:',templine)[6]
+               PSNRVFrame=re.split(' |:',templine)[8]
+               PSNRYUVFrame=re.split(' |:',templine)[10]
+          
+               PSNRYFrame=float(PSNRYFrame[0:(len(PSNRYFrame)-2)])
+               PSNRUFrame=float(PSNRUFrame[0:(len(PSNRUFrame)-2)])
+               PSNRVFrame=float(PSNRVFrame[0:(len(PSNRVFrame)-2)])
+               PSNRYUVFrame=float(PSNRYUVFrame[0:(len(PSNRYUVFrame)-3)])
+
+               mseYFrame=((PIXEL_MAX)/(10**(PSNRYFrame/20)))**2
+               mseY=mseY+mseYFrame
+
+               mseUFrame=((PIXEL_MAX)/(10**(PSNRUFrame/20)))**2
+               mseU=mseU+mseUFrame
+
+               mseVFrame=((PIXEL_MAX)/(10**(PSNRVFrame/20)))**2
+               mseV=mseV+mseVFrame
+
+               mseYUVFrame=((PIXEL_MAX)/(10**(PSNRYUVFrame/20)))**2
+               mseYUV=mseYUV+mseYUVFrame
+
+               NumFramesPSNR=NumFramesPSNR+1
+
+               PSNRYVideo=20 * math.log10(PIXEL_MAX / (math.sqrt(mseY/NumFramesPSNR)))
+               PSNRUVideo=20 * math.log10(PIXEL_MAX / (math.sqrt(mseU/NumFramesPSNR)))
+               PSNRVVideo=20 * math.log10(PIXEL_MAX / (math.sqrt(mseV/NumFramesPSNR)))
+               PSNRYUVVideo=20 * math.log10(PIXEL_MAX / (math.sqrt(mseYUV/NumFramesPSNR)))
+
+               templineNew=('Frame {0:3d}: [Y {1:1.4f}dB   U {2:1.4f}dB   V {3:1.4f}dB   YUV {4:1.4f}dB]  ..... Video: [Y {5:1.4f}dB   U {6:1.4f}dB   V {7:1.4f}dB   YUV {8:1.4f}dB]').format(NumFramesPSNR,PSNRYFrame,PSNRUFrame,PSNRVFrame,PSNRYUVFrame,PSNRYVideo,PSNRUVideo,PSNRVVideo,PSNRYUVVideo)
                #print((Lines[cnt][:]).rstrip())
-               #print(re.split(' |:',templine)[0])
+               #print(templineNew.rstrip())
+               #print()
+               #print('{}..{}..{}..{}...Video...{}..{}..{}..{}'.format(PSNRYFrame,PSNRUFrame,PSNRVFrame,PSNRYUVFrame,PSNRYVideo,PSNRUVideo,PSNRVVideo,PSNRYUVVideo))
                #print(re.split(' |:',templine)[1])
                #print('{}   ...  {}'.format(cnt_row,cnt_col_PSNR)) 
                CombinedLinesPSNRAll.append(Lines[cnt][:])
                if (Distributed_GOP_Matrix[cnt_row][cnt_col_PSNR] > Distributed_GOP_Matrix[cnt_row-1][GOP-1]) or (cnt_row==0):
-                    CombinedLinesPSNR.append(Lines[cnt][:])
+                    CombinedLinesPSNR.append(templineNew)
                     cnt_col_PSNR=cnt_col_PSNR+1
                else:
                     cnt_col_PSNR=cnt_col_PSNR+1
@@ -360,9 +403,11 @@ def Combine_encoder_log(Distributed_GOP_Matrix):
        templine=templine.replace("  "," ")
        templine=templine.replace("  "," ")
        templine=templine.replace("  "," ")
+       templine=templine.rstrip()
        templine=templine.split(' ')
-       #print('Frame {}...{}'.format(cnt,templine[2:10]))
-       fid.write('Frame {} {} {} {} {} {} {} {} {}\n'.format(cnt,str(templine[2]),str(templine[3]),str(templine[4]),str(templine[5]),str(templine[6]),str(templine[7]),str(templine[8]),str(templine[9]),str(templine[10])))
+       #print(templine)
+       fid.write('Frame {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}\n'.format(cnt,str(templine[2]),str(templine[3]),str(templine[4]),str(templine[5]),str(templine[6]),str(templine[7]),str(templine[8]),str(templine[9]),str(templine[10]),str(templine[11]),str(templine[12]),str(templine[13]),str(templine[14]),str(templine[15]),str(templine[16]),str(templine[17]),str(templine[18]),str(templine[19])))
+       #fid.write('{}\n'.format(templine))
     fid.close
 
 

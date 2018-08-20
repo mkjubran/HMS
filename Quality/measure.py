@@ -99,7 +99,7 @@ while True:
 
         mseY = mseY+msefY;
 	mseU = mseU+msefU;
-	mseV = mseU+msefU;
+	mseV = mseV+msefV;
 	mseYUV = mseYUV + msefYUV
 
 	vifp_value = vifp.vifp_mscale(refY.astype(float), distY.astype(float))
