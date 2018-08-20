@@ -314,6 +314,7 @@ def Combine_encoder_log(Distributed_GOP_Matrix):
     NumFramesPSNR=0
 
     NumFramesRate=0
+    TotalBits=0
 
     CombinedLinesRate=[]
     CombinedLinesPSNR=[]
@@ -333,71 +334,85 @@ def Combine_encoder_log(Distributed_GOP_Matrix):
             templine=templine.replace("  "," ")
 
             if templine.split(' ')[0] == 'POC':
-               #print((templine).rstrip())
-               #print('POC {}'.format(templine.split(' ')[1]))
                #print('{}   ...  {}'.format(cnt_row,cnt_col_Rate)) 
                CombinedLinesRateAll.append(Lines[cnt][:])
-               if (Distributed_GOP_Matrix[cnt_row][cnt_col_Rate] > Distributed_GOP_Matrix[cnt_row-1][GOP-1]) or (cnt_row==0):
+               if (Distributed_GOP_Matrix[cnt_row][cnt_col_Rate] > Distributed_GOP_Matrix[cnt_row-1][GOP-1]) or (cnt_row==0):   ## if new POC, not considered in previous GOPs
+                    #print((templine).rstrip())
+                    #print('{}'.format(templine.split(' ')[11]))
                     CombinedLinesRate.append(Lines[cnt][:])
                     cnt_col_Rate=cnt_col_Rate+1
+                    TotalBits=TotalBits+int(templine.split(' ')[11])
+                    NumFramesRate=NumFramesRate+1
                else:
                     cnt_col_Rate=cnt_col_Rate+1
+       
+            if (NumFramesRate>0):
+               AverageRate=(TotalBits/NumFramesRate)*fps
             
+
+
             if (((re.split(' |:',templine)[0]) == 'Frame') and ((re.split(' |:',templine)[3]) == '[Y')):   
-               PSNRYFrame=re.split(' |:',templine)[4]
-               PSNRUFrame=re.split(' |:',templine)[6]
-               PSNRVFrame=re.split(' |:',templine)[8]
-               PSNRYUVFrame=re.split(' |:',templine)[10]
-          
-               PSNRYFrame=float(PSNRYFrame[0:(len(PSNRYFrame)-2)])
-               PSNRUFrame=float(PSNRUFrame[0:(len(PSNRUFrame)-2)])
-               PSNRVFrame=float(PSNRVFrame[0:(len(PSNRVFrame)-2)])
-               PSNRYUVFrame=float(PSNRYUVFrame[0:(len(PSNRYUVFrame)-3)])
-
-               mseYFrame=((PIXEL_MAX)/(10**(PSNRYFrame/20)))**2
-               mseY=mseY+mseYFrame
-
-               mseUFrame=((PIXEL_MAX)/(10**(PSNRUFrame/20)))**2
-               mseU=mseU+mseUFrame
-
-               mseVFrame=((PIXEL_MAX)/(10**(PSNRVFrame/20)))**2
-               mseV=mseV+mseVFrame
-
-               mseYUVFrame=((PIXEL_MAX)/(10**(PSNRYUVFrame/20)))**2
-               mseYUV=mseYUV+mseYUVFrame
-
-               NumFramesPSNR=NumFramesPSNR+1
-
-               PSNRYVideo=20 * math.log10(PIXEL_MAX / (math.sqrt(mseY/NumFramesPSNR)))
-               PSNRUVideo=20 * math.log10(PIXEL_MAX / (math.sqrt(mseU/NumFramesPSNR)))
-               PSNRVVideo=20 * math.log10(PIXEL_MAX / (math.sqrt(mseV/NumFramesPSNR)))
-               PSNRYUVVideo=20 * math.log10(PIXEL_MAX / (math.sqrt(mseYUV/NumFramesPSNR)))
-
-               templineNew=('Frame {0:3d}: [Y {1:1.4f}dB   U {2:1.4f}dB   V {3:1.4f}dB   YUV {4:1.4f}dB]  ..... Video: [Y {5:1.4f}dB   U {6:1.4f}dB   V {7:1.4f}dB   YUV {8:1.4f}dB]').format(NumFramesPSNR,PSNRYFrame,PSNRUFrame,PSNRVFrame,PSNRYUVFrame,PSNRYVideo,PSNRUVideo,PSNRVVideo,PSNRYUVVideo)
-               #print((Lines[cnt][:]).rstrip())
-               #print(templineNew.rstrip())
-               #print()
-               #print('{}..{}..{}..{}...Video...{}..{}..{}..{}'.format(PSNRYFrame,PSNRUFrame,PSNRVFrame,PSNRYUVFrame,PSNRYVideo,PSNRUVideo,PSNRVVideo,PSNRYUVVideo))
-               #print(re.split(' |:',templine)[1])
-               #print('{}   ...  {}'.format(cnt_row,cnt_col_PSNR)) 
                CombinedLinesPSNRAll.append(Lines[cnt][:])
-               if (Distributed_GOP_Matrix[cnt_row][cnt_col_PSNR] > Distributed_GOP_Matrix[cnt_row-1][GOP-1]) or (cnt_row==0):
+               if (Distributed_GOP_Matrix[cnt_row][cnt_col_PSNR] > Distributed_GOP_Matrix[cnt_row-1][GOP-1]) or (cnt_row==0):  ## if new frame, not considered in previous GOPs
+                    PSNRYFrame=re.split(' |:',templine)[4]
+                    PSNRUFrame=re.split(' |:',templine)[6]
+                    PSNRVFrame=re.split(' |:',templine)[8]
+                    PSNRYUVFrame=re.split(' |:',templine)[10]
+          
+                    PSNRYFrame=float(PSNRYFrame[0:(len(PSNRYFrame)-2)])
+                    PSNRUFrame=float(PSNRUFrame[0:(len(PSNRUFrame)-2)])
+                    PSNRVFrame=float(PSNRVFrame[0:(len(PSNRVFrame)-2)])
+                    PSNRYUVFrame=float(PSNRYUVFrame[0:(len(PSNRYUVFrame)-3)])
+
+                    mseYFrame=((PIXEL_MAX)/(10**(PSNRYFrame/20)))**2
+                    mseY=mseY+mseYFrame
+
+                    mseUFrame=((PIXEL_MAX)/(10**(PSNRUFrame/20)))**2
+                    mseU=mseU+mseUFrame
+
+                    mseVFrame=((PIXEL_MAX)/(10**(PSNRVFrame/20)))**2
+                    mseV=mseV+mseVFrame
+
+                    mseYUVFrame=((PIXEL_MAX)/(10**(PSNRYUVFrame/20)))**2
+                    mseYUV=mseYUV+mseYUVFrame
+
+                    NumFramesPSNR=NumFramesPSNR+1
+
+                    PSNRYVideo=20 * math.log10(PIXEL_MAX / (math.sqrt(mseY/NumFramesPSNR)))
+                    PSNRUVideo=20 * math.log10(PIXEL_MAX / (math.sqrt(mseU/NumFramesPSNR)))
+                    PSNRVVideo=20 * math.log10(PIXEL_MAX / (math.sqrt(mseV/NumFramesPSNR)))
+                    PSNRYUVVideo=20 * math.log10(PIXEL_MAX / (math.sqrt(mseYUV/NumFramesPSNR)))
+
+                    templineNew=('Frame {0:3d}: [Y {1:1.4f}dB   U {2:1.4f}dB   V {3:1.4f}dB   YUV {4:1.4f}dB]  ..... Video: [Y {5:1.4f}dB   U {6:1.4f}dB   V {7:1.4f}dB   YUV {8:1.4f}dB]').format(NumFramesPSNR,PSNRYFrame,PSNRUFrame,PSNRVFrame,PSNRYUVFrame,PSNRYVideo,PSNRUVideo,PSNRVVideo,PSNRYUVVideo)
+                    #print((Lines[cnt][:]).rstrip())
+                    #print(templineNew.rstrip())
+                    #print()
+                    #print('{}..{}..{}..{}...Video...{}..{}..{}..{}'.format(PSNRYFrame,PSNRUFrame,PSNRVFrame,PSNRYUVFrame,PSNRYVideo,PSNRUVideo,PSNRVVideo,PSNRYUVVideo))
+                    #print(re.split(' |:',templine)[1])
+                    #print('{}   ...  {}'.format(cnt_row,cnt_col_PSNR)) 
+
                     CombinedLinesPSNR.append(templineNew)
                     cnt_col_PSNR=cnt_col_PSNR+1
                else:
                     cnt_col_PSNR=cnt_col_PSNR+1
 
-
+## write to combined log file
     fid = open(Combined_encoder_log,'w')
-    for cnt in range(len(CombinedLinesRate)):
-       templine=CombinedLinesRate[cnt][:].replace("  "," ")
-       templine=templine.replace("  "," ")
-       templine=templine.replace("  "," ")
-       templine=templine.replace("  "," ")
-       templine=templine.split(' ')
-       #print('POC {}...{}'.format(cnt,templine[2:22]))
-       fid.write('POC {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}\n'.format(cnt,str(templine[2]),str(templine[3]),str(templine[4]),str(templine[5]),str(templine[6]),str(templine[7]),str(templine[8]),str(templine[9]),str(templine[10]),str(templine[11]),str(templine[12]),str(templine[13]),str(templine[14]),str(templine[15]),str(templine[16]),str(templine[17]),str(templine[18]),str(templine[19]),str(templine[20]),str(templine[21]),str(templine[22])))
 
+    fid.write('Input File (MP4) = {}\n'.format(vid))
+    fid.write('RankListFile = {}\n'.format(RankListFile))
+    fid.write('Ref_active = {}\n'.format(num_ref_pics_active_Max))
+    fid.write('Ref_stitch = {}\n'.format(num_ref_pics_active_Stitching))
+    fid.write('QP = {}\n'.format(QP))
+    fid.write('MaxCUSize = {}\n'.format(MaxCUSize))
+    fid.write('MaxPartitionDepth = {}\n'.format(MaxPartitionDepth))
+    fid.write('fps = {}\n'.format(fps))
+    fid.write('RateControl = {}\n'.format(RateControl))
+    fid.write('rate = {}\n'.format(rate))
+    fid.write('NProcesses = {}\n\n'.format(NProcesses))
+
+
+## write PSNR
     for cnt in range(len(CombinedLinesPSNR)):
        templine=CombinedLinesPSNR[cnt][:].replace("  "," ")
        templine=templine.replace("  "," ")
@@ -405,24 +420,26 @@ def Combine_encoder_log(Distributed_GOP_Matrix):
        templine=templine.replace("  "," ")
        templine=templine.rstrip()
        templine=templine.split(' ')
-       #print(templine)
        fid.write('Frame {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}\n'.format(cnt,str(templine[2]),str(templine[3]),str(templine[4]),str(templine[5]),str(templine[6]),str(templine[7]),str(templine[8]),str(templine[9]),str(templine[10]),str(templine[11]),str(templine[12]),str(templine[13]),str(templine[14]),str(templine[15]),str(templine[16]),str(templine[17]),str(templine[18]),str(templine[19])))
-       #fid.write('{}\n'.format(templine))
-    fid.close
 
-
-    fid = open((Combined_encoder_log[0:(len(Combined_encoder_log)-4)]+'All.dat'),'w')
-    for cnt in range(len(CombinedLinesRateAll)):
-       templine=CombinedLinesRateAll[cnt][:].replace("  "," ")
+## write Rate
+    fid.write('\n\n')
+    for cnt in range(len(CombinedLinesRate)):
+       templine=CombinedLinesRate[cnt][:].replace("  "," ")
        templine=templine.replace("  "," ")
        templine=templine.replace("  "," ")
        templine=templine.replace("  "," ")
        templine=templine.split(' ')
-       #print('POC {}...{}'.format(cnt,templine[2:22]))
-       fid.write('POC {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}\n'.format(str(templine[1]),str(templine[2]),str(templine[3]),str(templine[4]),str(templine[5]),str(templine[6]),str(templine[7]),str(templine[8]),str(templine[9]),str(templine[10]),str(templine[11]),str(templine[12]),str(templine[13]),str(templine[14]),str(templine[15]),str(templine[16]),str(templine[17]),str(templine[18]),str(templine[19]),str(templine[20]),str(templine[21]),str(templine[22])))
+       fid.write('POC {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}\n'.format(cnt,str(templine[2]),str(templine[3]),str(templine[4]),str(templine[5]),str(templine[6]),str(templine[7]),str(templine[8]),str(templine[9]),str(templine[10]),str(templine[11]),str(templine[12]),str(templine[13]),str(templine[14]),str(templine[15]),str(templine[16]),str(templine[17]),str(templine[18]),str(templine[19]),str(templine[20]),str(templine[21]),str(templine[22])))
+
+    fid.write('\nNumber of Frames = {}\n'.format(NumFramesRate))
+    fid.write('Written bites = {}\n'.format(TotalBits))
+    fid.write('Bit Rate = {} kbps\n'.format(AverageRate/1000))
+
     fid.close
 
 
+    fid = open((Combined_encoder_log[0:(len(Combined_encoder_log)-4)]+'All.dat'),'w')
     for cnt in range(len(CombinedLinesPSNRAll)):
        templine=CombinedLinesPSNRAll[cnt][:].replace("  "," ")
        templine=templine.replace("  "," ")
@@ -431,6 +448,18 @@ def Combine_encoder_log(Distributed_GOP_Matrix):
        templine=templine.split(' ')
        #print('Frame {}...{}'.format(cnt,templine[2:10]))
        fid.write('Frame {} {} {} {} {} {} {} {} {}\n'.format(str(templine[1]),str(templine[2]),str(templine[3]),str(templine[4]),str(templine[5]),str(templine[6]),str(templine[7]),str(templine[8]),str(templine[9]),str(templine[10])))
+
+    fid.write('\n\n')
+    for cnt in range(len(CombinedLinesRateAll)):
+       templine=CombinedLinesRateAll[cnt][:].replace("  "," ")
+       templine=templine.replace("  "," ")
+       templine=templine.replace("  "," ")
+       templine=templine.replace("  "," ")
+       templine=templine.split(' ')
+       #print('POC {}...{}'.format(cnt,templine[2:22]))
+       fid.write('POC {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}\n'.format(str(templine[1]),str(templine[2]),str(templine[3]),str(templine[4]),str(templine[5]),str(templine[6]),str(templine[7]),str(templine[8]),str(templine[9]),str(templine[10]),str(templine[11]),str(templine[12]),str(templine[13]),str(templine[14]),str(templine[15]),str(templine[16]),str(templine[17]),str(templine[18]),str(templine[19]),str(templine[20]),str(templine[21]),str(templine[22])))
+
+
     fid.close
 
 ##################################################################
@@ -457,7 +486,6 @@ if __name__ == "__main__":
     NProcesses=int(args.nprocesses);
     Combined_encoder_log=args.combined_encoder_log
 
-
     
     fsr=fps
 
@@ -476,11 +504,11 @@ if __name__ == "__main__":
     ref_pics_active_Stitching=np.sort(ref_pics_active_Stitching)
     
     (Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)=Create_Distributed_GOP_Matrix();
-    #export_frames(vid)
-    #Split_Video_GOP(Distributed_GOP_Matrix)
-    #Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
-    #Encode_decode_video(Distributed_GOP_Matrix)
-    #Measure_Rate_PSNR(Distributed_GOP_Matrix)
+    export_frames(vid)
+    Split_Video_GOP(Distributed_GOP_Matrix)
+    Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
+    Encode_decode_video(Distributed_GOP_Matrix)
+    Measure_Rate_PSNR(Distributed_GOP_Matrix)
     Combine_encoder_log(Distributed_GOP_Matrix)    
 
     #print(ref_pics_active_Stitching)

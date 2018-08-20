@@ -116,7 +116,7 @@ while True:
 	PSNRYUV=20 * math.log10(PIXEL_MAX / (math.sqrt(mseYUV/frame_num)))
 
 	#print "Frame=%d	  PSNR(Frame)=%f   PSNR(Video)=%f   VIFP=%f   SSIM=%f" % (frame_num, PSNRFrame, PSNR, vifp_value, ssim_value)
-	print("Frame{0:3d}: [Y {1:1.4f}dB   U {2:1.4f}dB   V {3:1.4f}dB   YUV {4:1.4f}dB]  ..... Video: [Y {5:1.4f}dB   U {6:1.4f}dB   V {7:1.4f}dB   YUV {8:1.4f}dB]").format(frame_num,PSNRfY,PSNRfU,PSNRfV,PSNRfYUV,PSNRY,PSNRU,PSNRV,PSNRYUV)
+	print("Frame {0:3d}: [Y {1:1.4f}dB   U {2:1.4f}dB   V {3:1.4f}dB   YUV {4:1.4f}dB]  ..... Video: [Y {5:1.4f}dB   U {6:1.4f}dB   V {7:1.4f}dB   YUV {8:1.4f}dB]").format(frame_num,PSNRfY,PSNRfU,PSNRfV,PSNRfYUV,PSNRY,PSNRU,PSNRV,PSNRYUV)
 	frame_num += 1
 
 ####used for debuging the code
