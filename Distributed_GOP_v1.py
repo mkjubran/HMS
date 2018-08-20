@@ -238,9 +238,9 @@ def Encode_decode_video(Distributed_GOP_Matrix):
          osout = call('rm -rf {}'.format(BitstreamFile))
          osout = call('cp -f ./encoder_HMS.cfg ../Split_Video/Part{}/encoder_HMS.cfg'.format(Pcnt))
     
-         #print('./HMS/bin/TAppEncoderStatic -c ../Split_Video/Part{}/encoder_HMS.cfg -c ../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={}'.format(Pcnt,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
+         #print('./HMS/bin/TAppEncoderStatic -c ../Split_Video/Part{}/encoder_HMS.cfg -c ../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={}'.format(Pcnt,Pcnt,Pcnt,InputYUV,Width,Height,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
     
-         osout=call_bg('./HMS/bin/TAppEncoderStatic -c ../Split_Video/Part{}/encoder_HMS.cfg -c ../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={} &'.format(Pcnt,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
+         osout=call_bg('./HMS/bin/TAppEncoderStatic -c ../Split_Video/Part{}/encoder_HMS.cfg -c ../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={} &'.format(Pcnt,Pcnt,Pcnt,InputYUV,Width,Height,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
          encoderlog.append(osout)
          PcntCompleted.append(Pcnt)
          if int(Pcnt % NProcesses) == 0 :
@@ -263,6 +263,7 @@ def Encode_decode_video(Distributed_GOP_Matrix):
     #for Pcnt in range(4):
          encoderlog[Pcnt].stdout.read()
          print('Decoding GOP#{} of {}'.format(Pcnt,(np.shape(Distributed_GOP_Matrix)[0]-1)))
+         InputYUV='../Split_Video/Part{}/Part{}.yuv'.format(Pcnt,Pcnt)
          ReconFile='../Split_Video/Part{}/ReconPart{}.yuv'.format(Pcnt,Pcnt)
          BitstreamFile='../Split_Video/Part{}/HMEncodedVideo.bin'.format(Pcnt)
          osout = call('rm -rf {}'.format(ReconFile))
@@ -278,13 +279,35 @@ def Encode_decode_video(Distributed_GOP_Matrix):
                 fid.write(decoderlog[Pcnt2].stdout.read())
                 fid.close
             PcntCompleted=[]
-
+   
     for Pcnt2 in PcntCompleted:
          decoderlogfile='../Split_Video/Part{}/decoderlog.dat'.format(Pcnt2)
 	 fid = open(decoderlogfile,'w')
          fid.write(decoderlog[Pcnt2].stdout.read())
          fid.close
     PcntCompleted=[]
+    return
+
+###--------------------------------------------------------------
+def Measure_Rate_PSNR(Distributed_GOP_Matrix):
+    PcntCompleted=[]
+    encoderlog=[]
+    #for Pcnt in range(np.shape(Distributed_GOP_Matrix)[0]):
+    for Pcnt in range(1):
+         print('Measuring Rate and PSNR for GOP#{} of {}'.format(Pcnt,(np.shape(Distributed_GOP_Matrix)[0]-1)))
+         InputYUV='../Split_Video/Part{}/Part{}.yuv'.format(Pcnt,Pcnt)
+         ReconFile='../Split_Video/Part{}/ReconPart{}.yuv'.format(Pcnt,Pcnt)
+         osout=call_bg('python ./Quality/measure.py {} {} {} {} &'.format(InputYUV,ReconFile,Width,Height))
+         encoderlog.append(osout)
+         #print(encoderlog)
+         PcntCompleted.append(Pcnt)
+         if int(Pcnt % NProcesses) == 0 :
+            for Pcnt2 in PcntCompleted:
+	 	encoderlogfile='../Split_Video/Part{}/encoderlogPSNR.dat'.format(Pcnt2)
+	 	fid = open(encoderlogfile,'w')
+                fid.write(encoderlog[Pcnt2].stdout.read())
+                fid.close
+            PcntCompleted=[]
     return
 
 ###--------------------------------------------------------------
@@ -344,7 +367,7 @@ if __name__ == "__main__":
     fps=int(args.fps);
     GOP=int(args.gop);
     Width=int(args.w);
-    Hight=int(args.h);
+    Height=int(args.h);
     QP=int(args.qp);
     MaxCUSize=int(args.maxcusize);
     MaxPartitionDepth=int(args.maxpartitiondepth);
@@ -380,6 +403,6 @@ if __name__ == "__main__":
     #Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
     #Encode_decode_video(Distributed_GOP_Matrix)
     Combine_encoder_log(Distributed_GOP_Matrix)    
+    Measure_Rate_PSNR(Distributed_GOP_Matrix)
     print(Distributed_GOP_Matrix)
 
-#python ./Quality/measure.py  $InputYUV HMDecodedVideo_Stitching.yuv $W $H
