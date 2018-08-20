@@ -290,24 +290,16 @@ def Encode_decode_video(Distributed_GOP_Matrix):
 
 ###--------------------------------------------------------------
 def Measure_Rate_PSNR(Distributed_GOP_Matrix):
-    PcntCompleted=[]
-    encoderlog=[]
-    #for Pcnt in range(np.shape(Distributed_GOP_Matrix)[0]):
-    for Pcnt in range(1):
+    for Pcnt in range(np.shape(Distributed_GOP_Matrix)[0]):
+    #for Pcnt in range(3):
          print('Measuring Rate and PSNR for GOP#{} of {}'.format(Pcnt,(np.shape(Distributed_GOP_Matrix)[0]-1)))
          InputYUV='../Split_Video/Part{}/Part{}.yuv'.format(Pcnt,Pcnt)
          ReconFile='../Split_Video/Part{}/ReconPart{}.yuv'.format(Pcnt,Pcnt)
-         osout=call_bg('python ./Quality/measure.py {} {} {} {} &'.format(InputYUV,ReconFile,Width,Height))
-         encoderlog.append(osout)
-         #print(encoderlog)
-         PcntCompleted.append(Pcnt)
-         if int(Pcnt % NProcesses) == 0 :
-            for Pcnt2 in PcntCompleted:
-	 	encoderlogfile='../Split_Video/Part{}/encoderlogPSNR.dat'.format(Pcnt2)
-	 	fid = open(encoderlogfile,'w')
-                fid.write(encoderlog[Pcnt2].stdout.read())
-                fid.close
-            PcntCompleted=[]
+         (osout,err)=call('python ./Quality/measure.py {} {} {} {} &'.format(InputYUV,ReconFile,Width,Height))
+         encoderlogfile='../Split_Video/Part{}/encoderlog.dat'.format(Pcnt)
+	 fid = open(encoderlogfile,'a')
+         fid.write(osout)
+         fid.close
     return
 
 ###--------------------------------------------------------------
@@ -395,14 +387,15 @@ if __name__ == "__main__":
     ref_pics_active_Stitching=np.sort(ref_pics_active_Stitching)
     
     (Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)=Create_Distributed_GOP_Matrix();
-    #export_frames(vid)
-    #Split_Video_GOP(Distributed_GOP_Matrix)
+    export_frames(vid)
+    Split_Video_GOP(Distributed_GOP_Matrix)
     #print(ref_pics_active_Stitching)
     #print(ref_pics_in_Distributed_GOP_Matrix)
 
-    #Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
-    #Encode_decode_video(Distributed_GOP_Matrix)
-    Combine_encoder_log(Distributed_GOP_Matrix)    
+    Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
+    Encode_decode_video(Distributed_GOP_Matrix)
     Measure_Rate_PSNR(Distributed_GOP_Matrix)
+    Combine_encoder_log(Distributed_GOP_Matrix)    
+
     print(Distributed_GOP_Matrix)
 
