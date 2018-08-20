@@ -5,7 +5,7 @@ import numpy as np
 import os, sys, subprocess, pdb
 import argparse
 import ConfigParser
-import time
+import time, re
 
 
 
@@ -304,44 +304,88 @@ def Measure_Rate_PSNR(Distributed_GOP_Matrix):
 
 ###--------------------------------------------------------------
 def Combine_encoder_log(Distributed_GOP_Matrix):
-    CombinedLines=[]
-    CombinedLinesAll=[]
+    CombinedLinesRate=[]
+    CombinedLinesPSNR=[]
+    CombinedLinesRateAll=[]
+    CombinedLinesPSNRAll=[]
     for cnt_row in range(np.shape(Distributed_GOP_Matrix)[0]):
-        cnt_col=0
+        cnt_col_Rate=0
+        cnt_col_PSNR=0
         encoderlogfile='../Split_Video/Part{}/encoderlog.dat'.format(cnt_row)
         with open(encoderlogfile) as f:
              Lines = f.readlines()
         f.close()
         for cnt in range(len(Lines)):
-            if Lines[cnt][:].split(' ')[0] == 'POC':
-               CombinedLinesAll.append(Lines[cnt][:])
-               if (Distributed_GOP_Matrix[cnt_row][cnt_col] > Distributed_GOP_Matrix[cnt_row-1][GOP-1]) or (cnt_row==0):
-                    CombinedLines.append(Lines[cnt][:])
-                    cnt_col=cnt_col+1
+            templine=(Lines[cnt][:]).rstrip()
+            templine=templine.replace("  "," ")
+            templine=templine.replace("  "," ")
+            templine=templine.replace("  "," ")
+
+            if templine.split(' ')[0] == 'POC':
+               #print((templine).rstrip())
+               #print('POC {}'.format(templine.split(' ')[1]))
+               #print('{}   ...  {}'.format(cnt_row,cnt_col_Rate)) 
+               CombinedLinesRateAll.append(Lines[cnt][:])
+               if (Distributed_GOP_Matrix[cnt_row][cnt_col_Rate] > Distributed_GOP_Matrix[cnt_row-1][GOP-1]) or (cnt_row==0):
+                    CombinedLinesRate.append(Lines[cnt][:])
+                    cnt_col_Rate=cnt_col_Rate+1
                else:
-                    cnt_col=cnt_col+1
+                    cnt_col_Rate=cnt_col_Rate+1
+            
+            if (((re.split(' |:',templine)[0]) == 'Frame') and ((re.split(' |:',templine)[3]) == '[Y')):   
+               #print((Lines[cnt][:]).rstrip())
+               #print(re.split(' |:',templine)[0])
+               #print(re.split(' |:',templine)[1])
+               #print('{}   ...  {}'.format(cnt_row,cnt_col_PSNR)) 
+               CombinedLinesPSNRAll.append(Lines[cnt][:])
+               if (Distributed_GOP_Matrix[cnt_row][cnt_col_PSNR] > Distributed_GOP_Matrix[cnt_row-1][GOP-1]) or (cnt_row==0):
+                    CombinedLinesPSNR.append(Lines[cnt][:])
+                    cnt_col_PSNR=cnt_col_PSNR+1
+               else:
+                    cnt_col_PSNR=cnt_col_PSNR+1
+
 
     fid = open(Combined_encoder_log,'w')
-    for cnt in range(len(CombinedLines)):
-       templine=CombinedLines[cnt][:].replace("  "," ")
+    for cnt in range(len(CombinedLinesRate)):
+       templine=CombinedLinesRate[cnt][:].replace("  "," ")
        templine=templine.replace("  "," ")
        templine=templine.replace("  "," ")
        templine=templine.replace("  "," ")
        templine=templine.split(' ')
        #print('POC {}...{}'.format(cnt,templine[2:22]))
        fid.write('POC {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}\n'.format(cnt,str(templine[2]),str(templine[3]),str(templine[4]),str(templine[5]),str(templine[6]),str(templine[7]),str(templine[8]),str(templine[9]),str(templine[10]),str(templine[11]),str(templine[12]),str(templine[13]),str(templine[14]),str(templine[15]),str(templine[16]),str(templine[17]),str(templine[18]),str(templine[19]),str(templine[20]),str(templine[21]),str(templine[22])))
+
+    for cnt in range(len(CombinedLinesPSNR)):
+       templine=CombinedLinesPSNR[cnt][:].replace("  "," ")
+       templine=templine.replace("  "," ")
+       templine=templine.replace("  "," ")
+       templine=templine.replace("  "," ")
+       templine=templine.split(' ')
+       #print('Frame {}...{}'.format(cnt,templine[2:10]))
+       fid.write('Frame {} {} {} {} {} {} {} {} {}\n'.format(cnt,str(templine[2]),str(templine[3]),str(templine[4]),str(templine[5]),str(templine[6]),str(templine[7]),str(templine[8]),str(templine[9]),str(templine[10])))
     fid.close
 
 
     fid = open((Combined_encoder_log[0:(len(Combined_encoder_log)-4)]+'All.dat'),'w')
-    for cnt in range(len(CombinedLines)):
-       templine=CombinedLinesAll[cnt][:].replace("  "," ")
+    for cnt in range(len(CombinedLinesRateAll)):
+       templine=CombinedLinesRateAll[cnt][:].replace("  "," ")
        templine=templine.replace("  "," ")
        templine=templine.replace("  "," ")
        templine=templine.replace("  "," ")
        templine=templine.split(' ')
        #print('POC {}...{}'.format(cnt,templine[2:22]))
-       fid.write('POC {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}\n'.format(cnt,str(templine[1]),str(templine[2]),str(templine[3]),str(templine[4]),str(templine[5]),str(templine[6]),str(templine[7]),str(templine[8]),str(templine[9]),str(templine[10]),str(templine[11]),str(templine[12]),str(templine[13]),str(templine[14]),str(templine[15]),str(templine[16]),str(templine[17]),str(templine[18]),str(templine[19]),str(templine[20]),str(templine[21]),str(templine[22])))
+       fid.write('POC {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}\n'.format(str(templine[1]),str(templine[2]),str(templine[3]),str(templine[4]),str(templine[5]),str(templine[6]),str(templine[7]),str(templine[8]),str(templine[9]),str(templine[10]),str(templine[11]),str(templine[12]),str(templine[13]),str(templine[14]),str(templine[15]),str(templine[16]),str(templine[17]),str(templine[18]),str(templine[19]),str(templine[20]),str(templine[21]),str(templine[22])))
+    fid.close
+
+
+    for cnt in range(len(CombinedLinesPSNRAll)):
+       templine=CombinedLinesPSNRAll[cnt][:].replace("  "," ")
+       templine=templine.replace("  "," ")
+       templine=templine.replace("  "," ")
+       templine=templine.replace("  "," ")
+       templine=templine.split(' ')
+       #print('Frame {}...{}'.format(cnt,templine[2:10]))
+       fid.write('Frame {} {} {} {} {} {} {} {} {}\n'.format(str(templine[1]),str(templine[2]),str(templine[3]),str(templine[4]),str(templine[5]),str(templine[6]),str(templine[7]),str(templine[8]),str(templine[9]),str(templine[10])))
     fid.close
 
 ##################################################################
@@ -387,15 +431,14 @@ if __name__ == "__main__":
     ref_pics_active_Stitching=np.sort(ref_pics_active_Stitching)
     
     (Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)=Create_Distributed_GOP_Matrix();
-    export_frames(vid)
-    Split_Video_GOP(Distributed_GOP_Matrix)
-    #print(ref_pics_active_Stitching)
-    #print(ref_pics_in_Distributed_GOP_Matrix)
-
-    Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
-    Encode_decode_video(Distributed_GOP_Matrix)
-    Measure_Rate_PSNR(Distributed_GOP_Matrix)
+    #export_frames(vid)
+    #Split_Video_GOP(Distributed_GOP_Matrix)
+    #Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
+    #Encode_decode_video(Distributed_GOP_Matrix)
+    #Measure_Rate_PSNR(Distributed_GOP_Matrix)
     Combine_encoder_log(Distributed_GOP_Matrix)    
 
+    #print(ref_pics_active_Stitching)
+    #print(ref_pics_in_Distributed_GOP_Matrix)
     print(Distributed_GOP_Matrix)
 
