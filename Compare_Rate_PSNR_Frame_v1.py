@@ -14,8 +14,14 @@ parser = argparse.ArgumentParser(description='Optional app description')
 parser.add_argument('--fn1', type=str,
                     help='file name of first Rate_PSNR file')
 
+parser.add_argument('--Lfn1', type=str,
+                    help='Label of legend in plots related to first Rate_PSNR file')
+
 parser.add_argument('--fn2', type=str,
                     help='file name of second Rate_PSNR file')
+
+parser.add_argument('--Lfn2', type=str,
+                    help='Label of legend in plots related to second Rate_PSNR file')
 
 args = parser.parse_args()
 
@@ -72,14 +78,16 @@ if __name__ == '__main__':
    ##Inputs
    fname1=args.fn1;
    fname2=args.fn2;
+   Lfname1=args.Lfn1;
+   Lfname2=args.Lfn2;
    #np.set_printoptions(threshold=np.nan)
    
    plt.subplot(2, 1, 1)
    f1_FNum_Rate_PSNR=Get_FNum_Rate_PSNR(fname1)
-   plt.plot(f1_FNum_Rate_PSNR[:,0],f1_FNum_Rate_PSNR[:,1],"r-")
+   plt.plot(f1_FNum_Rate_PSNR[:,0],f1_FNum_Rate_PSNR[:,1],"r--")
    f2_FNum_Rate_PSNR=Get_FNum_Rate_PSNR(fname2)
-   plt.plot(f2_FNum_Rate_PSNR[:,0],f2_FNum_Rate_PSNR[:,1],"b-")
-   plt.legend(['fn1','fn2'])
+   plt.plot(f2_FNum_Rate_PSNR[:,0],f2_FNum_Rate_PSNR[:,1],"b--")
+   plt.legend([Lfname1,Lfname2])
    #plt.title('Comparing 2 videos')
    plt.xlabel('Frame Number')
    plt.ylabel('Frame Size (kbits)')
@@ -87,10 +95,10 @@ if __name__ == '__main__':
 
    plt.subplot(2, 1, 2)
    f1_FNum_Rate_PSNR=Get_FNum_Rate_PSNR(fname1)
-   plt.plot(f1_FNum_Rate_PSNR[:,0],f1_FNum_Rate_PSNR[:,2],"r-")
+   plt.plot(f1_FNum_Rate_PSNR[:,0],f1_FNum_Rate_PSNR[:,2],"r--")
    f2_FNum_Rate_PSNR=Get_FNum_Rate_PSNR(fname2)
-   plt.plot(f2_FNum_Rate_PSNR[:,0],f2_FNum_Rate_PSNR[:,2],"b-")
-   plt.legend(['fn1','fn2'])
+   plt.plot(f2_FNum_Rate_PSNR[:,0],f2_FNum_Rate_PSNR[:,2],"b--")
+   plt.legend([Lfname1,Lfname2])
    #plt.title('Comparing 2 videos')
    plt.xlabel('Frame Number')
    plt.ylabel('PSNR (dB)')
@@ -99,10 +107,10 @@ if __name__ == '__main__':
 ## read the over all: Number of Frames, Rate, PSNR
    TotalRatefn1=Get_TotalRate(fname1)
    TotalPSNRfn1=Get_TotalPSNR(fname1)
-   print("Fn1: Rate={}kbps, PSNR={}dB").format(TotalRatefn1,TotalPSNRfn1)
+   print("Fn1 {}: Rate={}kbps, PSNR={}dB").format(Lfname1,TotalRatefn1,TotalPSNRfn1)
 
    TotalRatefn2=Get_TotalRate(fname2)
    TotalPSNRfn2=Get_TotalPSNR(fname2)
-   print("Fn2: Rate={}kbps, PSNR={}dB").format(TotalRatefn2,TotalPSNRfn2)
+   print("Fn2 {}: Rate={}kbps, PSNR={}dB").format(Lfname2,TotalRatefn2,TotalPSNRfn2)
 
    plt.show()

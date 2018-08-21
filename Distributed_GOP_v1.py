@@ -239,9 +239,11 @@ def Encode_decode_video(Distributed_GOP_Matrix):
          osout = call('rm -rf {}'.format(BitstreamFile))
          osout = call('cp -f ./encoder_HMS.cfg ../Split_Video/Part{}/encoder_HMS.cfg'.format(Pcnt))
     
-         #print('./HMS/bin/TAppEncoderStatic -c ../Split_Video/Part{}/encoder_HMS.cfg -c ../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={}'.format(Pcnt,Pcnt,Pcnt,InputYUV,Width,Height,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
-    
-         osout=call_bg('./HMS/bin/TAppEncoderStatic -c ../Split_Video/Part{}/encoder_HMS.cfg -c ../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={} &'.format(Pcnt,Pcnt,Pcnt,InputYUV,Width,Height,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
+         #print('./HMS/bin/TAppEncoderStatic -c ../Split_Video/Part{}/encoder_HMS.cfg -c ../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={}'.format(Pcnt,Pcnt,Pcnt,InputYUV,Width,Height,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,rate))
+         if RateControl==0:
+             osout=call_bg('./HMS/bin/TAppEncoderStatic -c ../Split_Video/Part{}/encoder_HMS.cfg -c ../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={} &'.format(Pcnt,Pcnt,Pcnt,InputYUV,Width,Height,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,rate))
+         else:
+             osout=call_bg('./HMS/bin/TAppEncoderStatic -c ../Split_Video/Part{}/encoder_HMS.cfg -c ../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={} &'.format(Pcnt,Pcnt,Pcnt,InputYUV,Width,Height,QP,fps,GOP*alpha,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,rate))
          encoderlog.append(osout)
          PcntCompleted.append(Pcnt)
          if int(Pcnt % NProcesses) == 0 :
@@ -485,7 +487,7 @@ if __name__ == "__main__":
     rate=int(args.rate);
     NProcesses=int(args.nprocesses);
     Combined_encoder_log=args.combined_encoder_log
-
+    alpha=float(args.alpha)  ##rate control factor to avoid degradation of rate/PSNR at the end of the GOP.
     
     fsr=fps
 
