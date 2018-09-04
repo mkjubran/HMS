@@ -79,14 +79,17 @@ def content_similarity(img_0, img_1):
     # find the keypoints and descriptors with SIFT
     kp1, des1 = orb.detectAndCompute(img1,None)
     kp2, des2 = orb.detectAndCompute(img2,None)
-    
+    #print(img_0);print(img_1);print(img1);print(img2)
+    #print(des1)
+    #print(des2)
+    #pdb.set_trace()
     if (type(des1)==type(des2)):
     	# create BFMatcher object
     	bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
 
     	# Match descriptors.
     	matches = bf.match(des1,des2)
-    	# pdb.set_trace()
+    	#pdb.set_trace()
         #print("simind_1 matches={}").format(matches)
 
     	# Sort them in the order of their distance.
@@ -194,7 +197,7 @@ def map_to_downsampled(lwin,fname):
     np.save((fname+'_SceneCutFramesBeforeDownSampling'),(lwinBeforedownSampledint-1))
     np.save((fname+'_SceneCutFrames'),(lwindownSampledint-1))
     for iwin in lwindownSampledint:    
-        lwindownSampled.append('png/'+str(iwin)+'.png')
+        lwindownSampled.append('pngDS/'+str(iwin)+'.png')
     return lwindownSampled
 
 
@@ -222,7 +225,7 @@ if __name__ == '__main__':
     #print(lwin)
     lwin1 = find_scene_cuts(fn);
     #lwin1 = find_scene_cuts('../vid/out.mp4') ;
-    print(lwin1)
+    #print(lwin1)
     lwin1=map_to_downsampled(lwin1,fname)
     print(lwin1)
     print("Number of SC frames is {}").format(len(lwin1))
@@ -235,7 +238,7 @@ if __name__ == '__main__':
     print("Computing similarity between SC and all frames")
     lwinsim=comp_similarity(lwin,lwin_sc,lwinsim)
     
-    LambdaPoP=0.000001
+    LambdaPoP=0.000000001
     WeightPicPos=LambdaPoP*(np.transpose(np.full((len(lwin),1),1)*np.array(range(1,len(lwin)+1))))
     #lwinsimNorm=lwinsim/np.matrix.max(lwinsim)
     np.set_printoptions(threshold=np.nan)
