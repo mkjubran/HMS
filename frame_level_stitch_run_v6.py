@@ -210,7 +210,10 @@ def comp_dissimilarity(lwin_r,lwin_c,lwinsim):
           iwin_r=int(s.group(0))
           s=re.search('(?<=/)\w+', str(win_c))
           iwin_c=int(s.group(0))
-          lwinsim[iwin_r-1][iwin_c-1]=window_similarity(win_r, win_c)
+          if window_similarity(win_r, win_c)==1000:
+              lwinsim[iwin_r-1][iwin_c-1]=0
+          else:
+              lwinsim[iwin_r-1][iwin_c-1]=window_similarity(win_r, win_c)
     return lwinsim
 
 if __name__ == '__main__':
@@ -255,6 +258,8 @@ if __name__ == '__main__':
 
     lwinsim=((lwinsim.astype(float))/np.amax(np.amax(lwinsim)))
     np.save(('../savenpy/'+fname+'_lwinsimNormalized'),lwinsim)
+    print(np.unique(lwinsim))
+    print(np.mean(np.mean(lwinsim,0),0))
     lwinsim=lwinsim+WeightPicPos
     np.save(('../savenpy/'+fname+'_lwinsimNormalizedWeighted'),lwinsim)
     #print(np.mean(lwinsim,0))
@@ -301,7 +306,8 @@ if __name__ == '__main__':
         #print(next_candidate_criterion)
         # Sorted list indices
         sorted_candidate_criterion = [ _[0] for _ in sorted(enumerate(next_candidate_criterion), key=lambda x:x[1], reverse=True) ]
-        #print(sorted_candidate_criterion)
+        sorted_candidate_criterion_Index_Value = [ _ for _ in sorted(enumerate(next_candidate_criterion), key=lambda x:x[1], reverse=True) ]
+        #print(sorted_candidate_criterion_Index_Value)
         # next_candidate = lwin[np.argmax(lwinsim[current_top_win_index])]
         #for next_candidate in sorted_candidate_criterion:
 
@@ -314,6 +320,11 @@ if __name__ == '__main__':
                current_top_win_index = next_candidate
                break
         print(lwin_opt_sorting)
+ 
+    #reprint the SC frames
+    print("Number of SC frames is {}").format(len(lwin1))    
+    print(lwin1)
+
     np.save(('../savenpy/'+fname+'_lwindissim'),lwindissim)
     np.save(('../savenpy/'+fname+'_lwindissimNormalized'),lwindissimNorm)
     print('\nOPTIMAL Stitching frames at Downsampled space:') ; print(lwin_opt_sorting)
@@ -324,8 +335,6 @@ if __name__ == '__main__':
                lwin_opt_sorting=np.append(lwin_opt_sorting,i)
   
     #print('\nOPTIMAL HEVC GOP ORDER at Downsampled space:') ; print(lwin_opt_sorting)
- 
-    ## Added by Jubran
     fid = open('OrderedFrames_'+fname+'_fps'+str(fps)+'_fsr'+str(fsr)+'.txt','w')
     for FNum in lwin_opt_sorting:
     	print >> fid, FNum
