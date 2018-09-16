@@ -4,6 +4,7 @@ import cv2, os, sys, subprocess, pdb
 import scenedetect, re
 import datetime, math, time
 import argparse
+from numpy import *
 
 FRMPERWIN = 1 ; INF = 999
 
@@ -217,6 +218,7 @@ def comp_dissimilarity(lwin_r,lwin_c,lwinsim):
     return lwinsim
 
 if __name__ == '__main__':
+    np.set_printoptions(threshold=np.nan)
     #fn=sys.argv[-1]
     fname=fn.split('/')[2]
     fname=fname[0:(len(fname)-4)]

@@ -1,16 +1,19 @@
 #Frame1: Type POC QPoffset QPOffsetModelOff QPOffsetModelScale CbQPoffset CrQPoffset QPfactor tcOffsetDiv2 betaOffsetDiv2 temporal_id #ref_pics_active #ref_pics reference pictures     predict deltaRPS #ref_idcs reference idcs
 #print >> fid, 'Frame1:  P    1   5       -6.5                      0.2590         0          0          1.0   0            0               0           1                1         -1      0');
 from __future__ import division
+from numpy import *
 import numpy as np
-import os, sys, subprocess, pdb
+import cv2, os, sys, subprocess, pdb
 import argparse
 import ConfigParser
-import time, re
+import time, re, datetime
 import math
+import matplotlib.pyplot as plt
 
 
 
-INF = 999
+
+FRMPERWIN = 1 ; INF = 999
 
 ###--------------------------------------------------------------
 ## Parse configuration Parameters from the configuration file
@@ -315,9 +318,105 @@ def Edit_encoder_log():
        fid.write('POC {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}\n'.format(str(templine[1]),str(templine[2]),str(templine[3]),str(templine[4]),str(templine[5]),str(templine[6]),str(templine[7]),str(templine[8]),str(templine[9]),str(templine[10]),str(templine[11]),str(templine[12]),str(templine[13]),str(templine[14]),str(templine[15]),str(templine[16]),str(templine[17]),str(templine[18]),str(templine[19]),str(templine[20]),str(templine[21]),str(templine[22])))
     fid.close
 
+
+###################################################################3
+## check similarity using SIFT
+def call_err(cmd):
+    # proc = subprocess.Popen(["cat", "/etc/services"], stdout=subprocess.PIPE, shell=True)
+    proc = subprocess.Popen(cmd, \
+                   stdout=subprocess.PIPE, shell=True)
+    (out, err) = proc.communicate()
+    return (out, err)
+
+def get_frames_list(fn):
+    osout = call_err('ls -v ../CodecSIFT/pngall/*.png') ; lfrmall = osout[0]
+    lfrmall = lfrmall.split('\n')[0:-1]
+    
+    osout = call_err('rm -rf ../CodecSIFT/pngDS')
+    osout = call_err('mkdir ../CodecSIFT/pngDS')
+    for cnt in range(len(lfrmall)):
+        if ((cnt) % (fps/fsr)) == 0:
+             osout = call_err('cp -rf ../CodecSIFT/pngall/{}.png ../CodecSIFT/pngDS/{}.png'.format((cnt+1),int((cnt/(fps/fsr))+1)))
+ 
+    osout = call_err('ls -v ../CodecSIFT/pngDS/*.png') ; lfrm = osout[0]
+    lfrm = lfrm.split('\n')[0:-1]
+    return lfrm
+
+def make_windows(lfrm, numfrmwin):
+    numfrm = len(lfrm) ; numwin = numfrm/numfrmwin
+    lwin = []
+    for i in range(0, numfrm, numfrmwin ): lwin.append(lfrm[i:i+numfrmwin])
+    return lwin
+
+def comp_similarity(lwin_,lwin_sc_,lwinsim):
+    for win in lwin_:
+        now = datetime.datetime.now()
+        #print('{} ... {}').format(win,now.strftime("%Y-%m-%d %H:%M:%S"))
+        for win_sc in lwin_sc_:
+          s=re.split('/',str(win))[-1]
+          iwin=int(s[0:(len(s)-6)])
+
+          s=re.split('/',win_sc)[-1]
+          iwin_sc=int(s[0:(len(s)-4)])
+          lwinsim[iwin-1][iwin_sc-1]=window_similarity(win, win_sc)
+	  #print('{}..&..{}=..{}').format(win,win_sc,lwinsim[iwin-1][iwin_sc-1])
+    return lwinsim
+
+def window_similarity(win_0, win_1):
+    lfrmsim = []
+    if (type(win_0) == str and type(win_1) == str):
+       lfrmsim.append(content_similarity(win_0, win_1))
+    elif (type(win_0) == str and type(win_1) <> str):
+       lfrmsim.append(content_similarity(win_0, win_1[0]))
+    elif (type(win_0) <> str and type(win_1) == str):
+       lfrmsim.append(content_similarity(win_0[0], win_1))
+    else:
+       lfrmsim.append(content_similarity(win_0[0], win_1[0]))
+        
+    return np.mean(lfrmsim)
+
+def content_similarity(img_0, img_1):
+    
+    img1 = cv2.imread(img_0, 0)
+    img2 = cv2.imread(img_1, 0)
+
+    # Initiate SIFT detector
+    orb = cv2.ORB_create()
+    #orb = cv2.ORB()
+    #print("{} ...... {}\n").format(img_0,img_1)
+
+    # find the keypoints and descriptors with SIFT
+    kp1, des1 = orb.detectAndCompute(img1,None)
+    kp2, des2 = orb.detectAndCompute(img2,None)
+
+    if (type(des1)==type(des2)):
+    	# create BFMatcher object
+    	bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+
+    	# Match descriptors.
+    	matches = bf.match(des1,des2)
+    	#pdb.set_trace()
+        #print("simind_1 matches={}").format(matches)
+
+    	# Sort them in the order of their distance.
+    	matches   = sorted(matches, key = lambda x:x.distance)
+    	distances = [ _.distance for _ in matches]
+    	simind_1    =  np.mean(distances)
+    	#print("simind_1={}\n").format(simind_1)
+     
+        if math.isnan(simind_1):
+          simind_1=1000
+
+        simind_2=simind_1
+    	simind = (simind_1 + simind_2)/float(2)
+    else:
+        simind=1000
+    return simind
+
 ##################################################################
 ## Main Body
 if __name__ == "__main__":
+    np.set_printoptions(threshold='nan')
     args=main()
 
     ##Inputs
@@ -358,6 +457,28 @@ if __name__ == "__main__":
     #Build_encoding_struct_stitch()
     #Encode_decode_video()
     #Measure_Rate_PSNR()
-    Edit_encoder_log()    
+    #Edit_encoder_log()    
+
+
+    fname=fnname
+    
+    lfrm = get_frames_list(vid);
+    lwin = make_windows(lfrm, FRMPERWIN)
+    lwinsim=np.full((len(lwin),len(lwin)), INF)
+    lwin_stitch=lwin[StitchFrame-1]
+    lwinsim=comp_similarity(lwin,lwin_stitch,lwinsim)
+
+
+    s=re.split('/',str(lwin_stitch))[-1]
+    lwinsim=np.array(lwinsim)
+    SIFT_score=lwinsim[:,int(s[0:(len(s)-6)])-1]
+    SIFT_score_Norm=SIFT_score/np.max(SIFT_score)
+   
+    plt.plot(range(len(SIFT_score_Norm)),SIFT_score_Norm)
+    plt.title('average SIFT Score')
+    plt.xlabel('Frame Number')
+    plt.ylabel('Average SIFT Score')
+    plt.legend(['SIFT'])
+    plt.show()
 
 
