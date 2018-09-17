@@ -276,8 +276,8 @@ def Edit_encoder_log():
        templine=templine.split(' ')
        fid.write('Frame {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}\n'.format(cnt,str(templine[2]),str(templine[3]),str(templine[4]),str(templine[5]),str(templine[6]),str(templine[7]),str(templine[8]),str(templine[9]),str(templine[10]),str(templine[11]),str(templine[12]),str(templine[13]),str(templine[14]),str(templine[15]),str(templine[16]),str(templine[17]),str(templine[18]),str(templine[19])))
        PSNR_temp=str(templine[3])
-       PSNR_Rate[cnt,0]=cnt
-       PSNR_Rate[cnt,2]=float(PSNR_temp[0:(len(PSNR_temp)-2)])
+       Rate_PSNR[cnt,0]=cnt
+       Rate_PSNR[cnt,2]=float(PSNR_temp[0:(len(PSNR_temp)-2)])
 
 ## write Rate
     fid.write('\n\n')
@@ -289,7 +289,7 @@ def Edit_encoder_log():
        templine=templine.split(' ')
        fid.write('POC {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}\n'.format(cnt,str(templine[2]),str(templine[3]),str(templine[4]),str(templine[5]),str(templine[6]),str(templine[7]),str(templine[8]),str(templine[9]),str(templine[10]),str(templine[11]),str(templine[12]),str(templine[13]),str(templine[14]),str(templine[15]),str(templine[16]),str(templine[17]),str(templine[18]),str(templine[19]),str(templine[20]),str(templine[21]),str(templine[22])))
        Rate_temp=str(templine[11])
-       PSNR_Rate[cnt,1]=float(Rate_temp)
+       Rate_PSNR[cnt,1]=float(Rate_temp)
 
     fid.write('\nNumber of Frames = {}\n'.format(NumFramesRate))
     fid.write('Written bites = {}\n'.format(TotalBits))
@@ -449,25 +449,25 @@ if __name__ == "__main__":
     Encode_decode_video()
     Measure_Rate_PSNR()
 
-    PSNR_Rate=np.full((GOP,3), INF,float)
+    Rate_PSNR=np.full((GOP,3), INF,float)
     Edit_encoder_log() 
-    PSNR_Rate=np.array(PSNR_Rate)   
-    #print(PSNR_Rate)
+    Rate_PSNR=np.array(Rate_PSNR)   
+    #print(Rate_PSNR)
 
     fname=fnname
     
     lfrm = get_frames_list(vid);
+    lfrm=lfrm[0:GOP]
     lwin = make_windows(lfrm, FRMPERWIN)
     lwinsim=np.full((len(lwin),len(lwin)), INF)
     lwin_stitch=lwin[StitchFrame-1]
     lwinsim=comp_similarity(lwin,lwin_stitch,lwinsim)
 
 
-
-    Rate=PSNR_Rate[:,1]
+    Rate=Rate_PSNR[:,1]
     Rate_Norm=Rate/np.max(Rate)
 
-    PSNR=PSNR_Rate[:,2]
+    PSNR=Rate_PSNR[:,2]
     PSNR_Norm=PSNR/np.max(PSNR)
 
     s=re.split('/',str(lwin_stitch))[-1]
@@ -475,11 +475,18 @@ if __name__ == "__main__":
     SIFT_score=lwinsim[:,int(s[0:(len(s)-6)])-1]
     SIFT_score=SIFT_score[0:GOP]
     SIFT_score_Norm=SIFT_score/np.max(SIFT_score)
-   
+    SIFT_score=SIFT_score.reshape(len(SIFT_score),1)
+
+
+    Rate_PSNR_SIFT=np.concatenate((Rate_PSNR, SIFT_score),axis=1)
+    np.save(('../savenpy/'+fnname+'_Rate_PSNR_SIFT'),Rate_PSNR_SIFT)
+
+    #print(Rate_PSNR_SIFT)
+
     fig1, ax1 =plt.subplots()
-    ax1.plot(range(len(SIFT_score_Norm)),SIFT_score_Norm,'-r')
+    ax1.plot(range(len(SIFT_score_Norm)),SIFT_score_Norm,'-k')
     ax1.plot(range(len(Rate)),Rate_Norm,'--b')
-    ax1.plot(range(len(PSNR)),PSNR_Norm,':g')
+    ax1.plot(range(len(PSNR)),PSNR_Norm,':r')
     ax1.set_title('SIFT Similarity Score & CODEC Rate PSNR')
     ax1.set_xlabel('Frame Number')
     #ax1.set_ylabel('Average SIFT Score')
@@ -487,19 +494,30 @@ if __name__ == "__main__":
 
 
     fig2, ax2 =plt.subplots()
-    ax2.plot(range(len(SIFT_score_Norm)),SIFT_score_Norm,'-r')
-    ax2.plot(range(len(PSNR)),PSNR_Norm,':g')
-    ax2.set_title('SIFT Similarity Score & CODEC PSNR')
+    ax2.plot(range(len(SIFT_score_Norm)),SIFT_score_Norm,'-k')
+    ax2.plot(range(len(Rate)),Rate_Norm,'--b')
+    ax2.set_title('SIFT Similarity Score & CODEC Rate')
     ax2.set_xlabel('Frame Number')
     #ax2.set_ylabel('Average SIFT Score')
-    ax2.legend(['SIFT','PSNR'])
-
+    ax2.legend(['SIFT','Rate'])
 
     fig3, ax3 =plt.subplots()
-    ax3.plot(range(len(SIFT_score_Norm)),SIFT_score_Norm,'-r')
-    ax3.plot(range(len(Rate)),Rate_Norm,':g')
-    ax3.set_title('SIFT Similarity Score & CODEC Rate')
+    ax3.plot(range(len(SIFT_score_Norm)),SIFT_score_Norm,'-k')
+    ax3.plot(range(len(PSNR)),PSNR_Norm,':r')
+    ax3.set_title('SIFT Similarity Score & CODEC PSNR')
     ax3.set_xlabel('Frame Number')
     #ax3.set_ylabel('Average SIFT Score')
-    ax3.legend(['SIFT','Rate'])
+    ax3.legend(['SIFT','PSNR'])
+
+
+    fig4, ax4 =plt.subplots()
+    ax4.plot(range(np.shape(Rate_PSNR_SIFT)[0]),(Rate_PSNR_SIFT[:,3]/np.max(Rate_PSNR_SIFT[:,3])),'-k')
+    ax4.plot(range(np.shape(Rate_PSNR_SIFT)[0]),(Rate_PSNR_SIFT[:,2]/np.max(Rate_PSNR_SIFT[:,2])),':r')
+    ax4.plot(range(np.shape(Rate_PSNR_SIFT)[0]),(Rate_PSNR_SIFT[:,1]/np.max(Rate_PSNR_SIFT[:,1])),'--b')
+    ax4.set_title('SIFT Similarity Score & CODEC PSNR')
+    ax4.set_xlabel('Frame Number')
+    #ax3.set_ylabel('Average SIFT Score')
+    ax4.legend(['SIFT','PSNR'])
+
+
     plt.show()
