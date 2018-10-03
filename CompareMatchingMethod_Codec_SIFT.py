@@ -148,7 +148,7 @@ def Encode_decode_video():
     osout = call('rm -rf {}'.format(BitstreamFile))
     osout = call('cp -f ./encoder_HMS.cfg ../CodecSIFT/encoder_HMS.cfg')
     if RateControl==0:
-        osout=call_bg('./HMS/bin/TAppEncoderStatic -c ../CodecSIFT/encoder_HMS.cfg -c ../CodecSIFT/encoder_HMS_GOP.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={} &'.format(InputYUV,Width,Height,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,rate))
+        osout=call_bg('./HMS/bin/TAppEncoderStatic -c ../CodecSIFT/encoder_HMS.cfg -c ../CodecSIFT/encoder_HMS_GOP.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={} '.format(InputYUV,Width,Height,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,rate))
     else:
         osout=call_bg('./HMS/bin/TAppEncoderStatic -c ../CodecSIFT/encoder_HMS.cfg -c ../CodecSIFT/encoder_HMS_GOP.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={} &'.format(InputYUV,Width,Height,QP,fps,GOP*alpha,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,rate))
     encoderlogfile='../CodecSIFT/encoderlog.dat'

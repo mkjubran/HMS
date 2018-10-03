@@ -42,7 +42,7 @@ def export_frames(fn):
 
     osout = call('ls -v pngall/*.png') ; lfrmall = osout[0]
     lfrmall = lfrmall.split('\n')[0:-1]
-    
+    '''
     osout = call('rm -rf pngDS')
     osout = call('mkdir pngDS')
     for cnt in range(len(lfrmall)):
@@ -52,8 +52,11 @@ def export_frames(fn):
     osout = call('ls -v pngDS/*.png') ; lfrm = osout[0]
     lfrm = lfrm.split('\n')[0:-1]
     osout = call('rm -rf ../vid/out.mp4')
-    osout = call('ffmpeg -start_number 0 -i "pngDS/%d.png" -c:v libx264 -vf "fps={},format=yuv420p" ../vid/out.mp4'.format(fps))
-    return lfrm
+    #osout = call('ffmpeg -start_number 0 -i "pngDS/%d.png" -c:v libx264 -vf "fps={},format=yuv420p" ../vid/out.mp4'.format(fps))
+    '''
+    osout = call('rm -rf ../vid/out.mp4')
+    osout = call('ffmpeg -start_number 0 -i "pngall/%d.png" -c:v libx264 -qp 0 -vf "fps={},format=yuv420p" ../vid/out.mp4'.format(fps))
+    return lfrmall
 
 def window_similarity(win_0, win_1):
     lfrmsim = []
@@ -183,6 +186,7 @@ def comp_similarity(lwin_,lwin_sc_,lwinsim):
           #lwinsim[iwin_sc-1][iwin-1]=lwinsim[iwin-1][iwin_sc-1]
     return lwinsim
 
+'''
 def map_to_downsampled(lwin,fname):
     lwindownSampled = []
     lwindownSampledint = []
@@ -202,7 +206,7 @@ def map_to_downsampled(lwin,fname):
     for iwin in lwindownSampledint:    
         lwindownSampled.append('pngDS/'+str(iwin)+'.png')
     return lwindownSampled
-
+'''
 
 def comp_dissimilarity(lwin_r,lwin_c,lwinsim):
     for win_r in lwin_r:
@@ -233,7 +237,7 @@ if __name__ == '__main__':
     lwin1 = find_scene_cuts(fn);
     #lwin1 = find_scene_cuts('../vid/out.mp4') ;
     #print(lwin1)
-    lwin1=map_to_downsampled(lwin1,fname)
+    #lwin1=map_to_downsampled(lwin1,fname)
     print(lwin1)
     print("Number of SC frames is {}").format(len(lwin1))
     
@@ -323,8 +327,8 @@ if __name__ == '__main__':
                lwin_opt_sorting.append(next_candidate)
                current_top_win_index = next_candidate
                break
-        print(lwin_opt_sorting)
-        print('## {} of {} is completed'.format(len(lwin_opt_sorting),len(lwin_sc)))
+        #print(lwin_opt_sorting)
+        print('{} .... {}% '.format(lwin_opt_sorting,100*len(lwin_opt_sorting)/(len(lwin_sc)+1)))
  
     #reprint the SC frames
     print("Number of SC frames is {}").format(len(lwin1))    

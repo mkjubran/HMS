@@ -156,10 +156,13 @@ def Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Mat
         else:
            ref_pics_Stitching_array_Distributed=Abs_ref_pics_Stitching_array_Distributed
         
-        ref_pics_Stitching_array_Distributed=ref_pics_Stitching_array_Distributed.astype(int)
+        ref_pics_Stitching_array_Distributed_int=[]
+        for cnt_int in range(len(ref_pics_Stitching_array_Distributed)):
+	        ref_pics_Stitching_array_Distributed_int=np.append(ref_pics_Stitching_array_Distributed_int,int (ref_pics_Stitching_array_Distributed[cnt_int]))
+
+        ref_pics_Stitching_array_Distributed=ref_pics_Stitching_array_Distributed_int
         print('Stitching Frames in the Ref Picture set: Absolute Frame Numbers = {}').format(Abs_ref_pics_Stitching_array_Distributed)
         print('Stitching Frames in the Ref Picture set: Frame Numbers Relative to this GOP = {}').format(ref_pics_Stitching_array_Distributed)
-
 
     	##write config files header
     	fid = open('../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg'.format(Pcnt,Pcnt),'w')
