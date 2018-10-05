@@ -115,14 +115,14 @@ def content_similarity(img_0, img_1):
     	#simind_2    =  np.mean(distances)
         
         if math.isnan(simind_1):
-          simind_1=1000
+          simind_1=INF
 
         simind_2=simind_1
     	simind = (simind_1 + simind_2)/float(2)
         #print("simind={}").format(simind)
 	#print("dis1={}\n dis2={}...{}\n").format(des1,des2,simind)
     else:
-        simind=1000
+        simind=INF
 	#print("dis1={}\n dis2={}...{}\n").format(des1,des2,simind)
 
     # Draw first 10 matches.
@@ -164,7 +164,7 @@ def find_scene_cuts(fn):
 
     win_sc=[];
     for i in range(0, len(scene_list)): 
-            win_sc.append('png/'+str(scene_list[i])+'.png')
+            win_sc.append('pngall/'+str(scene_list[i])+'.png')
     #print(win_sc)
     return win_sc
 
@@ -241,12 +241,13 @@ if __name__ == '__main__':
     print(lwin1)
     print("Number of SC frames is {}").format(len(lwin1))
     
-    #lwin1.append('png/1.png') ##it is no neccessary to have first frame part of the stitching frames
+    #lwin1.append('pngall/1.png') ##it is no neccessary to have first frame part of the stitching frames
     lwin_sc = make_windows(lwin1, FRMPERWIN)
     lwinsim=np.full((len(lwin),len(lwin)), INF)
     lwindissim=np.full((len(lwin),len(lwin)), INF)
    
     LambdaPoP=0.0000001
+    LambdaPoP=0
     WeightPicPos=LambdaPoP*(np.transpose(np.full((len(lwin),1),1)*np.array(range(1,len(lwin)+1))))
     #lwinsimNorm=lwinsim/np.matrix.max(lwinsim)
     np.set_printoptions(threshold=np.nan)
@@ -264,18 +265,22 @@ if __name__ == '__main__':
        lwinsim=comp_similarity(lwin,lwin_sc,lwinsim)
        np.save(('../savenpy/'+fname+'_lwinsim'),lwinsim)
 
-    lwinsim=((lwinsim.astype(float))/np.amax(np.amax(lwinsim)))
-    np.save(('../savenpy/'+fname+'_lwinsimNormalized'),lwinsim)
-    print(np.unique(lwinsim))
-    print(np.mean(np.mean(lwinsim,0),0))
-    lwinsim=lwinsim+WeightPicPos
-    np.save(('../savenpy/'+fname+'_lwinsimNormalizedWeighted'),lwinsim)
+    lwinsim_0=lwinsim
+    lwinsim_0[lwinsim_0==INF]=-1
+    lwinsim_0[lwinsim_0==-1]=np.amax(np.amax(lwinsim_0))
+    np.save(('../savenpy/'+fname+'_lwinsim_0'),lwinsim_0)
+    lwinsim_0=((lwinsim_0.astype(float))/np.amax(np.amax(lwinsim_0)))
+    np.save(('../savenpy/'+fname+'_lwinsimNormalized'),lwinsim_0)
+    print(np.unique(lwinsim_0))
+    print(np.mean(np.mean(lwinsim_0,0),0))
+    lwinsim_0=lwinsim_0+WeightPicPos
+    np.save(('../savenpy/'+fname+'_lwinsimNormalizedWeighted'),lwinsim_0)
     #print(np.mean(lwinsim,0))
     
 
     #pdb.set_trace()
     #print('\nWindow similarity matrix:') ; print(np.matrix(lwinsim))
-    lwin_popularity_index = [ np.mean(_) for _ in lwinsim ]
+    lwin_popularity_index = [ np.mean(_) for _ in lwinsim_0 ]
     #print(lwin_popularity_index)
     #lwin_popularity_index = np.mean(lwinsim,1)
     #print(lwin_popularity_index)
@@ -301,7 +306,9 @@ if __name__ == '__main__':
         # Make choice criterion list
         #pdb.set_trace()
         lwindissim=comp_dissimilarity(lwin[current_top_win_index],lwin,lwindissim)
-        lwindissimNorm=((lwindissim.astype(float))/np.amax(np.amax(lwindissim)))
+        lwindissim_0=lwindissim;
+        lwindissim_0[lwindissim_0==INF]=0
+        lwindissimNorm=((lwindissim_0.astype(float))/np.amax(np.amax(lwindissim_0)))
         #print(np.mean(lwindissimNorm,axis=1))
         #print(np.mean(lwindissimNorm,axis=0))
         #print('\nWindow dissimilarity matrix:') ; print(np.matrix(lwindissim))
@@ -335,6 +342,7 @@ if __name__ == '__main__':
     print(lwin1)
 
     np.save(('../savenpy/'+fname+'_lwindissim'),lwindissim)
+    np.save(('../savenpy/'+fname+'_lwindissim_0'),lwindissim_0)
     np.save(('../savenpy/'+fname+'_lwindissimNormalized'),lwindissimNorm)
     print('\nOPTIMAL Stitching frames at Downsampled space:') ; print(lwin_opt_sorting)
     lwin_opt_sorting=np.array(lwin_opt_sorting)*fps/fsr
