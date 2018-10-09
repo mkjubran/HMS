@@ -7,7 +7,7 @@ import argparse
 import scipy.io as sio
 from numpy import *
 
-FRMPERWIN = 1 ; INF = 999
+FRMPERWIN = 1 ; INF = 9999999
 
 # Instantiate the parser
 parser = argparse.ArgumentParser(description='Optional app description')
@@ -16,16 +16,12 @@ parser = argparse.ArgumentParser(description='Optional app description')
 parser.add_argument('--f', type=str,
                     help='file name')
 
-parser.add_argument('--fsr', type=int,
-                    help='frame sample rate (ffmpeg -r ?)')
-
 parser.add_argument('--fps', type=int,
                     help='frame rate (ffmpeg -r ?)')
 
 args = parser.parse_args()
 
 fn=args.f;
-fsr=args.fsr;
 fps=args.fps;
 
 def call(cmd):
@@ -42,18 +38,7 @@ def export_frames(fn):
 
     osout = call('ls -v pngall/*.png') ; lfrmall = osout[0]
     lfrmall = lfrmall.split('\n')[0:-1]
-    '''
-    osout = call('rm -rf pngDS')
-    osout = call('mkdir pngDS')
-    for cnt in range(len(lfrmall)):
-        if ((cnt) % (fps/fsr)) == 0:
-             osout = call('cp -rf pngall/{}.png pngDS/{}.png'.format((cnt+1),int((cnt/(fps/fsr))+1)))
- 
-    osout = call('ls -v pngDS/*.png') ; lfrm = osout[0]
-    lfrm = lfrm.split('\n')[0:-1]
-    osout = call('rm -rf ../vid/out.mp4')
-    #osout = call('ffmpeg -start_number 0 -i "pngDS/%d.png" -c:v libx264 -vf "fps={},format=yuv420p" ../vid/out.mp4'.format(fps))
-    '''
+    
     osout = call('rm -rf ../vid/out.mp4')
     osout = call('ffmpeg -start_number 0 -i "pngall/%d.png" -c:v libx264 -qp 0 -vf "fps={},format=yuv420p" ../vid/out.mp4'.format(fps))
     return lfrmall
@@ -99,8 +84,12 @@ def content_similarity(img_0, img_1):
 
     	# Sort them in the order of their distance.
     	matches   = sorted(matches, key = lambda x:x.distance)
-    	distances = [ _.distance for _ in matches]
-    	simind_1    =  np.mean(distances)
+    	distances = [ _.distance for _ in matches if _.distance > 60]
+        if not distances:
+	   simind_1=INF
+        else:
+    	   simind_1    =  np.mean(distances)*len(distances)
+        #pdb.set_trace()
     	#print("simind_1={}\n").format(simind_1)
 
     	# Match descriptors.
@@ -186,28 +175,6 @@ def comp_similarity(lwin_,lwin_sc_,lwinsim):
           #lwinsim[iwin_sc-1][iwin-1]=lwinsim[iwin-1][iwin_sc-1]
     return lwinsim
 
-'''
-def map_to_downsampled(lwin,fname):
-    lwindownSampled = []
-    lwindownSampledint = []
-    lwinBeforedownSampledint = []
-    for win in lwin:    
-        s=re.search('(?<=/)\w+', str(win))
-        iwin=int(s.group(0))
-        lwinBeforedownSampledint.append(int(math.ceil(iwin)))   ##before downsampling
-        lwindownSampledint.append(int(math.ceil((iwin-1)/(fps/fsr))+1)) ##downsampling to 8:1
-
-    lwindownSampledint=np.unique(np.array(lwindownSampledint))
-    lwinBeforedownSampledint=np.array(lwinBeforedownSampledint)
-
-    np.save(('../savenpy/'+fname+'_SceneCutFramesBeforeDownSampling'),(lwinBeforedownSampledint-1))
-    np.save(('../savenpy/'+fname+'_SceneCutFrames'),(lwindownSampledint-1))
-
-    for iwin in lwindownSampledint:    
-        lwindownSampled.append('pngDS/'+str(iwin)+'.png')
-    return lwindownSampled
-'''
-
 def comp_dissimilarity(lwin_r,lwin_c,lwinsim):
     for win_r in lwin_r:
         now = datetime.datetime.now()
@@ -254,7 +221,7 @@ if __name__ == '__main__':
     #print(lwinsim.shape)
     #print(np.amax(np.amax(lwinsim)))
 
-    if os.path.isfile('../savenpy/'+fname+'_lwinsim.npy'):
+    if os.path.isfile('../savenpy/'+fname+'_lwinsim0000000000000000000000000000000000000000000000000.npy'):
        #pdb.set_trace()
        print("Loading similarity score between SC and all frames")
        lwinsim=np.load(('../savenpy/'+fname+'_lwinsim.npy'))
@@ -345,14 +312,14 @@ if __name__ == '__main__':
     np.save(('../savenpy/'+fname+'_lwindissim_0'),lwindissim_0)
     np.save(('../savenpy/'+fname+'_lwindissimNormalized'),lwindissimNorm)
     print('\nOPTIMAL Stitching frames at Downsampled space:') ; print(lwin_opt_sorting)
-    lwin_opt_sorting=np.array(lwin_opt_sorting)*fps/fsr
+    lwin_opt_sorting=np.array(lwin_opt_sorting)
     print('\nOPTIMAL Stitching frames:') ; print(lwin_opt_sorting)
-    for i in range(0, len(lwin)*fps/fsr):
+    for i in range(0, len(lwin)):
       if i not in lwin_opt_sorting:
                lwin_opt_sorting=np.append(lwin_opt_sorting,i)
   
     #print('\nOPTIMAL HEVC GOP ORDER at Downsampled space:') ; print(lwin_opt_sorting)
-    fid = open('OrderedFrames_'+fname+'_fps'+str(fps)+'_fsr'+str(fsr)+'.txt','w')
+    fid = open('OrderedFrames_'+fname+'.txt','w')
     for FNum in lwin_opt_sorting:
     	print >> fid, FNum
     #pdb.set_trace()
