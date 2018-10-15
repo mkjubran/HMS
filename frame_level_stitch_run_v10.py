@@ -253,7 +253,7 @@ if __name__ == '__main__':
     #pdb.set_trace()
     #print('\nWindow similarity matrix:') ; print(np.matrix(lwinsim))
     lwin_popularity_index = [ 1/np.mean(_) for _ in lwinsim ]
-    lwin_popularity_index=lwin_popularity_index-np.min(np.min(lwin_popularity_index))
+    #lwin_popularity_index=lwin_popularity_index-np.min(np.min(lwin_popularity_index))
     lwin_popularity_index_Norm_temp=((lwin_popularity_index)/np.amax(np.amax(lwin_popularity_index)))
     lwin_popularity_index_Norm=lwin_popularity_index_Norm_temp+WeightPicPos
     lwin_popularity_index_Norm=np.transpose(lwin_popularity_index_Norm)
@@ -287,7 +287,7 @@ if __name__ == '__main__':
         lwindissim=comp_dissimilarity(lwin[current_top_win_index],lwin,lwindissim)
         lwindissim_0=lwindissim;
         lwindissim_0[lwindissim_0==INF]=0
-        lwindissim_0=lwindissim_0-np.min(np.min(lwindissim_0))
+        #lwindissim_0=lwindissim_0-np.min(np.min(lwindissim_0))
         lwindissimNorm=((lwindissim_0.astype(float))/np.amax(np.amax(lwindissim_0)))
         #print(np.mean(lwindissimNorm,axis=1))
         #print(np.mean(lwindissimNorm,axis=0))
