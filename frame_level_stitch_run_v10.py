@@ -79,16 +79,19 @@ def content_similarity(img_0, img_1):
 
     	# Match descriptors.
     	matches = bf.match(des1,des2)
-    	#pdb.set_trace()
+        #pdb.set_trace()
         #print("simind_1 matches={}").format(matches)
 
     	# Sort them in the order of their distance.
     	matches   = sorted(matches, key = lambda x:x.distance)
-    	distances = [ _.distance for _ in matches if _.distance < 40]
+    	distances = [ _.distance for _ in matches if _.distance < 100]
         if not distances:
 	   simind_1=INF
         else:
-    	   simind_1    =  np.mean(distances)*len(distances)
+    	   simind_1    =  np.mean(distances)
+           #simind_1    =  np.mean(distances)*len(distances)
+
+        
         #pdb.set_trace()
     	#print("simind_1={}\n").format(simind_1)
 
@@ -216,7 +219,8 @@ if __name__ == '__main__':
    
     LambdaPoP=0.0000001
     LambdaPoP=0
-    WeightPicPos=LambdaPoP*(np.transpose(np.full((len(lwin),1),1)*np.array(range(1,len(lwin)+1))))
+    WeightPicPos=LambdaPoP*(np.transpose(np.full((len(lwin),1),1)))*np.array(range(1,len(lwin)+1))
+    
     #lwinsimNorm=lwinsim/np.matrix.max(lwinsim)
     np.set_printoptions(threshold=np.nan)
     #print(lwinsim.shape)
@@ -249,9 +253,10 @@ if __name__ == '__main__':
     #pdb.set_trace()
     #print('\nWindow similarity matrix:') ; print(np.matrix(lwinsim))
     lwin_popularity_index = [ 1/np.mean(_) for _ in lwinsim ]
-    lwin_popularity_index_Norm=((lwin_popularity_index)/np.amax(np.amax(lwin_popularity_index)))
-    lwin_popularity_index_Norm=lwin_popularity_index_Norm+WeightPicPos
-
+    lwin_popularity_index_Norm_temp=((lwin_popularity_index)/np.amax(np.amax(lwin_popularity_index)))
+    lwin_popularity_index_Norm=lwin_popularity_index_Norm_temp+WeightPicPos
+    lwin_popularity_index_Norm=np.transpose(lwin_popularity_index_Norm)
+    #pdb.set_trace()
 
     #print(lwin_popularity_index)
     #lwin_popularity_index = np.mean(lwinsim,1)
@@ -263,6 +268,7 @@ if __name__ == '__main__':
     #print('{}....{}').format(current_top_win_index,current_top_win)
     print('Producing Popularity-Dissimilarity List')
     for i in range(0, len(lwin_sc)):
+        #pdb.set_trace()
 	#print('i={}....{}').format(i,current_top_win_index)
         # lwinsim_ = []
         # for win_ in lwin: lwinsim_.append(sliding_window_similarity(current_top_win, win_)[0])
@@ -284,16 +290,21 @@ if __name__ == '__main__':
         #print(np.mean(lwindissimNorm,axis=1))
         #print(np.mean(lwindissimNorm,axis=0))
         #print('\nWindow dissimilarity matrix:') ; print(np.matrix(lwindissim))
-        next_candidate_criterion = [((10*dissimilarity)+(1*popularity)) for dissimilarity, popularity \
-                                        in zip(np.mean(lwindissimNorm,axis=0), lwin_popularity_index_Norm)]  ##consider dissimilarity with all previously selected current_top_win_indexs
+        next_candidate_criterion = np.array([((1*dissimilarity)+(1*popularity)) for dissimilarity, popularity \
+                                        in zip(np.mean(lwindissimNorm,axis=0), lwin_popularity_index_Norm)])  ##consider dissimilarity with all previously selected current_top_win_indexs
         np.save(('../savenpy/'+fname+'next_candidate_criterion'+str(i)),next_candidate_criterion)
 	#next_candidate_criterion = [dissimilarity/float(popularity) for dissimilarity, popularity \
         #                                in zip(lwindissim[current_top_win_index], lwin_popularity_index)] ##consider dissimilarity with only the current_top_win_index
 
         #print(next_candidate_criterion)
         # Sorted list indices
+        #sorted_candidate_criterion = [ _[0] for _ in sorted(enumerate(np.transpose(next_candidate_criterion)), key=lambda x:x[1], reverse=True) ]
+        #sorted_candidate_criterion_Index_Value = [ _ for _ in sorted(enumerate(next_candidate_criterion), key=lambda x:x[1], reverse=True) ]
+        #pdb.set_trace()
         sorted_candidate_criterion = [ _[0] for _ in sorted(enumerate(next_candidate_criterion), key=lambda x:x[1], reverse=True) ]
         sorted_candidate_criterion_Index_Value = [ _ for _ in sorted(enumerate(next_candidate_criterion), key=lambda x:x[1], reverse=True) ]
+        sorted_candidate_criterion_Index_Value=np.array(sorted_candidate_criterion_Index_Value)
+        #pdb.set_trace()
         #print(sorted_candidate_criterion_Index_Value)
         # next_candidate = lwin[np.argmax(lwinsim[current_top_win_index])]
         #for next_candidate in sorted_candidate_criterion:
@@ -319,6 +330,7 @@ if __name__ == '__main__':
     np.save(('../savenpy/'+fname+'_lwin_popularity_index_Norm'),lwin_popularity_index_Norm)
     np.save(('../savenpy/'+fname+'_lwin_popularity_index'),lwin_popularity_index)
 
+
     lwin_opt_sorting=np.array(lwin_opt_sorting)
     print('\nOPTIMAL Stitching frames:') ; print(lwin_opt_sorting)
     for i in range(0, len(lwin)):
@@ -330,3 +342,5 @@ if __name__ == '__main__':
     for FNum in lwin_opt_sorting:
     	print >> fid, FNum
     #pdb.set_trace()
+
+    np.save(('../savenpy/'+fname+'_lwin_opt_sorting'),lwin_opt_sorting)
