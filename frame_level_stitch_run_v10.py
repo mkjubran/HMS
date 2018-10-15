@@ -222,7 +222,7 @@ if __name__ == '__main__':
     #print(lwinsim.shape)
     #print(np.amax(np.amax(lwinsim)))
 
-    if os.path.isfile('../savenpy/'+fname+'_lwinsim0000000000000000000000000000.npy'):
+    if os.path.isfile('../savenpy/'+fname+'_lwinsim.npy'):
        #pdb.set_trace()
        print("Loading similarity score between SC and all frames")
        lwinsim=np.load(('../savenpy/'+fname+'_lwinsim.npy'))
@@ -248,7 +248,11 @@ if __name__ == '__main__':
 
     #pdb.set_trace()
     #print('\nWindow similarity matrix:') ; print(np.matrix(lwinsim))
-    lwin_popularity_index = [ np.mean(_) for _ in lwinsim_0 ]
+    lwin_popularity_index = [ 1/np.mean(_) for _ in lwinsim ]
+    lwin_popularity_index_Norm=((lwin_popularity_index)/np.amax(np.amax(lwin_popularity_index)))
+    lwin_popularity_index_Norm=lwin_popularity_index_Norm+WeightPicPos
+
+
     #print(lwin_popularity_index)
     #lwin_popularity_index = np.mean(lwinsim,1)
     #print(lwin_popularity_index)
@@ -280,8 +284,8 @@ if __name__ == '__main__':
         #print(np.mean(lwindissimNorm,axis=1))
         #print(np.mean(lwindissimNorm,axis=0))
         #print('\nWindow dissimilarity matrix:') ; print(np.matrix(lwindissim))
-        next_candidate_criterion = [((1*dissimilarity)+(1/float(popularity))) for dissimilarity, popularity \
-                                        in zip(np.mean(lwindissimNorm,axis=0), lwin_popularity_index)]  ##consider dissimilarity with all previously selected current_top_win_indexs
+        next_candidate_criterion = [((10*dissimilarity)+(1*popularity)) for dissimilarity, popularity \
+                                        in zip(np.mean(lwindissimNorm,axis=0), lwin_popularity_index_Norm)]  ##consider dissimilarity with all previously selected current_top_win_indexs
         np.save(('../savenpy/'+fname+'next_candidate_criterion'+str(i)),next_candidate_criterion)
 	#next_candidate_criterion = [dissimilarity/float(popularity) for dissimilarity, popularity \
         #                                in zip(lwindissim[current_top_win_index], lwin_popularity_index)] ##consider dissimilarity with only the current_top_win_index
@@ -312,6 +316,8 @@ if __name__ == '__main__':
     np.save(('../savenpy/'+fname+'_lwindissim'),lwindissim)
     np.save(('../savenpy/'+fname+'_lwindissim_0'),lwindissim_0)
     np.save(('../savenpy/'+fname+'_lwindissimNormalized'),lwindissimNorm)
+    np.save(('../savenpy/'+fname+'_lwin_popularity_index_Norm'),lwin_popularity_index_Norm)
+    np.save(('../savenpy/'+fname+'_lwin_popularity_index'),lwin_popularity_index)
 
     lwin_opt_sorting=np.array(lwin_opt_sorting)
     print('\nOPTIMAL Stitching frames:') ; print(lwin_opt_sorting)
