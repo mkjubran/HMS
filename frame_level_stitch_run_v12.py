@@ -270,7 +270,7 @@ if __name__ == '__main__':
     lwin_opt_sorting = [] ; lwin_opt_sorting.append(np.argmin(lwin_popularity_index))
     lwin_opt_sorting_hGP = [] ;
     for i in range(-halfGP,halfGP+1):
-       if ((np.argmin(lwin_popularity_index)+i) > 0 ) and ((np.argmin(lwin_popularity_index)+i) < len(lwin_popularity_index)):
+       if ((np.argmin(lwin_popularity_index)+i) > -1 ) and ((np.argmin(lwin_popularity_index)+i) < len(lwin_popularity_index)):
           lwin_opt_sorting_hGP.append(np.argmin(lwin_popularity_index)+i)
     #pdb.set_trace()
     current_top_win_index = np.argmin(lwin_popularity_index) 
@@ -324,15 +324,18 @@ if __name__ == '__main__':
         #    if next_candidate not in lwin_opt_sorting:
         #       lwin_opt_sorting.append(next_candidate)
         #       current_top_win_index = next_candidate
+        #pdb.set_trace()
         for next_candidate in sorted_candidate_criterion:
             if next_candidate not in lwin_opt_sorting_hGP:
                lwin_opt_sorting.append(next_candidate)
                current_top_win_index = next_candidate
                for i in range(-halfGP,halfGP+1):
-       		  if ((next_candidate+i) > 0 ) and ((next_candidate+i) < len(lwin)):
+       		  if ((next_candidate+i) > -1 ) and ((next_candidate+i) < len(lwin)):
                      lwin_opt_sorting_hGP.append(next_candidate+i)
                #pdb.set_trace()
                break
+        lwin_opt_sorting_hGP=np.unique(lwin_opt_sorting_hGP)
+        #pdb.set_trace()
         if len(lwin_opt_sorting_hGP)==len(lwin):
 	    break
         #print(lwin_opt_sorting)
