@@ -333,6 +333,8 @@ if __name__ == '__main__':
                      lwin_opt_sorting_hGP.append(next_candidate+i)
                #pdb.set_trace()
                break
+        if len(lwin_opt_sorting_hGP)==len(lwin):
+	    break
         #print(lwin_opt_sorting)
         print('{} .... {}% '.format(lwin_opt_sorting,100*len(lwin_opt_sorting)/(len(lwin_sc)+1)))
  
