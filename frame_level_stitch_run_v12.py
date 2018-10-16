@@ -334,7 +334,8 @@ if __name__ == '__main__':
                      lwin_opt_sorting_hGP.append(next_candidate+i)
                #pdb.set_trace()
                break
-        lwin_opt_sorting_hGP=np.unique(lwin_opt_sorting_hGP)
+        #pdb.set_trace()
+        lwin_opt_sorting_hGP=list(np.unique(lwin_opt_sorting_hGP))
         #pdb.set_trace()
         if len(lwin_opt_sorting_hGP)==len(lwin):
 	    break
