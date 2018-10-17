@@ -298,7 +298,7 @@ if __name__ == '__main__':
         lwindissim_test=lwindissim_0;
         if size(lwindissim_test[lwindissim_test==INF])==0:
 	   lwindissim_0[lwindissim_0==0]=1;
-        pdb.set_trace()
+        #pdb.set_trace()
         lwindissim_0[lwindissim_0==INF]=0
         lwindissim_0=lwindissim_0[np.mean(lwindissim_0,axis=1)!=0,:]
         #lwindissim_0=lwindissim_0-np.min(np.min(lwindissim_0))
