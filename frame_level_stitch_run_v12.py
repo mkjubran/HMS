@@ -295,8 +295,9 @@ if __name__ == '__main__':
         #pdb.set_trace()
         lwindissim=comp_dissimilarity(lwin[current_top_win_index],lwin,lwindissim)
         lwindissim_0=np.copy(lwindissim);
-        lwindissim_test=lwindissim_0;
-        if size(lwindissim_test[lwindissim_test==INF])==0:
+        lwindissim_test=np.copy(lwindissim_0);
+        lwindissim_test[lwindissim_test==INF]=0
+        if size(lwindissim_test[np.mean(lwindissim_test,axis=1)!=0,:])==0:
 	   lwindissim_0[lwindissim_0==0]=1;
         #pdb.set_trace()
         lwindissim_0[lwindissim_0==INF]=0
