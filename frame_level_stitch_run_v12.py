@@ -296,7 +296,8 @@ if __name__ == '__main__':
         lwindissim=comp_dissimilarity(lwin[current_top_win_index],lwin,lwindissim)
         lwindissim_0=np.copy(lwindissim);
         lwindissim_0[lwindissim_0==INF]=0
-        lwindissim_0=lwindissim_0[np.mean(lwindissim_0,axis=1)!=0,:]
+        if np.mean(lwindissim_0)!=0:
+           lwindissim_0=lwindissim_0[np.mean(lwindissim_0,axis=1)!=0,:]
         #lwindissim_0=lwindissim_0-np.min(np.min(lwindissim_0))
         lwindissimNorm=((lwindissim_0.astype(float))/np.amax(np.amax(lwindissim_0)))
         #print(np.mean(lwindissimNorm,axis=1))
