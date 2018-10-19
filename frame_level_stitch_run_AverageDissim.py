@@ -267,13 +267,13 @@ if __name__ == '__main__':
     #lwin_popularity_index = np.mean(lwinsim,1)
     #print(lwin_popularity_index)
     #pdb.set_trace()
-    lwin_opt_sorting = [] ; lwin_opt_sorting.append(np.argmin(lwin_popularity_index))
+    lwin_opt_sorting = [] ; lwin_opt_sorting.append(np.argmax(lwin_popularity_index))
     lwin_opt_sorting_hGP = [] ;
     for i in range(-halfGP,halfGP+1):
-       if ((np.argmin(lwin_popularity_index)+i) > -1 ) and ((np.argmin(lwin_popularity_index)+i) < len(lwin_popularity_index)):
-          lwin_opt_sorting_hGP.append(np.argmin(lwin_popularity_index)+i)
+       if ((np.argmax(lwin_popularity_index_Norm)+i) > -1 ) and ((np.argmax(lwin_popularity_index_Norm)+i) < len(lwin_popularity_index_Norm)):
+          lwin_opt_sorting_hGP.append(np.argmax(lwin_popularity_index_Norm)+i)
     #pdb.set_trace()
-    current_top_win_index = np.argmin(lwin_popularity_index) 
+    current_top_win_index = np.argmax(lwin_popularity_index_Norm) 
     current_top_win = lwin[current_top_win_index]
     #print('{}....{}').format(current_top_win_index,current_top_win)
     print('Producing Popularity-Dissimilarity List')
