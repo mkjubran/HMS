@@ -19,14 +19,14 @@ parser.add_argument('--f', type=str,
 parser.add_argument('--fps', type=int,
                     help='frame rate (ffmpeg -r ?)')
 
-parser.add_argument('--hgp', type=int,
+parser.add_argument('--gp', type=int,
                     help='frame rate (ffmpeg -r ?)')
 
 args = parser.parse_args()
 
 fn=args.f;
 fps=args.fps;
-halfGP=args.hgp;
+GP=args.gp;
 
 def call(cmd):
     # proc = subprocess.Popen(["cat", "/etc/services"], stdout=subprocess.PIPE, shell=True)
@@ -268,10 +268,10 @@ if __name__ == '__main__':
     #print(lwin_popularity_index)
     #pdb.set_trace()
     lwin_opt_sorting = [] ; lwin_opt_sorting.append(np.argmax(lwin_popularity_index_Norm))
-    lwin_opt_sorting_hGP = [] ;
-    for i in range(-halfGP,halfGP+1):
+    lwin_opt_sorting_GP = [] ;
+    for i in range(-GP,GP+1):
        if ((np.argmax(lwin_popularity_index_Norm)+i) > -1 ) and ((np.argmax(lwin_popularity_index_Norm)+i) < len(lwin_popularity_index_Norm)):
-          lwin_opt_sorting_hGP.append(np.argmax(lwin_popularity_index_Norm)+i)
+          lwin_opt_sorting_GP.append(np.argmax(lwin_popularity_index_Norm)+i)
     #pdb.set_trace()
     current_top_win_index = np.argmax(lwin_popularity_index_Norm) 
     #pdb.set_trace()
@@ -332,18 +332,18 @@ if __name__ == '__main__':
         #       current_top_win_index = next_candidate
         #pdb.set_trace()
         for next_candidate in sorted_candidate_criterion:
-            if next_candidate not in lwin_opt_sorting_hGP:
+            if next_candidate not in lwin_opt_sorting_GP:
                lwin_opt_sorting.append(next_candidate)
                current_top_win_index = next_candidate
-               for i in range(-halfGP,halfGP+1):
+               for i in range(-GP,GP+1):
        		  if ((next_candidate+i) > -1 ) and ((next_candidate+i) < len(lwin)):
-                     lwin_opt_sorting_hGP.append(next_candidate+i)
+                     lwin_opt_sorting_GP.append(next_candidate+i)
                #pdb.set_trace()
                break
         #pdb.set_trace()
-        lwin_opt_sorting_hGP=list(np.unique(lwin_opt_sorting_hGP))
+        lwin_opt_sorting_GP=list(np.unique(lwin_opt_sorting_GP))
         #pdb.set_trace()
-        if len(lwin_opt_sorting_hGP)==len(lwin):
+        if len(lwin_opt_sorting_GP)==len(lwin):
 	    break
         #print(lwin_opt_sorting)
         print('{} .... {}% '.format(lwin_opt_sorting,100*len(lwin_opt_sorting)/(len(lwin_sc)+1)))

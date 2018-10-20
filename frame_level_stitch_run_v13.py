@@ -19,14 +19,18 @@ parser.add_argument('--f', type=str,
 parser.add_argument('--fps', type=int,
                     help='frame rate (ffmpeg -r ?)')
 
-parser.add_argument('--hgp', type=int,
-                    help='frame rate (ffmpeg -r ?)')
+parser.add_argument('--gp', type=int,
+                    help='Guard Period')
+
+parser.add_argument('--suffix', type=str,
+                    help='suffix added to all output files')
 
 args = parser.parse_args()
 
 fn=args.f;
 fps=args.fps;
-halfGP=args.hgp;
+GP=args.gp;
+suffix=args.suffix;
 
 def call(cmd):
     # proc = subprocess.Popen(["cat", "/etc/services"], stdout=subprocess.PIPE, shell=True)
@@ -157,7 +161,7 @@ def find_scene_cuts(fn):
     scene_list=np.array(scene_list) ;
     scene_list=scene_list+1;
     #print(scene_list)
-    np.save(('../savenpy/'+fname+'_SceneCutFrames'),scene_list-1)
+    np.save(('../savenpy/'+fname+'_SceneCutFrames'+suffix),scene_list-1)
 
     win_sc=[];
     for i in range(0, len(scene_list)): 
@@ -230,26 +234,26 @@ if __name__ == '__main__':
     #print(lwinsim.shape)
     #print(np.amax(np.amax(lwinsim)))
     #pdb.set_trace()
-    if os.path.isfile('../savenpy/'+fname+'_lwinsim.npy'):
+    if os.path.isfile('../savenpy/'+fname+'_lwinsim'+suffix+'.npy'):
        #pdb.set_trace()
        print("Loading similarity score between SC and all frames")
-       lwinsim=np.load(('../savenpy/'+fname+'_lwinsim.npy'))
+       lwinsim=np.load(('../savenpy/'+fname+'_lwinsim'+suffix+'.npy'))
     else:
        # Get global window similarity matrix
        print("Computing similarity between SC and all frames")
        #pdb.set_trace()
        lwinsim=comp_similarity(lwin,lwin_sc,lwinsim)
-       np.save(('../savenpy/'+fname+'_lwinsim'),lwinsim)
+       np.save(('../savenpy/'+fname+'_lwinsim'+suffix),lwinsim)
     lwinsim_0=np.copy(lwinsim)
     lwinsim_0[lwinsim_0==INF]=-1
     lwinsim_0[lwinsim_0==-1]=np.amax(np.amax(lwinsim_0))
-    np.save(('../savenpy/'+fname+'_lwinsim_0'),lwinsim_0)
+    np.save(('../savenpy/'+fname+'_lwinsim_0'+suffix),lwinsim_0)
     lwinsim_0=((lwinsim_0.astype(float))/np.amax(np.amax(lwinsim_0)))
-    np.save(('../savenpy/'+fname+'_lwinsimNormalized'),lwinsim_0)
+    np.save(('../savenpy/'+fname+'_lwinsimNormalized'+suffix),lwinsim_0)
     print(np.unique(lwinsim_0))
     print(np.mean(np.mean(lwinsim_0,0),0))
     lwinsim_0=lwinsim_0+WeightPicPos
-    np.save(('../savenpy/'+fname+'_lwinsimNormalizedWeighted'),lwinsim_0)
+    np.save(('../savenpy/'+fname+'_lwinsimNormalizedWeighted'+suffix),lwinsim_0)
     #print(np.mean(lwinsim,0))
     
 
@@ -268,10 +272,10 @@ if __name__ == '__main__':
     #print(lwin_popularity_index)
     #pdb.set_trace()
     lwin_opt_sorting = [] ; lwin_opt_sorting.append(np.argmax(lwin_popularity_index))
-    lwin_opt_sorting_hGP = [] ;
-    for i in range(-halfGP,halfGP+1):
+    lwin_opt_sorting_GP = [] ;
+    for i in range(-GP,GP+1):
        if ((np.argmax(lwin_popularity_index_Norm)+i) > -1 ) and ((np.argmax(lwin_popularity_index_Norm)+i) < len(lwin_popularity_index_Norm)):
-          lwin_opt_sorting_hGP.append(np.argmax(lwin_popularity_index_Norm)+i)
+          lwin_opt_sorting_GP.append(np.argmax(lwin_popularity_index_Norm)+i)
     #pdb.set_trace()
     current_top_win_index = np.argmax(lwin_popularity_index_Norm) 
     #pdb.set_trace()
@@ -310,7 +314,7 @@ if __name__ == '__main__':
         #print('\nWindow dissimilarity matrix:') ; print(np.matrix(lwindissim))
         next_candidate_criterion = np.array([((1*dissimilarity)+(1*popularity)) for dissimilarity, popularity \
                                         in zip(np.min(lwindissimNorm,axis=0), lwin_popularity_index_Norm)])  ##consider dissimilarity with all previously selected current_top_win_indexs
-        np.save(('../savenpy/'+fname+'next_candidate_criterion'+str(i)),next_candidate_criterion)
+        np.save(('../savenpy/'+fname+'next_candidate_criterion'+str(i)+suffix),next_candidate_criterion)
 	#next_candidate_criterion = [dissimilarity/float(popularity) for dissimilarity, popularity \
         #                                in zip(lwindissim[current_top_win_index], lwin_popularity_index)] ##consider dissimilarity with only the current_top_win_index
 
@@ -332,18 +336,18 @@ if __name__ == '__main__':
         #       current_top_win_index = next_candidate
         #pdb.set_trace()
         for next_candidate in sorted_candidate_criterion:
-            if next_candidate not in lwin_opt_sorting_hGP:
+            if next_candidate not in lwin_opt_sorting_GP:
                lwin_opt_sorting.append(next_candidate)
                current_top_win_index = next_candidate
-               for i in range(-halfGP,halfGP+1):
+               for i in range(-GP,GP+1):
        		  if ((next_candidate+i) > -1 ) and ((next_candidate+i) < len(lwin)):
-                     lwin_opt_sorting_hGP.append(next_candidate+i)
+                     lwin_opt_sorting_GP.append(next_candidate+i)
                #pdb.set_trace()
                break
         #pdb.set_trace()
-        lwin_opt_sorting_hGP=list(np.unique(lwin_opt_sorting_hGP))
+        lwin_opt_sorting_GP=list(np.unique(lwin_opt_sorting_GP))
         #pdb.set_trace()
-        if len(lwin_opt_sorting_hGP)==len(lwin):
+        if len(lwin_opt_sorting_GP)==len(lwin):
 	    break
         #print(lwin_opt_sorting)
         print('{} .... {}% '.format(lwin_opt_sorting,100*len(lwin_opt_sorting)/(len(lwin_sc)+1)))
@@ -352,11 +356,11 @@ if __name__ == '__main__':
     print("Number of SC frames is {}").format(len(lwin1))    
     print(lwin1)
 
-    np.save(('../savenpy/'+fname+'_lwindissim'),lwindissim)
-    np.save(('../savenpy/'+fname+'_lwindissim_0'),lwindissim_0)
-    np.save(('../savenpy/'+fname+'_lwindissimNormalized'),lwindissimNorm)
-    np.save(('../savenpy/'+fname+'_lwin_popularity_index_Norm'),lwin_popularity_index_Norm)
-    np.save(('../savenpy/'+fname+'_lwin_popularity_index'),lwin_popularity_index)
+    np.save(('../savenpy/'+fname+'_lwindissim'+suffix),lwindissim)
+    np.save(('../savenpy/'+fname+'_lwindissim_0'+suffix),lwindissim_0)
+    np.save(('../savenpy/'+fname+'_lwindissimNormalized'+suffix),lwindissimNorm)
+    np.save(('../savenpy/'+fname+'_lwin_popularity_index_Norm'+suffix),lwin_popularity_index_Norm)
+    np.save(('../savenpy/'+fname+'_lwin_popularity_index'+suffix),lwin_popularity_index)
 
 
     lwin_opt_sorting=np.array(lwin_opt_sorting)
@@ -371,4 +375,4 @@ if __name__ == '__main__':
     	print >> fid, FNum
     #pdb.set_trace()
 
-    np.save(('../savenpy/'+fname+'_lwin_opt_sorting'),lwin_opt_sorting)
+    np.save(('../savenpy/'+fname+'_lwin_opt_sorting'+suffix),lwin_opt_sorting)
