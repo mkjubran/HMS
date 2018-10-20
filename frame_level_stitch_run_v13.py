@@ -25,12 +25,20 @@ parser.add_argument('--gp', type=int,
 parser.add_argument('--suffix', type=str,
                     help='suffix added to all output files')
 
+parser.add_argument('--wpp', type=int,
+                    help='Popularity weight')
+
+parser.add_argument('--wd', type=int,
+                    help='Dissimilarity weight')
+
 args = parser.parse_args()
 
 fn=args.f;
 fps=args.fps;
 GP=args.gp;
 suffix=args.suffix;
+wpp=args.wpp;
+wd=args.wd;
 
 def call(cmd):
     # proc = subprocess.Popen(["cat", "/etc/services"], stdout=subprocess.PIPE, shell=True)
@@ -234,15 +242,16 @@ if __name__ == '__main__':
     #print(lwinsim.shape)
     #print(np.amax(np.amax(lwinsim)))
     #pdb.set_trace()
-    if os.path.isfile('../savenpy/'+fname+'_lwinsim'+suffix+'.npy'):
+    if os.path.isfile('../savenpy/'+fname+'_lwinsim.npy'):
        #pdb.set_trace()
        print("Loading similarity score between SC and all frames")
-       lwinsim=np.load(('../savenpy/'+fname+'_lwinsim'+suffix+'.npy'))
+       lwinsim=np.load(('../savenpy/'+fname+'_lwinsim.npy'))
     else:
        # Get global window similarity matrix
        print("Computing similarity between SC and all frames")
        #pdb.set_trace()
        lwinsim=comp_similarity(lwin,lwin_sc,lwinsim)
+       np.save(('../savenpy/'+fname+'_lwinsim'),lwinsim)
        np.save(('../savenpy/'+fname+'_lwinsim'+suffix),lwinsim)
     lwinsim_0=np.copy(lwinsim)
     lwinsim_0[lwinsim_0==INF]=-1
@@ -312,7 +321,7 @@ if __name__ == '__main__':
         #print(np.mean(lwindissimNorm,axis=1))
         #print(np.mean(lwindissimNorm,axis=0))
         #print('\nWindow dissimilarity matrix:') ; print(np.matrix(lwindissim))
-        next_candidate_criterion = np.array([((1*dissimilarity)+(1*popularity)) for dissimilarity, popularity \
+        next_candidate_criterion = np.array([((wd*dissimilarity)+(wpp*popularity)) for dissimilarity, popularity \
                                         in zip(np.min(lwindissimNorm,axis=0), lwin_popularity_index_Norm)])  ##consider dissimilarity with all previously selected current_top_win_indexs
         np.save(('../savenpy/'+fname+'next_candidate_criterion'+str(i)+suffix),next_candidate_criterion)
 	#next_candidate_criterion = [dissimilarity/float(popularity) for dissimilarity, popularity \
