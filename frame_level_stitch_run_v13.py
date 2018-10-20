@@ -246,6 +246,7 @@ if __name__ == '__main__':
        #pdb.set_trace()
        print("Loading similarity score between SC and all frames")
        lwinsim=np.load(('../savenpy/'+fname+'_lwinsim.npy'))
+       np.save(('../savenpy/'+fname+'_lwinsim'+suffix),lwinsim)
     else:
        # Get global window similarity matrix
        print("Computing similarity between SC and all frames")
