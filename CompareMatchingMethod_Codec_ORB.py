@@ -333,16 +333,7 @@ def call_err(cmd):
 def get_frames_list(fn):
     osout = call_err('ls -v ../CodecSIFT/pngall/*.png') ; lfrmall = osout[0]
     lfrmall = lfrmall.split('\n')[0:-1]
-    
-    osout = call_err('rm -rf ../CodecSIFT/pngDS')
-    osout = call_err('mkdir ../CodecSIFT/pngDS')
-    for cnt in range(len(lfrmall)):
-        if ((cnt) % (fps/fsr)) == 0:
-             osout = call_err('cp -rf ../CodecSIFT/pngall/{}.png ../CodecSIFT/pngDS/{}.png'.format((cnt+1),int((cnt/(fps/fsr))+1)))
- 
-    osout = call_err('ls -v ../CodecSIFT/pngDS/*.png') ; lfrm = osout[0]
-    lfrm = lfrm.split('\n')[0:-1]
-    return lfrm
+    return lfrmall
 
 def make_windows(lfrm, numfrmwin):
     numfrm = len(lfrm) ; numwin = numfrm/numfrmwin
@@ -373,19 +364,15 @@ def window_similarity(win_0, win_1):
     elif (type(win_0) <> str and type(win_1) == str):
        lfrmsim.append(content_similarity(win_0[0], win_1))
     else:
-       lfrmsim.append(content_similarity(win_0[0], win_1[0]))
-        
+       lfrmsim.append(content_similarity(win_0[0], win_1[0]))        
     return np.mean(lfrmsim)
 
 def content_similarity(img_0, img_1):
-    
     img1 = cv2.imread(img_0, 0)
     img2 = cv2.imread(img_1, 0)
 
     # Initiate SIFT detector
-    orb = cv2.ORB_create()
-    #orb = cv2.ORB()
-    #print("{} ...... {}\n").format(img_0,img_1)
+    orb = cv2.ORB_create(nfeatures=100000)
 
     # find the keypoints and descriptors with SIFT
     kp1, des1 = orb.detectAndCompute(img1,None)
@@ -397,23 +384,24 @@ def content_similarity(img_0, img_1):
 
     	# Match descriptors.
     	matches = bf.match(des1,des2)
-    	#pdb.set_trace()
-        #print("simind_1 matches={}").format(matches)
 
     	# Sort them in the order of their distance.
     	matches   = sorted(matches, key = lambda x:x.distance)
-    	distances = [ _.distance for _ in matches]
-    	simind_1    =  np.mean(distances)
-    	#print("simind_1={}\n").format(simind_1)
-     
+    	distances = [ _.distance for _ in matches if _.distance < 100]
+        if not distances:
+	   simind_1=INF
+        else:
+    	   simind_1    =  np.mean(distances)
+        
         if math.isnan(simind_1):
-          simind_1=1000
+          simind_1=INF
 
         simind_2=simind_1
     	simind = (simind_1 + simind_2)/float(2)
     else:
-        simind=1000
+        simind=INF
     return simind
+
 
 ##################################################################
 ## Main Body
@@ -479,7 +467,7 @@ if __name__ == "__main__":
 
 
     Rate_PSNR_SIFT=np.concatenate((Rate_PSNR, SIFT_score),axis=1)
-    np.save(('../savenpy/'+fnname+'_Rate_PSNR_SIFT'),Rate_PSNR_SIFT)
+    np.save(('../savenpy/'+fnname+'_Rate_PSNR_ORB'),Rate_PSNR_SIFT)
 
     #print(Rate_PSNR_SIFT)
 
@@ -487,34 +475,34 @@ if __name__ == "__main__":
     ax1.plot(range(len(SIFT_score_Norm)),SIFT_score_Norm,'-k')
     ax1.plot(range(len(Rate)),Rate_Norm,'--b')
     ax1.plot(range(len(PSNR)),PSNR_Norm,':r')
-    ax1.set_title('SIFT Similarity Score & CODEC Rate PSNR')
+    ax1.set_title('ORB Similarity Score & CODEC Rate PSNR')
     ax1.set_xlabel('Frame Number')
     #ax1.set_ylabel('Average SIFT Score')
-    ax1.legend(['SIFT','Rate','PSNR'])
+    ax1.legend(['ORB','Rate','PSNR'])
 
 
     fig2, ax2 =plt.subplots()
     ax2.plot(range(len(SIFT_score_Norm)),SIFT_score_Norm,'-k')
     ax2.plot(range(len(Rate)),Rate_Norm,'--b')
-    ax2.set_title('SIFT Similarity Score & CODEC Rate')
+    ax2.set_title('ORB Similarity Score & CODEC Rate')
     ax2.set_xlabel('Frame Number')
     #ax2.set_ylabel('Average SIFT Score')
-    ax2.legend(['SIFT','Rate'])
+    ax2.legend(['ORB','Rate'])
 
     fig3, ax3 =plt.subplots()
     ax3.plot(range(len(SIFT_score_Norm)),SIFT_score_Norm,'-k')
     ax3.plot(range(len(PSNR)),PSNR_Norm,':r')
-    ax3.set_title('SIFT Similarity Score & CODEC PSNR')
+    ax3.set_title('ORB Similarity Score & CODEC PSNR')
     ax3.set_xlabel('Frame Number')
     #ax3.set_ylabel('Average SIFT Score')
-    ax3.legend(['SIFT','PSNR'])
+    ax3.legend(['ORB','PSNR'])
 
 
     fig4, ax4 =plt.subplots()
     ax4.plot(range(np.shape(Rate_PSNR_SIFT)[0]),(Rate_PSNR_SIFT[:,3]/np.max(Rate_PSNR_SIFT[:,3])),'-k')
     ax4.plot(range(np.shape(Rate_PSNR_SIFT)[0]),(Rate_PSNR_SIFT[:,2]/np.max(Rate_PSNR_SIFT[:,2])),':r')
     ax4.plot(range(np.shape(Rate_PSNR_SIFT)[0]),(Rate_PSNR_SIFT[:,1]/np.max(Rate_PSNR_SIFT[:,1])),'--b')
-    ax4.set_title('SIFT Similarity Score & CODEC PSNR')
+    ax4.set_title('ORB Similarity Score & CODEC PSNR')
     ax4.set_xlabel('Frame Number')
     #ax3.set_ylabel('Average SIFT Score')
     ax4.legend(['SIFT','PSNR'])
