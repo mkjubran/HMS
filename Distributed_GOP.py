@@ -114,21 +114,22 @@ def call_bg(cmd):
 
 ###--------------------------------------------------------------
 def export_frames(fn):
-    osout = call('rm -rf ../Split_Video')
-    osout = call('mkdir ../Split_Video')
-    osout = call('mkdir ../Split_Video/pngall')
-    osout = call('ffmpeg -r 1 -i {} -r 1 -qp 0 ../Split_Video/pngall/%d.png'.format(fn))
+    osout = call('rm -rf rec.yuv')
+    osout = call('rm -rf {}'.format(Split_video_path))
+    osout = call('mkdir {}'.format(Split_video_path))
+    osout = call('mkdir {}/pngall'.format(Split_video_path))
+    osout = call('ffmpeg -r 1 -i {} -r 1 -qp 0 {}/pngall/%d.png'.format(fn,Split_video_path))
     return 
 
 ###--------------------------------------------------------------
 def Split_Video_GOP(Distributed_GOP_Matrix):
     for cnt_row in range(np.shape(Distributed_GOP_Matrix)[0]):
-        osout = call('rm -rf ../Split_Video/Part{}'.format(cnt_row))
-        osout = call('mkdir ../Split_Video/Part{}'.format(cnt_row))
+        osout = call('rm -rf {}/Part{}'.format(Split_video_path,cnt_row))
+        osout = call('mkdir {}/Part{}'.format(Split_video_path,cnt_row))
         for cnt_col in range(np.shape(Distributed_GOP_Matrix)[1]):
-            osout = call('cp -rf ../Split_Video/pngall/{}.png ../Split_Video/Part{}/{}.png'.format(int(Distributed_GOP_Matrix[cnt_row,cnt_col]+1),cnt_row,int(cnt_col+1)))
-        osout = call('ffmpeg -start_number 0 -i ../Split_Video/Part{}/%d.png -c:v libx264 -vf "fps=25,format=yuv420p" -qp 0 ../Split_Video/Part{}/Part{}.mp4'.format(cnt_row,cnt_row,cnt_row))
-        osout = call('ffmpeg -y -i ../Split_Video/Part{}/Part{}.mp4 -vcodec rawvideo -pix_fmt yuv420p -qp 0 ../Split_Video/Part{}/Part{}.yuv'.format(cnt_row,cnt_row,cnt_row,cnt_row))
+            osout = call('cp -rf {}/pngall/{}.png {}/Part{}/{}.png'.format(Split_video_path,int(Distributed_GOP_Matrix[cnt_row,cnt_col]+1),Split_video_path,cnt_row,int(cnt_col+1)))
+        osout = call('ffmpeg -start_number 0 -i {}/Part{}/%d.png -c:v libx264 -vf "fps=25,format=yuv420p" -qp 0 {}/Part{}/Part{}.mp4'.format(Split_video_path,cnt_row,Split_video_path,cnt_row,cnt_row))
+        osout = call('ffmpeg -y -i {}/Part{}/Part{}.mp4 -vcodec rawvideo -pix_fmt yuv420p -qp 0 {}/Part{}/Part{}.yuv'.format(Split_video_path,cnt_row,cnt_row,Split_video_path,cnt_row,cnt_row))
     return
 
 ###--------------------------------------------------------------
@@ -165,7 +166,7 @@ def Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Mat
         print('Stitching Frames in the Ref Picture set: Frame Numbers Relative to this GOP = {}').format(ref_pics_Stitching_array_Distributed)
 
     	##write config files header
-    	fid = open('../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg'.format(Pcnt,Pcnt),'w')
+    	fid = open('{}/Part{}/encoder_HMS_GOP_{}.cfg'.format(Split_video_path,Pcnt,Pcnt),'w')
     	print >> fid, '#======== Coding Structure ============='
     	print >> fid, 'IntraPeriod                   : -1           # Period of I-Frame ( -1 = only first)'
     	print >> fid, 'DecodingRefreshType           : 2           # Random Accesss 0:none, 1:CRA, 2:IDR, 3:Recovery Point SEI'
@@ -228,26 +229,25 @@ def Encode_decode_video(Distributed_GOP_Matrix):
     for Pcnt in range(np.shape(Distributed_GOP_Matrix)[0]):
     #for Pcnt in range(4):
          print('Encoding GOP#{} of {}'.format(Pcnt,(np.shape(Distributed_GOP_Matrix)[0]-1)))
-         InputYUV='../Split_Video/Part{}/Part{}.yuv'.format(Pcnt,Pcnt)
-         BitstreamFile='../Split_Video/Part{}/HMEncodedVideo.bin'.format(Pcnt)
+         InputYUV='{}/Part{}/Part{}.yuv'.format(Split_video_path,Pcnt,Pcnt)
+         BitstreamFile='{}/Part{}/HMEncodedVideo.bin'.format(Split_video_path,Pcnt)
          osout = call('rm -rf {}'.format(BitstreamFile))
-         osout = call('cp -f ./encoder_HMS.cfg ../Split_Video/Part{}/encoder_HMS.cfg'.format(Pcnt))
+         osout = call('cp -f ./encoder_HMS.cfg {}/Part{}/encoder_HMS.cfg'.format(Split_video_path,Pcnt))
+   
     
-         #print('./HMS/bin/TAppEncoderStatic -c ../Split_Video/Part{}/encoder_HMS.cfg -c ../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={}'.format(Pcnt,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
-    
-         osout=call_bg('./HMS/bin/TAppEncoderStatic -c ../Split_Video/Part{}/encoder_HMS.cfg -c ../Split_Video/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={} &'.format(Pcnt,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
+         osout=call_bg('./HMS/bin/TAppEncoderStatic -c {}/Part{}/encoder_HMS.cfg -c {}/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={} &'.format(Split_video_path,Pcnt,Split_video_path,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
          encoderlog.append(osout)
          PcntCompleted.append(Pcnt)
          if int(Pcnt % NProcesses) == 0 :
             for Pcnt2 in PcntCompleted:
-		encoderlogfile='../Split_Video/Part{}/encoderlog.dat'.format(Pcnt2)
+		encoderlogfile='{}/Part{}/encoderlog.dat'.format(Split_video_path,Pcnt2)
 		fid = open(encoderlogfile,'w')
                 fid.write(encoderlog[Pcnt2].stdout.read())
                 fid.close
             PcntCompleted=[]
 
     for Pcnt2 in PcntCompleted:
-         encoderlogfile='../Split_Video/Part{}/encoderlog.dat'.format(Pcnt2)
+         encoderlogfile='{}/Part{}/encoderlog.dat'.format(Split_video_path,Pcnt2)
 	 fid = open(encoderlogfile,'w')
          fid.write(encoderlog[Pcnt2].stdout.read())
          fid.close
@@ -258,8 +258,8 @@ def Encode_decode_video(Distributed_GOP_Matrix):
     #for Pcnt in range(4):
          encoderlog[Pcnt].stdout.read()
          print('Decoding GOP#{} of {}'.format(Pcnt,(np.shape(Distributed_GOP_Matrix)[0]-1)))
-         ReconFile='../Split_Video/Part{}/ReconPart{}.yuv'.format(Pcnt,Pcnt)
-         BitstreamFile='../Split_Video/Part{}/HMEncodedVideo.bin'.format(Pcnt)
+         ReconFile='{}/Part{}/ReconPart{}.yuv'.format(Split_video_path,Pcnt,Pcnt)
+         BitstreamFile='{}/Part{}/HMEncodedVideo.bin'.format(Split_video_path,Pcnt)
          osout = call('rm -rf {}'.format(ReconFile))
          
          #print('./HMS/bin/TAppDecoderStatic --BitstreamFile="{}" --ReconFile="{}" &'.format(BitstreamFile,ReconFile))
@@ -268,14 +268,14 @@ def Encode_decode_video(Distributed_GOP_Matrix):
 	 PcntCompleted.append(Pcnt)
          if int(Pcnt % NProcesses) == 0 :
             for Pcnt2 in PcntCompleted:
-		decoderlogfile='../Split_Video/Part{}/decoderlog.dat'.format(Pcnt2)
+		decoderlogfile='{}/Part{}/decoderlog.dat'.format(Split_video_path,Pcnt2)
 		fid = open(decoderlogfile,'w')
                 fid.write(decoderlog[Pcnt2].stdout.read())
                 fid.close
             PcntCompleted=[]
 
     for Pcnt2 in PcntCompleted:
-         decoderlogfile='../Split_Video/Part{}/decoderlog.dat'.format(Pcnt2)
+         decoderlogfile='{}/Part{}/decoderlog.dat'.format(Split_video_path,Pcnt2)
 	 fid = open(decoderlogfile,'w')
          fid.write(decoderlog[Pcnt2].stdout.read())
          fid.close
@@ -288,7 +288,7 @@ def Combine_encoder_log(Distributed_GOP_Matrix):
     CombinedLinesAll=[]
     for cnt_row in range(np.shape(Distributed_GOP_Matrix)[0]):
         cnt_col=0
-        encoderlogfile='../Split_Video/Part{}/encoderlog.dat'.format(cnt_row)
+        encoderlogfile='{}/Part{}/encoderlog.dat'.format(Split_video_path,cnt_row)
         with open(encoderlogfile) as f:
              Lines = f.readlines()
         f.close()
@@ -347,6 +347,7 @@ if __name__ == "__main__":
     rate=int(args.rate);
     NProcesses=int(args.nprocesses);
     Combined_encoder_log=args.combined_encoder_log
+    Split_video_path=args.split_video_path;
 
 
     
