@@ -5,7 +5,7 @@ import numpy as np
 import os, sys, subprocess, pdb
 import argparse
 import ConfigParser
-import time
+import datetime, math, time
 
 
 
@@ -228,8 +228,9 @@ def Encode_decode_video(Distributed_GOP_Matrix):
     decoderlog=[]
     PcntCompleted=[]
     for Pcnt in range(np.shape(Distributed_GOP_Matrix)[0]):
+         now = datetime.datetime.now()
     #for Pcnt in range(4):
-         print('Encoding GOP#{} of {}'.format(Pcnt,(np.shape(Distributed_GOP_Matrix)[0]-1)))
+         print('Encoding GOP#{} of {} ... {}'.format(Pcnt,(np.shape(Distributed_GOP_Matrix)[0]-1),now.strftime("%Y-%m-%d %H:%M:%S")))
          InputYUV='{}/Part{}/Part{}.yuv'.format(Split_video_path,Pcnt,Pcnt)
          BitstreamFile='{}/Part{}/HMEncodedVideo.bin'.format(Split_video_path,Pcnt)
          osout = call('rm -rf {}'.format(BitstreamFile))
@@ -242,7 +243,8 @@ def Encode_decode_video(Distributed_GOP_Matrix):
          if int(Pcnt % NProcesses) == 0 :
             for Pcnt2 in PcntCompleted:
                 encoderlog[Pcnt2].wait()
-                print('Encoding of GOP#{} is completed'.format(Pcnt2))
+                now = datetime.datetime.now()
+                print('Encoding of GOP#{} is completed ... {}'.format(Pcnt2,now.strftime("%Y-%m-%d %H:%M:%S")))
 		encoderlogfile='{}/Part{}/encoderlog.dat'.format(Split_video_path,Pcnt2)
 		fid = open(encoderlogfile,'w')
                 fid.write(encoderlog[Pcnt2].stdout.read())
@@ -382,4 +384,4 @@ if __name__ == "__main__":
     Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
     Encode_decode_video(Distributed_GOP_Matrix)
     Combine_encoder_log(Distributed_GOP_Matrix)    
-    print(Distributed_GOP_Matrix)
+    #print(Distributed_GOP_Matrix)
