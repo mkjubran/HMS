@@ -109,6 +109,7 @@ def call(cmd):
 
 ###--------------------------------------------------------------
 def call_bg(cmd):
+    #proc = subprocess.Popen(cmd, shell=True)
     proc = subprocess.Popen(cmd,stdout=subprocess.PIPE, shell=True)
     return proc
 
@@ -235,11 +236,13 @@ def Encode_decode_video(Distributed_GOP_Matrix):
          osout = call('cp -f ./encoder_HMS.cfg {}/Part{}/encoder_HMS.cfg'.format(Split_video_path,Pcnt))
    
     
-         osout=call_bg('./HMS/bin/TAppEncoderStatic -c {}/Part{}/encoder_HMS.cfg -c {}/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={} &'.format(Split_video_path,Pcnt,Split_video_path,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
+         osout=call_bg('./HMS/bin/TAppEncoderStatic -c {}/Part{}/encoder_HMS.cfg -c {}/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={}'.format(Split_video_path,Pcnt,Split_video_path,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
          encoderlog.append(osout)
          PcntCompleted.append(Pcnt)
          if int(Pcnt % NProcesses) == 0 :
             for Pcnt2 in PcntCompleted:
+                encoderlog[Pcnt2].wait()
+                print('Encoding of GOP#{} is completed'.format(Pcnt2))
 		encoderlogfile='{}/Part{}/encoderlog.dat'.format(Split_video_path,Pcnt2)
 		fid = open(encoderlogfile,'w')
                 fid.write(encoderlog[Pcnt2].stdout.read())
@@ -262,12 +265,14 @@ def Encode_decode_video(Distributed_GOP_Matrix):
          BitstreamFile='{}/Part{}/HMEncodedVideo.bin'.format(Split_video_path,Pcnt)
          osout = call('rm -rf {}'.format(ReconFile))
          
-         #print('./HMS/bin/TAppDecoderStatic --BitstreamFile="{}" --ReconFile="{}" &'.format(BitstreamFile,ReconFile))
-         osout=call_bg('./HMS/bin/TAppDecoderStatic --BitstreamFile="{}" --ReconFile="{}" &'.format(BitstreamFile,ReconFile))
+         #print('./HMS/bin/TAppDecoderStatic --BitstreamFile="{}" --ReconFile="{}"'.format(BitstreamFile,ReconFile))
+         osout=call_bg('./HMS/bin/TAppDecoderStatic --BitstreamFile="{}" --ReconFile="{}"'.format(BitstreamFile,ReconFile))
          decoderlog.append(osout)
 	 PcntCompleted.append(Pcnt)
          if int(Pcnt % NProcesses) == 0 :
             for Pcnt2 in PcntCompleted:
+                decoderlog[Pcnt2].wait()
+                print('Decoding of GOP#{} is completed'.format(Pcnt2))
 		decoderlogfile='{}/Part{}/decoderlog.dat'.format(Split_video_path,Pcnt2)
 		fid = open(decoderlogfile,'w')
                 fid.write(decoderlog[Pcnt2].stdout.read())
