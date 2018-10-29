@@ -242,7 +242,7 @@ def Encode_decode_video(Distributed_GOP_Matrix):
          PcntCompleted.append(Pcnt)
          if Pcnt==0:
 	    for line in encoderlog[0].stdout:
-		sys.write.stdout(line)
+		sys.stdout.write(line)
          if int(Pcnt % NProcesses) == 0 :
             for Pcnt2 in PcntCompleted:
                 encoderlog[Pcnt2].wait()
