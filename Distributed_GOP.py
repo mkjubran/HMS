@@ -228,9 +228,9 @@ def Encode_decode_video(Distributed_GOP_Matrix):
     decoderlog=[]
     PcntCompleted=[]
     for Pcnt in range(np.shape(Distributed_GOP_Matrix)[0]):
-         now = datetime.datetime.now()
+         now_start = datetime.datetime.now()
     #for Pcnt in range(4):
-         print('Encoding GOP#{} of {} ... {}'.format(Pcnt,(np.shape(Distributed_GOP_Matrix)[0]-1),now.strftime("%Y-%m-%d %H:%M:%S")))
+         print('Encoding GOP#{} of {} ... {}'.format(Pcnt,(np.shape(Distributed_GOP_Matrix)[0]-1),now_start.strftime("%Y-%m-%d %H:%M:%S")))
          InputYUV='{}/Part{}/Part{}.yuv'.format(Split_video_path,Pcnt,Pcnt)
          BitstreamFile='{}/Part{}/HMEncodedVideo.bin'.format(Split_video_path,Pcnt)
          osout = call('rm -rf {}'.format(BitstreamFile))
@@ -240,14 +240,14 @@ def Encode_decode_video(Distributed_GOP_Matrix):
          osout=call_bg('./HMS/bin/TAppEncoderStatic -c {}/Part{}/encoder_HMS.cfg -c {}/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={}'.format(Split_video_path,Pcnt,Split_video_path,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
          encoderlog.append(osout)
          PcntCompleted.append(Pcnt)
-         if Pcnt==0:
+         if Pcnt==-1:
 	    for line in encoderlog[0].stdout:
 		sys.stdout.write(line)
          if int(Pcnt % NProcesses) == 0 :
             for Pcnt2 in PcntCompleted:
                 encoderlog[Pcnt2].wait()
                 now = datetime.datetime.now()
-                print('Encoding of GOP#{} is completed ... {}'.format(Pcnt2,now.strftime("%Y-%m-%d %H:%M:%S")))
+                print('Encoding of GOP#{} is completed ... {}   ({})'.format(Pcnt2,now.strftime("%Y-%m-%d %H:%M:%S"),now.replace(microsecond=0)-now_start.replace(microsecond=0)))
 		encoderlogfile='{}/Part{}/encoderlog.dat'.format(Split_video_path,Pcnt2)
 		fid = open(encoderlogfile,'w')
                 fid.write(encoderlog[Pcnt2].stdout.read())
@@ -312,6 +312,17 @@ def Combine_encoder_log(Distributed_GOP_Matrix):
                     cnt_col=cnt_col+1
 
     fid = open(Combined_encoder_log,'w')
+    fid.write('Input File (MP4) = {}\n'.format(vid))
+    fid.write('RankListFile = {}\n'.format(RankListFile))
+    fid.write('Ref_active = {}\n'.format(num_ref_pics_active_Max))
+    fid.write('Ref_stitch = {}\n'.format(num_ref_pics_active_Stitching))
+    fid.write('QP = {}\n'.format(QP))
+    fid.write('MaxCUSize = {}\n'.format(MaxCUSize))
+    fid.write('MaxPartitionDepth = {}\n'.format(MaxPartitionDepth))
+    fid.write('fps = {}\n'.format(fps))
+    fid.write('RateControl = {}\n'.format(RateControl))
+    fid.write('rate = {}\n'.format(rate))
+    fid.write('NProcesses = {}\n\n'.format(NProcesses))
     for cnt in range(len(CombinedLines)):
        templine=CombinedLines[cnt][:].replace("  "," ")
        templine=templine.replace("  "," ")
@@ -324,6 +335,17 @@ def Combine_encoder_log(Distributed_GOP_Matrix):
 
 
     fid = open((Combined_encoder_log[0:(len(Combined_encoder_log)-4)]+'All.dat'),'w')
+    fid.write('Input File (MP4) = {}\n'.format(vid))
+    fid.write('RankListFile = {}\n'.format(RankListFile))
+    fid.write('Ref_active = {}\n'.format(num_ref_pics_active_Max))
+    fid.write('Ref_stitch = {}\n'.format(num_ref_pics_active_Stitching))
+    fid.write('QP = {}\n'.format(QP))
+    fid.write('MaxCUSize = {}\n'.format(MaxCUSize))
+    fid.write('MaxPartitionDepth = {}\n'.format(MaxPartitionDepth))
+    fid.write('fps = {}\n'.format(fps))
+    fid.write('RateControl = {}\n'.format(RateControl))
+    fid.write('rate = {}\n'.format(rate))
+    fid.write('NProcesses = {}\n\n'.format(NProcesses))
     for cnt in range(len(CombinedLines)):
        templine=CombinedLinesAll[cnt][:].replace("  "," ")
        templine=templine.replace("  "," ")
