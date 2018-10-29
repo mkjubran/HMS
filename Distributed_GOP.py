@@ -240,6 +240,9 @@ def Encode_decode_video(Distributed_GOP_Matrix):
          osout=call_bg('./HMS/bin/TAppEncoderStatic -c {}/Part{}/encoder_HMS.cfg -c {}/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={}'.format(Split_video_path,Pcnt,Split_video_path,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
          encoderlog.append(osout)
          PcntCompleted.append(Pcnt)
+         if Pcnt==0:
+	    for line in encoderlog[0].stdout:
+		sys.write.stdout(line)
          if int(Pcnt % NProcesses) == 0 :
             for Pcnt2 in PcntCompleted:
                 encoderlog[Pcnt2].wait()
