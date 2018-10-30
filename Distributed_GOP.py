@@ -243,7 +243,7 @@ def Encode_decode_video(Distributed_GOP_Matrix):
          if Pcnt==-1: ## must be enabled (Pcnt==0) only for testing as this will make encoderlog.dat file of Part0 empty
 	    for line in encoderlog[0].stdout:
 		sys.stdout.write(line)
-         if (((int(Pcnt % NProcesses) == 0) and (Pcnt == 0)) or (Pcnt==(np.shape(Distributed_GOP_Matrix)[0]-1))):
+         if ((int((Pcnt+1) % NProcesses) == 0)) or (Pcnt==(np.shape(Distributed_GOP_Matrix)[0]-1))):
             for Pcnt2 in PcntCompleted:
                 encoderlog[Pcnt2].wait()
                 now = datetime.datetime.now()
@@ -274,7 +274,7 @@ def Encode_decode_video(Distributed_GOP_Matrix):
          osout=call_bg('./HMS/bin/TAppDecoderStatic --BitstreamFile="{}" --ReconFile="{}"'.format(BitstreamFile,ReconFile))
          decoderlog.append(osout)
 	 PcntCompleted.append(Pcnt)
-         if (((int(Pcnt % NProcesses) == 0) and (Pcnt == 0)) or (Pcnt==(np.shape(Distributed_GOP_Matrix)[0]-1))):
+         if ((int((Pcnt+1) % NProcesses) == 0) or (Pcnt==(np.shape(Distributed_GOP_Matrix)[0]-1))):
             for Pcnt2 in PcntCompleted:
                 decoderlog[Pcnt2].wait()
                 print('Decoding of GOP#{} is completed'.format(Pcnt2))
