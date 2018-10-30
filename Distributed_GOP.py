@@ -274,7 +274,7 @@ def Encode_decode_video(Distributed_GOP_Matrix):
          osout=call_bg('./HMS/bin/TAppDecoderStatic --BitstreamFile="{}" --ReconFile="{}"'.format(BitstreamFile,ReconFile))
          decoderlog.append(osout)
 	 PcntCompleted.append(Pcnt)
-         if ((int(Pcnt % NProcesses) == 0) or (Pcnt==(np.shape(Distributed_GOP_Matrix)[0]-1)) or (Pcnt == 0)) 
+         if ((int(Pcnt % NProcesses) == 0) or (Pcnt==(np.shape(Distributed_GOP_Matrix)[0]-1)) or (Pcnt == 0)):
             for Pcnt2 in PcntCompleted:
                 decoderlog[Pcnt2].wait()
                 print('Decoding of GOP#{} is completed'.format(Pcnt2))
