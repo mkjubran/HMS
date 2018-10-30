@@ -240,10 +240,10 @@ def Encode_decode_video(Distributed_GOP_Matrix):
          osout=call_bg('./HMS/bin/TAppEncoderStatic -c {}/Part{}/encoder_HMS.cfg -c {}/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={}'.format(Split_video_path,Pcnt,Split_video_path,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
          encoderlog.append(osout)
          PcntCompleted.append(Pcnt)
-         if Pcnt==-1:
+         if Pcnt==-1: ## must be enabled (Pcnt==0) only for testing as this will make encoderlog.dat file of Part0 empty
 	    for line in encoderlog[0].stdout:
 		sys.stdout.write(line)
-         if int(Pcnt % NProcesses) == 0 :
+         if ((int(Pcnt % NProcesses) == 0) or (Pcnt==(np.shape(Distributed_GOP_Matrix)[0]-1))) :
             for Pcnt2 in PcntCompleted:
                 encoderlog[Pcnt2].wait()
                 now = datetime.datetime.now()
@@ -274,7 +274,7 @@ def Encode_decode_video(Distributed_GOP_Matrix):
          osout=call_bg('./HMS/bin/TAppDecoderStatic --BitstreamFile="{}" --ReconFile="{}"'.format(BitstreamFile,ReconFile))
          decoderlog.append(osout)
 	 PcntCompleted.append(Pcnt)
-         if int(Pcnt % NProcesses) == 0 :
+         if ((int(Pcnt % NProcesses) == 0) or (Pcnt==(np.shape(Distributed_GOP_Matrix)[0]-1))) :
             for Pcnt2 in PcntCompleted:
                 decoderlog[Pcnt2].wait()
                 print('Decoding of GOP#{} is completed'.format(Pcnt2))
