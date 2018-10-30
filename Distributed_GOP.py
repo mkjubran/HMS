@@ -264,8 +264,9 @@ def Encode_decode_video(Distributed_GOP_Matrix):
     PcntCompleted=[]
     for Pcnt in range(np.shape(Distributed_GOP_Matrix)[0]):
     #for Pcnt in range(4):
+         now_start = datetime.datetime.now()
          encoderlog[Pcnt].stdout.read()
-         print('Decoding GOP#{} of {}'.format(Pcnt,(np.shape(Distributed_GOP_Matrix)[0]-1)))
+         print('Decoding GOP#{} of {} ... {}'.format(Pcnt,(np.shape(Distributed_GOP_Matrix)[0]-1),now_start.strftime("%Y-%m-%d %H:%M:%S")))
          ReconFile='{}/Part{}/ReconPart{}.yuv'.format(Split_video_path,Pcnt,Pcnt)
          BitstreamFile='{}/Part{}/HMEncodedVideo.bin'.format(Split_video_path,Pcnt)
          osout = call('rm -rf {}'.format(ReconFile))
@@ -277,7 +278,8 @@ def Encode_decode_video(Distributed_GOP_Matrix):
          if ((int((Pcnt+1) % NProcesses) == 0) or (Pcnt==(np.shape(Distributed_GOP_Matrix)[0]-1))):
             for Pcnt2 in PcntCompleted:
                 decoderlog[Pcnt2].wait()
-                print('Decoding of GOP#{} is completed'.format(Pcnt2))
+                now = datetime.datetime.now()
+                print('Decoding of GOP#{} is completed ... {}   ({})'.format(Pcnt2,now.strftime("%Y-%m-%d %H:%M:%S"),now.replace(microsecond=0)-now_start.replace(microsecond=0)))
 		decoderlogfile='{}/Part{}/decoderlog.dat'.format(Split_video_path,Pcnt2)
 		fid = open(decoderlogfile,'w')
                 fid.write(decoderlog[Pcnt2].stdout.read())
