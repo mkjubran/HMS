@@ -170,7 +170,7 @@ def Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Mat
 
         ref_pics_Stitching_array_Distributed=ref_pics_Stitching_array_Distributed_int
         print('Stitching Frames in the Ref Picture set: Absolute Frame Numbers = {}').format(Abs_ref_pics_Stitching_array_Distributed)
-        print('Stitching Frames in the Ref Picture set: Frame Numbers Relative to this GOP = {}').format(ref_pics_Stitching_array_Distributed)
+        #print('Stitching Frames in the Ref Picture set: Frame Numbers Relative to this GOP = {}').format(ref_pics_Stitching_array_Distributed)
 
     	##write config files header
     	fid = open('{}/Part{}/encoder_HMS_GOP_{}.cfg'.format(Split_video_path,Pcnt,Pcnt),'w')
@@ -254,14 +254,14 @@ def Encode_decode_video(Distributed_GOP_Matrix):
              encoderlog[Pcnt2].wait()
              PcntCompleted.remove(Pcnt2)
              now_end.append(datetime.datetime.now())
-             print('Encoding of GOP#{} is completed ... {}   ({})'.format(Pcnt2,now_end[Pcnt2].strftime("%Y-%m-%d %H:%M:%S"),now_end[Pcnt2].replace(microsecond=0)-now_start[Pcnt2].replace(microsecond=0)))
+             print('Encoding of GOP#{} is completed ... {}   ({}) .. ({})'.format(Pcnt2,now_end[Pcnt2].strftime("%Y-%m-%d %H:%M:%S"),now_end[Pcnt2].replace(microsecond=0)-now_start[Pcnt2].replace(microsecond=0),now_end[Pcnt2].replace(microsecond=0)-now_start[0].replace(microsecond=0)))
              Pcnt2=Pcnt2+1
 
          if (Pcnt==(np.shape(Distributed_GOP_Matrix)[0]-1)):
             for Pcnt2 in PcntCompleted:
                 encoderlog[Pcnt2].wait()
                 now_end.append(datetime.datetime.now())
-                print('Encoding of GOP#{} is completed ... {}   ({})'.format(Pcnt2,now_end[Pcnt2].strftime("%Y-%m-%d %H:%M:%S"),now_end[Pcnt2].replace(microsecond=0)- now_start[Pcnt2].replace(microsecond=0)))
+                print('Encoding of GOP#{} is completed ... {}   ({}) .. ({})'.format(Pcnt2,now_end[Pcnt2].strftime("%Y-%m-%d %H:%M:%S"),now_end[Pcnt2].replace(microsecond=0)- now_start[Pcnt2].replace(microsecond=0),now_end[Pcnt2].replace(microsecond=0)-now_start[0].replace(microsecond=0)))
             PcntCompleted=[]
 
    ### decoding ---------------
@@ -287,14 +287,14 @@ def Encode_decode_video(Distributed_GOP_Matrix):
              decoderlog[Pcnt2].wait()
              PcntCompleted.remove(Pcnt2)
              now_end.append(datetime.datetime.now())
-             print('Decoding of GOP#{} is completed ... {}   ({})'.format(Pcnt2,now_end[Pcnt2].strftime("%Y-%m-%d %H:%M:%S"),now_end[Pcnt2].replace(microsecond=0)-now_start[Pcnt2].replace(microsecond=0)))
+             print('Decoding of GOP#{} is completed ... {}   ({}) .. ({})'.format(Pcnt2,now_end[Pcnt2].strftime("%Y-%m-%d %H:%M:%S"),now_end[Pcnt2].replace(microsecond=0)-now_start[Pcnt2].replace(microsecond=0),now_end[Pcnt2].replace(microsecond=0)-now_start[0].replace(microsecond=0)))
              Pcnt2=Pcnt2+1
 
          if (Pcnt==(np.shape(Distributed_GOP_Matrix)[0]-1)):
             for Pcnt2 in PcntCompleted:
                 decoderlog[Pcnt2].wait()
                 now_end.append(datetime.datetime.now())
-                print('Decoding of GOP#{} is completed ... {}   ({})'.format(Pcnt2,now_end[Pcnt2].strftime("%Y-%m-%d %H:%M:%S"),now_end[Pcnt2].replace(microsecond=0)- now_start[Pcnt2].replace(microsecond=0)))
+                print('Decoding of GOP#{} is completed ... {}   ({}) .. ({})'.format(Pcnt2,now_end[Pcnt2].strftime("%Y-%m-%d %H:%M:%S"),now_end[Pcnt2].replace(microsecond=0)- now_start[Pcnt2].replace(microsecond=0),now_end[Pcnt2].replace(microsecond=0)-now_start[0].replace(microsecond=0)))
             PcntCompleted=[]
     return
 
