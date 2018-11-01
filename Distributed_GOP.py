@@ -114,6 +114,12 @@ def call_bg(cmd):
     return proc
 
 ###--------------------------------------------------------------
+def call_bg_file(cmd,fidProcess):
+    proc = subprocess.Popen(cmd,stdout=fidProcess, shell=True)
+    fidProcess.close
+    return proc
+
+###--------------------------------------------------------------
 def export_frames(fn):
     osout = call('rm -rf rec.yuv')
     osout = call('rm -rf {}'.format(Split_video_path))
@@ -229,29 +235,23 @@ def Encode_decode_video(Distributed_GOP_Matrix):
     PcntCompleted=[]
     for Pcnt in range(np.shape(Distributed_GOP_Matrix)[0]):
          now_start = datetime.datetime.now()
-    #for Pcnt in range(4):
          print('Encoding GOP#{} of {} ... {}'.format(Pcnt,(np.shape(Distributed_GOP_Matrix)[0]-1),now_start.strftime("%Y-%m-%d %H:%M:%S")))
          InputYUV='{}/Part{}/Part{}.yuv'.format(Split_video_path,Pcnt,Pcnt)
          BitstreamFile='{}/Part{}/HMEncodedVideo.bin'.format(Split_video_path,Pcnt)
          osout = call('rm -rf {}'.format(BitstreamFile))
          osout = call('cp -f ./encoder_HMS.cfg {}/Part{}/encoder_HMS.cfg'.format(Split_video_path,Pcnt))
    
-    
-         osout=call_bg('./HMS/bin/TAppEncoderStatic -c {}/Part{}/encoder_HMS.cfg -c {}/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={}'.format(Split_video_path,Pcnt,Split_video_path,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate))
+         encoderlogfile='{}/Part{}/encoderlog.dat'.format(Split_video_path,Pcnt)
+         fid = open(encoderlogfile,'w')
+         osout=call_bg_file('./HMS/bin/TAppEncoderStatic -c {}/Part{}/encoder_HMS.cfg -c {}/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={}'.format(Split_video_path,Pcnt,Split_video_path,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,Pcnt,rate),fid)
          encoderlog.append(osout)
          PcntCompleted.append(Pcnt)
-         if Pcnt==-1: ## must be enabled (Pcnt==0) only for testing as this will make encoderlog.dat file of Part0 empty
-	    for line in encoderlog[0].stdout:
-		sys.stdout.write(line)
+
          if ((int((Pcnt+1) % NProcesses) == 0) or (Pcnt==(np.shape(Distributed_GOP_Matrix)[0]-1))):
             for Pcnt2 in PcntCompleted:
                 encoderlog[Pcnt2].wait()
                 now = datetime.datetime.now()
                 print('Encoding of GOP#{} is completed ... {}   ({})'.format(Pcnt2,now.strftime("%Y-%m-%d %H:%M:%S"),now.replace(microsecond=0)-now_start.replace(microsecond=0)))
-		encoderlogfile='{}/Part{}/encoderlog.dat'.format(Split_video_path,Pcnt2)
-		fid = open(encoderlogfile,'w')
-                fid.write(encoderlog[Pcnt2].stdout.read())
-                fid.close
             PcntCompleted=[]
 
     for Pcnt2 in PcntCompleted:
@@ -260,6 +260,8 @@ def Encode_decode_video(Distributed_GOP_Matrix):
          fid.write(encoderlog[Pcnt2].stdout.read())
          fid.close
     PcntCompleted=[]
+
+   ### decoding ---------------
 
     PcntCompleted=[]
     for Pcnt in range(np.shape(Distributed_GOP_Matrix)[0]):
@@ -277,12 +279,13 @@ def Encode_decode_video(Distributed_GOP_Matrix):
 	 PcntCompleted.append(Pcnt)
          if ((int((Pcnt+1) % NProcesses) == 0) or (Pcnt==(np.shape(Distributed_GOP_Matrix)[0]-1))):
             for Pcnt2 in PcntCompleted:
-                decoderlog[Pcnt2].wait()
+                #decoderlog[Pcnt2].wait()
+                out, err = decoderlog[Pcnt2].communicate()
                 now = datetime.datetime.now()
                 print('Decoding of GOP#{} is completed ... {}   ({})'.format(Pcnt2,now.strftime("%Y-%m-%d %H:%M:%S"),now.replace(microsecond=0)-now_start.replace(microsecond=0)))
 		decoderlogfile='{}/Part{}/decoderlog.dat'.format(Split_video_path,Pcnt2)
 		fid = open(decoderlogfile,'w')
-                fid.write(decoderlog[Pcnt2].stdout.read())
+                fid.write(out)
                 fid.close
             PcntCompleted=[]
 
