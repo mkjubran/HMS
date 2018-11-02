@@ -124,8 +124,8 @@ def export_frames(fn):
     osout = call('rm -rf rec.yuv')
     osout = call('rm -rf {}'.format(Split_video_path))
     osout = call('mkdir {}'.format(Split_video_path))
-    osout = call('mkdir {}/pngall'.format(Split_video_path))
-    osout = call('ffmpeg -r 1 -i {} -r 1 -qp 0 {}/pngall/%d.png'.format(fn,Split_video_path))
+    osout = call('mkdir {}/pngparallel'.format(Split_video_path))
+    osout = call('ffmpeg -r 1 -i {} -r 1 -qp 0 {}/pngparallel/%d.png'.format(fn,Split_video_path))
     return 
 
 ###--------------------------------------------------------------
@@ -134,7 +134,7 @@ def Split_Video_GOP(Distributed_GOP_Matrix):
         osout = call('rm -rf {}/Part{}'.format(Split_video_path,cnt_row))
         osout = call('mkdir {}/Part{}'.format(Split_video_path,cnt_row))
         for cnt_col in range(np.shape(Distributed_GOP_Matrix)[1]):
-            osout = call('cp -rf {}/pngall/{}.png {}/Part{}/{}.png'.format(Split_video_path,int(Distributed_GOP_Matrix[cnt_row,cnt_col]+1),Split_video_path,cnt_row,int(cnt_col+1)))
+            osout = call('cp -rf {}/pngparallel/{}.png {}/Part{}/{}.png'.format(Split_video_path,int(Distributed_GOP_Matrix[cnt_row,cnt_col]+1),Split_video_path,cnt_row,int(cnt_col+1)))
         osout = call('ffmpeg -start_number 0 -i {}/Part{}/%d.png -c:v libx264 -vf "fps=25,format=yuv420p" -qp 0 {}/Part{}/Part{}.mp4'.format(Split_video_path,cnt_row,Split_video_path,cnt_row,cnt_row))
         osout = call('ffmpeg -y -i {}/Part{}/Part{}.mp4 -vcodec rawvideo -pix_fmt yuv420p -qp 0 {}/Part{}/Part{}.yuv'.format(Split_video_path,cnt_row,cnt_row,Split_video_path,cnt_row,cnt_row))
     return
