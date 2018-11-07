@@ -138,7 +138,7 @@ echo "Mode = "$mode >> $HMSResults
 echo "" >> $HMSResults
 
 rm -rf ./encoder_HMS_GOP.cfg
-python CreateHMGOPStructHoldFixPredictRPS_InterRPS.py --ranklist $RankListFile --ref_active $Ref_active --ref_stitch $Ref_stitch --mode $mode --fsr $fsr --fps $fps
+python CreateHMGOPStructHoldFixPredictRPS_InterRPS_v0.py --ranklist $RankListFile --ref_active $Ref_active --ref_stitch $Ref_stitch --mode $mode --fps $fps
 
 
 if [ $rate = 0 ]
