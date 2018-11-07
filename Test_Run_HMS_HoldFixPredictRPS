@@ -13,7 +13,7 @@ output_dir="../savenpy"
 opt=''
 
 
-ffmpeg -i ../vid/$vid.mp4 -vcodec rawvideo -pix_fmt yuv420p ../vid/$vid.yuv
+ffmpeg -y -i ../vid/$vid.mp4 -vcodec rawvideo -pix_fmt yuv420p ../vid/$vid.yuv
 
 ## Target Bit Rate 
 #opt=$vid
