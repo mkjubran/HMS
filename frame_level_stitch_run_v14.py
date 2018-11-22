@@ -382,7 +382,7 @@ if __name__ == '__main__':
                lwin_opt_sorting=np.append(lwin_opt_sorting,i)
   
     #print('\nOPTIMAL HEVC GOP ORDER at Downsampled space:') ; print(lwin_opt_sorting)
-    fid = open('OrderedFrames_'+fname+'.txt','w')
+    fid = open('OrderedFrames_'+fname+suffix'.txt','w')
     for FNum in lwin_opt_sorting:
     	print >> fid, FNum
     #pdb.set_trace()
