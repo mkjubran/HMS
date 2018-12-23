@@ -52,9 +52,9 @@ def Get_FNum_Rate_PSNR(fname):
 
 def Comp_TotalRate(f_FNum_Rate_PSNR):
    TotalSize=0
-   for cnt in range(np.shape(f1_FNum_Rate_PSNR)[0]):
+   for cnt in range(np.shape(f_FNum_Rate_PSNR)[0]):
 	TotalSize=TotalSize+f_FNum_Rate_PSNR[cnt,1]
-   TotalRate=TotalSize/fps
+   TotalRate=(TotalSize/np.shape(f_FNum_Rate_PSNR)[0])*fps
    return TotalRate
    
 
@@ -68,7 +68,37 @@ def Comp_TotalPSNR(f_FNum_Rate_PSNR):
    return TotalPSNR
 
 
+def Get_FNum_VMAF(fname):
+   #read file
+   with open(fname) as f:
+      fl = f.readlines()
+      f.close()
 
+   ## get VMAF Score
+   FNum_VMAF=np.empty((1,2), float)
+   for cnt in range(len(fl)):
+      L=fl[cnt].replace("..."," ")
+      L=L.replace("'","")
+      L=L.replace("\\n","")
+      L=L.replace("]","")
+      L=L.replace(":"," ")
+      L=L.replace(",","").split()
+      if len(L)>0:
+         if L[0]=='VMAF_Frame':
+             #print(L)
+             #print('{}...{}'.format(L[1],L[15]))
+             FNum=int(L[1])+0
+             FVMAF=float(L[15])+0
+	     FNum_VMAF=np.append(FNum_VMAF,np.array([[FNum,FVMAF]]),0)
+   FNum_VMAF=FNum_VMAF[1:np.size(FNum_VMAF,0)]
+   return FNum_VMAF
+
+def Comp_TotalVMAF(f_FNum_VMAF):
+   TotalVMAF=0
+   for cnt in range(np.shape(f_FNum_VMAF)[0]):
+	TotalVMAF=TotalVMAF+f_FNum_VMAF[cnt,1]
+   TotalVMAF=(TotalVMAF/np.shape(f_FNum_VMAF)[0])
+   return TotalVMAF
 
 if __name__ == '__main__':
    ##Inputs
@@ -82,6 +112,9 @@ if __name__ == '__main__':
    f1_FNum_Rate_PSNR=Get_FNum_Rate_PSNR(fname1)
    f2_FNum_Rate_PSNR=Get_FNum_Rate_PSNR(fname2)
 
+   f1_FNum_VMAF=Get_FNum_VMAF(fname1)
+   f2_FNum_VMAF=Get_FNum_VMAF(fname2)
+
    f1_numFrames=np.shape(f1_FNum_Rate_PSNR)[0]
    f2_numFrames=np.shape(f2_FNum_Rate_PSNR)[0]
 
@@ -91,27 +124,6 @@ if __name__ == '__main__':
    else:
       f2_FNum_Rate_PSNR=f2_FNum_Rate_PSNR[0:f1_numFrames,:]
 
-   plt.subplot(2, 1, 1)
-   plt.plot(f1_FNum_Rate_PSNR[:,0],f1_FNum_Rate_PSNR[:,1],"r--")
-   plt.plot(f2_FNum_Rate_PSNR[:,0],f2_FNum_Rate_PSNR[:,1],"b--")
-   plt.legend([Lfname1,Lfname2])
-   #plt.title('Comparing 2 videos')
-   plt.xlabel('Frame Number')
-   plt.ylabel('Frame Size (kbits)')
-
-
-   plt.subplot(2, 1, 2)
-   #f1_FNum_Rate_PSNR=Get_FNum_Rate_PSNR(fname1)
-   plt.plot(f1_FNum_Rate_PSNR[:,0],f1_FNum_Rate_PSNR[:,2],"r--")
-   #f2_FNum_Rate_PSNR=Get_FNum_Rate_PSNR(fname2)
-   plt.plot(f2_FNum_Rate_PSNR[:,0],f2_FNum_Rate_PSNR[:,2],"b--")
-   plt.legend([Lfname1,Lfname2])
-   #plt.title('Comparing 2 videos')
-   plt.xlabel('Frame Number')
-   plt.ylabel('PSNR (dB)')
-   #plt.show()
-   
-
 ## compute the over all: Number of Frames, Rate, PSNR
    TotalRatefn1=Comp_TotalRate(f1_FNum_Rate_PSNR)
    TotalRatefn2=Comp_TotalRate(f2_FNum_Rate_PSNR)
@@ -119,8 +131,11 @@ if __name__ == '__main__':
    TotalPSNRfn1=Comp_TotalPSNR(f1_FNum_Rate_PSNR)
    TotalPSNRfn2=Comp_TotalPSNR(f2_FNum_Rate_PSNR)
 
-   print("Fn1 ({}): #Frames= {}, Rate={} kbps, PSNR={} dB").format(Lfname1,f1_numFrames,TotalRatefn1,TotalPSNRfn1)
-   print("Fn2 ({}): #Frames= {}, Rate={} kbps, PSNR={} dB").format(Lfname2,f2_numFrames,TotalRatefn2,TotalPSNRfn2)
+   TotalVMAFfn1=Comp_TotalVMAF(f1_FNum_VMAF)
+   TotalVMAFfn2=Comp_TotalVMAF(f2_FNum_VMAF)
+
+   print("Fn1 ({}): #Frames= {}, Rate={} kbps, PSNR={} dB, VMAF={}").format(Lfname1,f1_numFrames,TotalRatefn1,TotalPSNRfn1,TotalVMAFfn1)
+   print("Fn2 ({}): #Frames= {}, Rate={} kbps, PSNR={} dB, VMAF={}").format(Lfname2,f2_numFrames,TotalRatefn2,TotalPSNRfn2,TotalVMAFfn2)
 
    plt.show()
 
