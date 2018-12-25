@@ -245,7 +245,7 @@ Frame 237: [Y 90.2175dB   U 999.9900dB   V 999.9900dB   YUV 91.9784dB]  ..... Vi
 Frame 238: [Y 93.0050dB   U 999.9900dB   V 999.9900dB   YUV 94.7659dB]  ..... Video: [Y 57.9124dB   U 64.0329dB   V 64.8565dB   YUV 59.2138dB]
 Frame 239: [Y 88.5334dB   U 999.9900dB   V 999.9900dB   YUV 90.2943dB]  ..... Video: [Y 57.9306dB   U 64.0511dB   V 64.8748dB   YUV 59.2320dB]
 Frame 240: [Y 88.3810dB   U 999.9900dB   V 999.9900dB   YUV 90.1419dB]  ..... Video: [Y 57.9487dB   U 64.0693dB   V 64.8929dB   YUV 59.2501dB]
-VMAF_Asset: {"asset_dict": {"height": 480, "use_path_as_workpath": 1, "width": 640, "yuv_type": "yuv420p"}, "asset_id": 1771080712718439, "content_id": 1771080712718439, "dataset": "cmd", "dis_path": "../vid/VP9DecodedVideo.yuv", "ref_path": "../vid/Breathe10sec_640480.yuv", "workdir": "/u/Downloads/HMStitching/HMS/vmaf/workspace/workdir/900456f3-b348-4479-848f-13f8015a8b10"}
+VMAF_Asset: {"asset_dict": {"height": 480, "use_path_as_workpath": 1, "width": 640, "yuv_type": "yuv420p"}, "asset_id": 1771080712718439, "content_id": 1771080712718439, "dataset": "cmd", "dis_path": "../vid/VP9DecodedVideo.yuv", "ref_path": "../vid/Breathe10sec_640480.yuv", "workdir": "/u/Downloads/HMStitching/HMS/vmaf/workspace/workdir/d8e0d688-1e40-46ee-9821-de0f05eca173"}
 VMAF_Executor: VMAF_VF0.2.4c-0.6.1
 VMAF_Result:
 VMAF_Frame 0: VMAF_feature_adm2_score:0.994206, VMAF_feature_motion2_score:0.000000, VMAF_feature_vif_scale0_score:0.841568, VMAF_feature_vif_scale1_score:0.982094, VMAF_feature_vif_scale2_score:0.991484, VMAF_feature_vif_scale3_score:0.995216, VMAF_score:95.290848
