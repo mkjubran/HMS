@@ -176,7 +176,7 @@ fi
 python ./Quality/measure.py  $InputYUV ../vid/HMDecodedVideo_Stitching.yuv $W $H >> $HMSResults 
 
 ## getting vmaf score
-./vmaf/run_vmaf yuv420p $W $H $InputYUV ../vid/HMDecodedVideo_Stitching.yuv > $path/vmaf.out
+../vmaf/run_vmaf yuv420p $W $H $InputYUV ../vid/HMDecodedVideo_Stitching.yuv > $path/vmaf.out
 sed -i -e 's/^/VMAF_/' $path/vmaf.out
 cat $path/vmaf.out >> $HMSResults
 rm -rf $path/vmaf.out

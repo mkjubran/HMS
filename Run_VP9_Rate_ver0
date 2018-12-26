@@ -104,7 +104,7 @@ python ./Quality/measure.py  $InputYUV ../vid/VP9DecodedVideo.yuv $W $H >> $HMSR
 
 ## getting vmaf score
 echo "VMAF ........................" 
-./vmaf/run_vmaf yuv420p $W $H $InputYUV ../vid/VP9DecodedVideo.yuv > $path/vmaf.out
+../vmaf/run_vmaf yuv420p $W $H $InputYUV ../vid/VP9DecodedVideo.yuv > $path/vmaf.out
 echo "VMAF Done"
 
 sed -i -e 's/^/VMAF_/' $path/vmaf.out
