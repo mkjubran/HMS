@@ -67,7 +67,7 @@ def Comp_TotalRate(fname,f_FNum_PSNR):
          if ((L[0]=='File') and (L[1]=='Size')):
              #print(L)
              FSize=(int(L[4])+0)*8
-   TotalRate=(FSize/np.shape(f_FNum_PSNR)[0])*fps
+   TotalRate=((FSize/np.shape(f_FNum_PSNR)[0])*fps)/1000
    return TotalRate
 
 def Comp_TotalPSNR(f_FNum_PSNR):

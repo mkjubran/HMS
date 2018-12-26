@@ -54,7 +54,7 @@ def Comp_TotalRate(f_FNum_Rate_PSNR):
    TotalSize=0
    for cnt in range(np.shape(f_FNum_Rate_PSNR)[0]):
 	TotalSize=TotalSize+f_FNum_Rate_PSNR[cnt,1]
-   TotalRate=(TotalSize/np.shape(f_FNum_Rate_PSNR)[0])*fps
+   TotalRate=((TotalSize/np.shape(f_FNum_Rate_PSNR)[0])*fps)/1000
    return TotalRate
    
 
