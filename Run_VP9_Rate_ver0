@@ -46,7 +46,6 @@ esac
 done
 #### End Parsing Command Line Parameters
 
-
 echo "================================================================================================"
 echo "Evaluate VP9 1-pass using target Bit Rate"
 echo "================================================================================================"
@@ -86,7 +85,8 @@ rm -rf encoder.log
 #VBR encoding
 #../libvpx/build/vpxenc -y $InputYUV -o ../vid/VP9EncodedVideo.webm --codec=vp9 --i420 -w $W -h $H -p 1 -t 4 --good --cpu-used=0 --target-bitrate=$rate --end-usage=vbr  --fps=$fps'000'/1000 -v --kf-min-dist=0 --kf-max-dist=360 --static-thresh=0  --min-q=0 --max-q=63
 #CBR encoding
-../libvpx/build/vpxenc -y $InputYUV -o ../vid/VP9EncodedVideo.webm --codec=vp9 --i420 -w $W -h $H -p 1 -t 4 --rt --cpu-used=4 --end-usage=cbr --target-bitrate=$rate --fps=$fps'000'/1000 --undershoot-pct=95 --buf-sz=6000 --buf-initial-sz=4000 --buf-optimal-sz=5000 -v --kf-max-dist=999999 --min-q=4 --max-q=56
+rate=$((rate / 1000)) 
+../libvpx/build/vpxenc -y $InputYUV -o ../vid/VP9EncodedVideo.webm --codec=vp9 --i420 -w $W -h $H -p 1 -t 4 --rt --cpu-used=4 --end-usage=cbr --target-bitrate=$rate --fps=$fps'000'/1000 --undershoot-pct=0 --buf-sz=6000 --buf-initial-sz=4000 --buf-optimal-sz=5000 -v --kf-max-dist=999999 --min-q=4 --max-q=56
 
 
 file_size=`du -b "../vid/VP9EncodedVideo.webm" | cut -f1`
