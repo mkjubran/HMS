@@ -102,8 +102,8 @@ while True:
 	mseV = mseV+msefV;
 	mseYUV = mseYUV + msefYUV
 
-	vifp_value = vifp.vifp_mscale(refY.astype(float), distY.astype(float))
-	ssim_value = ssim.ssim(refY, distY)
+	#vifp_value = vifp.vifp_mscale(refY.astype(float), distY.astype(float))
+	#ssim_value = ssim.ssim(refY, distY)
 
         PSNRfY=20 * math.log10(PIXEL_MAX / (math.sqrt(msefY)))
 	PSNRfU=20 * math.log10(PIXEL_MAX / (math.sqrt(msefU)))
