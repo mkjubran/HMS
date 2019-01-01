@@ -44,7 +44,7 @@ def Get_FNum_Rate_PSNR(fname):
          if L[0]=='POC':
              #print(L)
              FNum=int(L[1])+0
-             FRate=int(L[11])/1000+0
+             FRate=int(L[11])+0
              FPSNR=float(L[14])+0
 	     FNum_Rate_PSNR=np.append(FNum_Rate_PSNR,np.array([[FNum,FRate,FPSNR]]),0)
    FNum_Rate_PSNR=FNum_Rate_PSNR[1:np.size(FNum_Rate_PSNR,0)]
