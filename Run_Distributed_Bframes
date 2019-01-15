@@ -1,0 +1,16 @@
+#!/bin/bash
+#clear
+
+python Distributed_GOP_PBBB_v1.py --c=./Distributed_GOP_Config_Breathe20.cfg
+
+python Distributed_GOP_PBBB_v1.py --c=./Distributed_GOP_Config_Breathe40.cfg
+
+python Distributed_GOP_PBBB_v1.py --c=./Distributed_GOP_Config_Breathe80.cfg
+
+python Distributed_GOP_PBBB_v1.py --c=./Distributed_GOP_Config_Breathe100.cfg
+
+python Distributed_GOP_PBBB_v1.py --c=./Distributed_GOP_Config_Breathe200.cfg
+
+python Distributed_GOP_PBBB_v1.py --c=./Distributed_GOP_Config_Breathe300.cfg
+
+python Distributed_GOP_PBBB_v1.py --c=./Distributed_GOP_Config_Breathe400.cfg
