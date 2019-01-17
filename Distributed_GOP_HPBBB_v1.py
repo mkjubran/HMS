@@ -181,13 +181,15 @@ def Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Mat
         ref_pics_Stitching_array_Distributed=ref_pics_Stitching_array_Distributed_int
         print('Stitching Frames in the Ref Picture set: Absolute Frame Numbers = {}').format(Abs_ref_pics_Stitching_array_Distributed)
         #print('Stitching Frames in the Ref Picture set: Frame Numbers Relative to this GOP = {}').format(ref_pics_Stitching_array_Distributed)
+       
 
+        
     	##write config files header
     	fid = open('{}/Part{}/encoder_HMS_GOP_{}.cfg'.format(Split_video_path,Pcnt,Pcnt),'w')
     	print >> fid, '#======== Coding Structure ============='
     	print >> fid, 'IntraPeriod                   : -1           # Period of I-Frame ( -1 = only first)'
     	print >> fid, 'DecodingRefreshType           : 2           # Random Accesss 0:none, 1:CRA, 2:IDR, 3:Recovery Point SEI'
-    	print >> fid, 'GOPSize                       : '+str(GOP)+'           # GOP Size (number of B slice = GOPSize-1)'
+    	print >> fid, 'GOPSize                       : '+str(GOP-NoBFrames)+'           # GOP Size (number of B slice = GOPSize-1)'
     	print >> fid, 'ReWriteParamSetsFlag          : 1           # Write parameter sets with every IRAP'
     	'#        Type POC QPoffset QPOffsetModelOff QPOffsetModelScale CbQPoffset CrQPoffset QPfactor tcOffsetDiv2 betaOffsetDiv2 temporal_id #ref_pics_active #ref_pics reference pictures     predict     deltaRPS' '#ref_idcs reference idcs'
     	print >> fid,''
@@ -203,12 +205,14 @@ def Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Mat
 	        ref_pics_stitch_to_use_Distributed=np.append(ref_pics_stitch_to_use_Distributed,0)
 
     	ref_pics_Distributed=[]
-    	for cnt in range(1,NumFrames_Distributed+1):
+        cnt_enc=1
+    	for cnt in range(NoBFrames,NumFrames_Distributed+1,NoBFrames):
+           #pdb.set_trace() 
 	   ref_pics_notstitch_to_use_Distributed=[]
 	   ref_pics_old_Distributed=ref_pics_Distributed
 	   ref_pics_Distributed=[]
 	   reference_idcs_Distributed=[]
-	   cnt2=cnt-1
+	   cnt2=cnt-NoBFrames
 	   ref_pics_Distributed=np.append(ref_pics_notstitch_to_use_Distributed,ref_pics_stitch_to_use_Distributed)
            #print(ref_pics_Distributed)
 	   while len(ref_pics_notstitch_to_use_Distributed)<num_ref_pics_active_Max_Distributed-num_ref_pics_active_Stitching_Distributed:
@@ -225,22 +229,58 @@ def Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Mat
 	      if len(ref_pics_stitch_to_use_Distributed) < num_ref_pics_active_Stitching_Distributed: 
 	         ref_pics_stitch_to_use_Distributed=np.append(ref_pics_stitch_to_use_Distributed,cnt)
 	
-	   if ( ( ( cnt - 1 ) % ( NoBFrames + 1 ) ) == 0 ): 
-		GOPLine='Frame' + str(cnt) + ': P '+ str(cnt) +' 0 -6.5 0.2590 0 0 1.0 0 0 0 '+ str(len(ref_pics_Distributed)) + ' ' + str(len(ref_pics_Distributed))
-	   else:
-		GOPLine='Frame' + str(cnt) + ': B '+ str(cnt) +' 0 -6.5 0.2590 0 0 1.0 0 0 0 '+ str(len(ref_pics_Distributed)) + ' ' + str(len(ref_pics_Distributed))
-
+	   GOPLine='Frame' + str(cnt_enc) + ': P '+ str(cnt) +' 0 -6.5 0.2590 0 0 1.0 0 0 0 '+ str(len(ref_pics_Distributed)) + ' ' + str(len(ref_pics_Distributed))
+           cnt_enc=cnt_enc+1;
 	   for cnt1 in range(len(ref_pics_Distributed)):
 	      GOPLine=GOPLine+' '+str(int(ref_pics_Distributed[cnt1]-cnt))
-	   if cnt == 1:
+	   if cnt == NoBFrames:
 	      GOPLine=GOPLine+' 0'
 	   else:	
 	      GOPLine=GOPLine+' 2 0'
 			
            print >> fid, GOPLine
 
+   
+           ### added to incorporate B frames (PBBB...BPBBB...B)
+           if cnt>0:
+	      for cntB in range(cnt-NoBFrames+1,cnt):
+	         ref_pics_notstitch_to_use_Distributed=[]
+	         ref_pics_old_Distributed=ref_pics_Distributed
+	         ref_pics_Distributed=[]
+	         reference_idcs_Distributed=[]
+	         cnt2=cntB-1
+	         ref_pics_Distributed=np.append(ref_pics_notstitch_to_use_Distributed,ref_pics_stitch_to_use_Distributed)
+                 ref_pics_L1list=cnt
+                 #print(ref_pics_Distributed)
+	         while len(ref_pics_notstitch_to_use_Distributed)<num_ref_pics_active_Max_Distributed-num_ref_pics_active_Stitching_Distributed:
+	            ref_pics_notstitch_to_use_Distributed=np.append(ref_pics_notstitch_to_use_Distributed,cnt2)
+	            ref_pics_Distributed=np.append(ref_pics_notstitch_to_use_Distributed,ref_pics_stitch_to_use_Distributed)
+	            ref_pics_Distributed=np.unique(ref_pics_Distributed)
+	            cnt2=cnt2-1
+	         ref_pics_Distributed=np.sort(ref_pics_Distributed)
+	         ref_pics_Distributed=ref_pics_Distributed[ref_pics_Distributed>=0]
+	         ref_pics_Distributed=ref_pics_Distributed[::-1]
+              
+                 ref_pics_Distributed=np.append(ref_pics_Distributed,ref_pics_L1list)
+                 #print(ref_pics_Distributed)
+
+	         if cntB in ref_pics_Stitching_array_Distributed:
+	            if len(ref_pics_stitch_to_use_Distributed) < num_ref_pics_active_Stitching_Distributed: 
+	               ref_pics_stitch_to_use_Distributed=np.append(ref_pics_stitch_to_use_Distributed,cntB)
+	
+      	         GOPLine='Frame' + str(cnt_enc) + ': B '+ str(cntB) +' 0 -6.5 0.2590 0 0 1.0 0 0 0 '+ str(len(ref_pics_Distributed)) + ' ' + str(len(ref_pics_Distributed))
+                 cnt_enc=cnt_enc+1;
+	         for cnt1 in range(len(ref_pics_Distributed)):
+	            GOPLine=GOPLine+' '+str(int(ref_pics_Distributed[cnt1]-cntB))	
+	         GOPLine=GOPLine+' 2 0'
+			
+                 print >> fid, GOPLine
+
+	##### end of adding B frames
+
 	fid.write('\n#Note: The number of frames in the particitioned video is equal to GOP (Frame#0, Frame#1, .... Frame#(GOP-1)) and thus the line Frmae#GOP in this file will not be used to encode any frame, it is added to comply with the required format of HEVC GOP structure')
         fid.close()
+ 
 
 ###--------------------------------------------------------------
 def Encode_decode_video(Distributed_GOP_Matrix):
@@ -506,6 +546,8 @@ if __name__ == "__main__":
     #print(ref_pics_in_Distributed_GOP_Matrix)
 
     Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Matrix)
+    #quit()
+   
     Encode_decode_video(Distributed_GOP_Matrix)
     Combine_encoder_log(Distributed_GOP_Matrix)    
     #print(Distributed_GOP_Matrix)
