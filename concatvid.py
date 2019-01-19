@@ -130,7 +130,7 @@ if __name__ == '__main__':
     thefile.close() 
 
     osout = call('rm {}/output_temp.mp4'.format(output_dir))
-    osout = call('ffmpeg -f concat  -safe 0 -i concat_clips_temp.txt -c:v libx264 -strict -2 -crf 0 -c copy {}/output_temp.mp4'.format(output_dir))
+    osout = call('ffmpeg -f concat  -safe 0 -i concat_clips_temp.txt -c:v libx264 -strict -2 -qp 0 -c copy {}/output_temp.mp4'.format(output_dir))
 
     osout = call('rm {}/{}.mp4'.format(output_dir,output_filename))
     osout = call('ffmpeg -y -r {} -i {}/output_temp.mp4 -strict -2 -vf scale={}:{} -strict -2 -c:v libx264 -preset ultrafast -r {} -qp 0 {}/{}.mp4 -hide_banner'.format(infps,output_dir,width,hight,outfps,output_dir,output_filename))

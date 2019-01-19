@@ -79,7 +79,7 @@ def content_similarity(img_0, img_1):
 
     # Initiate SIFT detector
     orb = cv2.ORB_create(nfeatures=1000)
-    #orb = cv2.ORB()
+    #orb = cv2.ORB(nfeatures=1000)
     #print("{} ...... {}\n").format(img_0,img_1)
 
     # find the keypoints and descriptors with SIFT
