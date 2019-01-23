@@ -145,7 +145,7 @@ def Split_Video_GOP(Distributed_GOP_Matrix):
         osout = call('mkdir {}/Part{}'.format(Split_video_path,cnt_row))
         for cnt_col in range(np.shape(Distributed_GOP_Matrix)[1]):
             osout = call('cp -rf {}/pngparallel/{}.png {}/Part{}/{}.png'.format(Split_video_path,int(Distributed_GOP_Matrix[cnt_row,cnt_col]+1),Split_video_path,cnt_row,int(cnt_col+1)))
-        osout = call('ffmpeg -start_number 0 -i {}/Part{}/%d.png -c:v libx264 -vf "fps=25,format=yuv420p" {}/Part{}/Part{}.mp4'.format(Split_video_path,cnt_row,Split_video_path,cnt_row,cnt_row))
+        osout = call('ffmpeg -start_number 0 -i {}/Part{}/%d.png -c:v libx264 -qp 0 -vf "fps=25,format=yuv420p" {}/Part{}/Part{}.mp4'.format(Split_video_path,cnt_row,Split_video_path,cnt_row,cnt_row))
         osout = call('ffmpeg -y -i {}/Part{}/Part{}.mp4 -vcodec rawvideo -pix_fmt yuv420p {}/Part{}/Part{}.yuv'.format(Split_video_path,cnt_row,cnt_row,Split_video_path,cnt_row,cnt_row))
     return
 
