@@ -26,6 +26,9 @@ parser.add_argument('--Lfn1', type=str,
 parser.add_argument('--fps', type=int,
                     help='frame per second')
 
+parser.add_argument('--nf', type=int,
+                    help='number of frames')
+
 args = parser.parse_args()
 
 def Get_FNum_PSNR(fname):
@@ -116,6 +119,7 @@ if __name__ == '__main__':
    fname1=args.fn1;
    Lfname1=args.Lfn1;
    fps=args.fps;
+   nf=args.nf;
    
    f1_FNum_PSNR=Get_FNum_PSNR(fname1) 
 
@@ -126,11 +130,19 @@ if __name__ == '__main__':
 ## compute the over all: Number of Frames, Rate, PSNR
    TotalRatefn1=Comp_TotalRate(fname1,f1_FNum_PSNR)
 
+   ## must be applied after compute rate because it depend on the original number of frames (size of array)
+   if (nf != 0):
+	f1_FNum_PSNR=f1_FNum_PSNR[0:nf,:]
+	f1_FNum_VMAF=f1_FNum_VMAF[0:nf,:]
+   else:
+	nf=f1_numFrames
+
    TotalPSNRfn1=Comp_TotalPSNR(f1_FNum_PSNR)
 
    TotalVMAFfn1=Comp_TotalVMAF(f1_FNum_VMAF)
-
+   print("Number of frames used to compute Rate, PSNR and VMAR is {}").format(nf)
    print("Fn1 ({}): #Frames= {}, Rate={} kbps, PSNR={} dB, VMAF={}").format(Lfname1,f1_numFrames,TotalRatefn1,TotalPSNRfn1,TotalVMAFfn1)
    print("{}	{}	{}	{}").format(f1_numFrames,TotalRatefn1,TotalPSNRfn1,TotalVMAFfn1)
+
    plt.show()
 
