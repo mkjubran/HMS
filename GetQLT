@@ -2,9 +2,9 @@
 #clear
 f1=../../HMStitching2C/savenpy/rp_640480_VP9_rate10000000_fps24_.dat
 
+#ft1=$f1
+#python Compare_Plan_V9_Rate_PSNR_VMAF_NoPlot_v2.py --fn1=$ft1 --fps=24 --nf=0
 
-
-echo '----------------------'
-./GetRate $f1
-python Compare_Plan_V9_Rate_PSNR_VMAF_NoPlot_v1.py --fn1=$f1 --fps=24 --nf=0
-
+#ft1=$f1
+#ft2=$f2
+#python Compare_Plan_Frame_Rate_PSNR_VMAF_NoPlot_v2.py --fn1=$ft1 --fn2=$ft2 --fps=24 --nf=0
