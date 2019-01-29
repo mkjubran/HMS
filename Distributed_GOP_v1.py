@@ -1,5 +1,5 @@
-#Frame1: Type POC QPoffset QPOffsetModelOff QPOffsetModelScale CbQPoffset CrQPoffset QPfactor tcOffsetDiv2 betaOffsetDiv2 temporal_id #ref_pics_active #ref_pics reference pictures     predict deltaRPS #ref_idcs reference idcs
-#print >> fid, 'Frame1:  P    1   5       -6.5                      0.2590         0          0          1.0   0            0               0           1                1         -1      0');
+#Frame1: Type POC QPoffset QPOffsetModelOff QPOffsetModelScale CbQPoffset CrQPoffset QPfactor tcOffsetDiv2 betaOffsetDiv2 temporal_id #ref_pics_active #ref_pics reference 
+#pictures predict deltaRPS #ref_idcs reference idcs print >> fid, 'Frame1: P 1 5 -6.5 0.2590 0 0 1.0 0 0 0 1 1 -1 0');
 from __future__ import division
 import numpy as np
 import os, sys, subprocess, pdb
@@ -145,7 +145,7 @@ def Split_Video_GOP(Distributed_GOP_Matrix):
         osout = call('mkdir {}/Part{}'.format(Split_video_path,cnt_row))
         for cnt_col in range(np.shape(Distributed_GOP_Matrix)[1]):
             osout = call('cp -rf {}/pngparallel/{}.png {}/Part{}/{}.png'.format(Split_video_path,int(Distributed_GOP_Matrix[cnt_row,cnt_col]+1),Split_video_path,cnt_row,int(cnt_col+1)))
-        osout = call('ffmpeg -start_number 0 -i {}/Part{}/%d.png -c:v libx264 -qp 0 -vf "fps=25,format=yuv420p" {}/Part{}/Part{}.mp4'.format(Split_video_path,cnt_row,Split_video_path,cnt_row,cnt_row))
+        osout = call('ffmpeg -start_number 0 -i {}/Part{}/%d.png -c:v libx264 -vf "fps=25,format=yuv420p" {}/Part{}/Part{}.mp4'.format(Split_video_path,cnt_row,Split_video_path,cnt_row,cnt_row))
         osout = call('ffmpeg -y -i {}/Part{}/Part{}.mp4 -vcodec rawvideo -pix_fmt yuv420p {}/Part{}/Part{}.yuv'.format(Split_video_path,cnt_row,cnt_row,Split_video_path,cnt_row,cnt_row))
     return
 
