@@ -142,7 +142,7 @@ def export_YUVframes(fn):
     osout = call('rm -rf {}'.format(Split_video_path))
     osout = call('mkdir {}'.format(Split_video_path))
     osout = call('mkdir {}/pngparallel'.format(Split_video_path))
-    fYUVCnt=0;
+    fYUVCnt=1;
     FSize=(Width*Hight)+((Width/2)*(Hight/2))+((Width/2)*(Hight/2));
 
     fnYUV=(fn[0:(len(fn)-4)]+'.yuv')
