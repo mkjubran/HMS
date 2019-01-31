@@ -537,7 +537,6 @@ if __name__ == "__main__":
     #Split_Video_GOP(Distributed_GOP_Matrix)
     Split_VideoYUV_GOP(Distributed_GOP_Matrix)
 
-    '''
     print(Distributed_GOP_Matrix)
     #print(ref_pics_active_Stitching)
     #print(ref_pics_in_Distributed_GOP_Matrix)
@@ -546,4 +545,3 @@ if __name__ == "__main__":
     Encode_decode_video(Distributed_GOP_Matrix)
     Combine_encoder_log(Distributed_GOP_Matrix)    
     #print(Distributed_GOP_Matrix)
-    '''
