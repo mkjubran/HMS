@@ -1,13 +1,15 @@
 #!/bin/bash
 #clear
 
-python Distributed_GOP_v1.py --c=./Distributed_GOP_Config_Jet40.cfg
+python GenerateCFG.py --rate=2M
+python Distributed_GOP_v1.py --c=./Distributed_GOP_Config.cfg
 
-python Distributed_GOP_v1.py --c=./Distributed_GOP_Config_Jet80.cfg
+python GenerateCFG.py --rate=2M
+python Distributed_GOP_v1.py --c=./Distributed_GOP_Config.cfg
 
-python Distributed_GOP_v1.py --c=./Distributed_GOP_Config_Jet100.cfg
+python GenerateCFG.py --rate=2M
+python Distributed_GOP_v1.py --c=./Distributed_GOP_Config.cfg
 
-python Distributed_GOP_v1.py --c=./Distributed_GOP_Config_Jet200.cfg
-
-python Distributed_GOP_v1.py --c=./Distributed_GOP_Config_Jet400.cfg
+python GenerateCFG.py --rate=2M
+python Distributed_GOP_v1.py --c=./Distributed_GOP_Config.cfg
 
