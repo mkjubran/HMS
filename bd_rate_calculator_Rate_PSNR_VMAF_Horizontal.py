@@ -47,15 +47,13 @@ if __name__ == '__main__':
 
 
 #  print(LN1)
-  x=len(LN1)//3
-  h11=LN1[:x]
-  h12=LN1[(x):(2*x)]
-  h13=LN1[((2*x)):]
+  h11=LN1[2:][::5]
+  h12=LN1[3:][::5]
+  h13=LN1[4:][::5]
 
-  x=len(LN2)//3
-  h21=LN2[:x]
-  h22=LN2[(x):(2*x)]
-  h23=LN2[((2*x)):]
+  h21=LN2[2:][::5]
+  h22=LN2[3:][::5]
+  h23=LN2[4:][::5]
 
   Rate_PSNR_1=zip(h11,h12)
   PSNR_Rate_1=zip(h12,h11)
