@@ -80,6 +80,10 @@ case $i in
     rate="${i#*=}"
     shift
     ;;
+    -PBBB=*|--PBBB=*)
+    PBBB="${i#*=}"
+    shift
+    ;;
    -opt=*|--opt=*|-Opt=*|--Opt=*)
     opt="${i#*=}"
     shift
@@ -115,7 +119,12 @@ then
 opt="_"$opt
 fi
 
+if [ $PBBB != "yes" ] || [ $PBBB != "Yes" ]
+then
+HMSResults=$path"/"$fid"_PBBB_QP"$QP"_rate"$rate"_MCU"$MaxCUSize"_Depth"$MaxPartitionDepth"_RefA"$Ref_active"_RefS"$Ref_stitch"_fsr"$fsr"_fps"$fps"_"$mode$opt".dat"
+else
 HMSResults=$path"/"$fid"_QP"$QP"_rate"$rate"_MCU"$MaxCUSize"_Depth"$MaxPartitionDepth"_RefA"$Ref_active"_RefS"$Ref_stitch"_fsr"$fsr"_fps"$fps"_"$mode$opt".dat"
+fi
 echo $HMSResults
 
 InputYUV="../vid/"$fid".yuv"
@@ -138,8 +147,12 @@ echo "Mode = "$mode >> $HMSResults
 echo "" >> $HMSResults
 
 rm -rf ./encoder_HMS_GOP.cfg
+if [ $PBBB != "yes" ] || [ $PBBB != "Yes" ]
+then
+python CreateHMGOPStructHoldFixPredictRPS_InterRPS_v1.py --ranklist $RankListFile --ref_active $Ref_active --ref_stitch $Ref_stitch --mode $mode --fps $fps --PBBB $PBBB
+else
 python CreateHMGOPStructHoldFixPredictRPS_InterRPS_v0.py --ranklist $RankListFile --ref_active $Ref_active --ref_stitch $Ref_stitch --mode $mode --fps $fps
-
+fi
 
 if [ $rate = 0 ]
 then
