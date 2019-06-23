@@ -16,7 +16,7 @@ opt=''
 
 ## Target Bit Rate 
 #opt='Test'
-qp=30;rate=40000;refa=4;refs=0;fps=24;fsr=$fps;PBBB='yes';mode=normal;
+qp=30;rate=40000;refa=4;refs=0;fps=24;fsr=$fps;PBBB='no';mode=normal;
 ./Run_HMS_HoldFixPredictRPS_Rate_InterRPS_ver1 --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt --PBBB=$PBBB
 
 #qp=30;rate=80000;refa=4;refs=0;fps=24;fsr=$fps;PBBB='yes';mode=normal;

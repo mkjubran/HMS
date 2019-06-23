@@ -122,10 +122,13 @@ fi
 if [ $PBBB == "yes" ] || [ $PBBB == "Yes" ]
 then
 HMSResults=$path"/"$fid"_PBBB_QP"$QP"_rate"$rate"_MCU"$MaxCUSize"_Depth"$MaxPartitionDepth"_RefA"$Ref_active"_RefS"$Ref_stitch"_fsr"$fsr"_fps"$fps"_"$mode$opt".dat"
+HMSResultsMemoryTime=$path"/"$fid"_PBBB_MemoryTime_QP"$QP"_rate"$rate"_MCU"$MaxCUSize"_Depth"$MaxPartitionDepth"_RefA"$Ref_active"_RefS"$Ref_stitch"_fsr"$fsr"_fps"$fps"_"$mode$opt".dat"
 else
 HMSResults=$path"/"$fid"_QP"$QP"_rate"$rate"_MCU"$MaxCUSize"_Depth"$MaxPartitionDepth"_RefA"$Ref_active"_RefS"$Ref_stitch"_fsr"$fsr"_fps"$fps"_"$mode$opt".dat"
+HMSResultsMemoryTime=$path"/"$fid"_MemoryTime_QP"$QP"_rate"$rate"_MCU"$MaxCUSize"_Depth"$MaxPartitionDepth"_RefA"$Ref_active"_RefS"$Ref_stitch"_fsr"$fsr"_fps"$fps"_"$mode$opt".dat"
 fi
 echo $HMSResults
+echo $HMSResultsMemoryTime
 
 InputYUV="../vid/"$fid".yuv"
 InputMP4="../vid/"$fid".mp4"
@@ -164,13 +167,15 @@ fi
 rm -rf "../vid/HMEncodedVideo.bin"
 rm -rf encoder.log
 
-
+rm -rf ../savenpy/MemoryTime_log.txt 
+python GetTime.py 'start encoding'
 if [ $mode = "stitching" ]
 then
 ./HMS/bin/TAppEncoderStatic -c ./encoder_HMS.cfg -c ./encoder_HMS_GOP.cfg --InputFile=$InputYUV --SourceWidth=$W --SourceHeight=$H --SAO=0 --QP=$QP --FrameRate=$fps --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" --RateControl=$RateControl --TargetBitrate=$rate |& tee -a encoder.log
 else
 ./HM_Original/bin/TAppEncoderStatic -c ./encoder_HMS.cfg -c ./encoder_HMS_GOP.cfg --InputFile=$InputYUV --SourceWidth=$W --SourceHeight=$H --SAO=0 --QP=$QP --FrameRate=$fps --FramesToBeEncoded=$FramesToBeEncoded --MaxCUSize=$MaxCUSize --MaxPartitionDepth=$MaxPartitionDepth --QuadtreeTULog2MaxSize=4 --BitstreamFile="../vid/HMEncodedVideo.bin" --RateControl=$RateControl --TargetBitrate=$rate |& tee -a encoder.log
 fi
+python GetTime.py 'end encoding'
 
 file_size=`du -b "../vid/HMEncodedVideo.bin" | cut -f1`
 echo "File Size (.bin) = "$file_size" Bytes" >> $HMSResults
@@ -179,12 +184,17 @@ echo "" >> $HMSResults
 rm -rf "../vid/HMDecodedVideo_Stitching.yuv"
 rm -rf decoder.log
 
+python GetTime.py 'start decoding'
 if [ $mode = "stitching" ]
 then
 ./HMS/bin/TAppDecoderStatic --BitstreamFile="../vid/HMEncodedVideo.bin" --ReconFile="../vid/HMDecodedVideo_Stitching.yuv" |& tee -a decoder.log
 else
 ./HM_Original/bin/TAppDecoderStatic --BitstreamFile="../vid/HMEncodedVideo.bin" --ReconFile="../vid/HMDecodedVideo_Stitching.yuv" |& tee -a decoder.log
 fi
+python GetTime.py 'end decoding'
+
+cp ../savenpy/MemoryTime_log.txt $HMSResultsMemoryTime
+echo $HMSResultsMemoryTime
 
 python ./Quality/measure.py  $InputYUV ../vid/HMDecodedVideo_Stitching.yuv $W $H >> $HMSResults 
 

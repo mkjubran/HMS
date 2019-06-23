@@ -11,9 +11,19 @@ MaxCUSize = 64
 MaxPartitionDepth = 4
 Mode = normal
 
-File Size (.bin) =  Bytes
+File Size (.bin) = 357 Bytes
 
+Frame   1: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]  ..... Video: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]
+Frame   2: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]  ..... Video: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]
+Frame   3: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]  ..... Video: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]
+Frame   4: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]  ..... Video: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]
+Frame   5: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]  ..... Video: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]
+Frame   6: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]  ..... Video: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]
+Frame   7: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]  ..... Video: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]
+Frame   8: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]  ..... Video: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]
+Frame   9: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]  ..... Video: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]
+Frame  10: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]  ..... Video: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]
 
-Number of Frames = 1
-Number of written bites = 
-Bit Rate =  kbps
+Number of Frames = 10
+Number of written bites = 357
+Bit Rate = 6.854 kbps

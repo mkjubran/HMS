@@ -18,7 +18,7 @@ Frame MSE output                       : Disabled
 MS-SSIM output                         : Disabled
 Cabac-zero-word-padding                : Enabled
 Frame/Field                            : Frame based coding
-Frame index                            : 0 - 20799 (20800 frames)
+Frame index                            : 0 - 9 (10 frames)
 Profile                                : main
 CU size / depth / total-depth          : 64 / 4 / 4
 RQT trans. size (min / max)            : 4 / 16
@@ -74,20 +74,38 @@ Non-environment-variable-controlled macros set as follows:
                    Input ChromaFormatIDC =   4:2:0
        Output (internal) ChromaFormatIDC =   4:2:0
 
-POC    0 TId: 0 ( I-SLICE, nQP 2 QP 4 )       1408 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     2 ] [L0 ] [L1 ]
-POC    1 TId: 0 ( P-SLICE, nQP 14 QP 12 )        168 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     2 ] [L0 0 ] [L1 ]
-POC    2 TId: 0 ( B-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     4 ] [L0 1 0 ] [L1 1 0 ]
-POC    3 TId: 0 ( B-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     4 ] [L0 2 1 0 ] [L1 2 1 0 ]
-POC    4 TId: 0 ( B-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     5 ] [L0 3 2 1 0 ] [L1 3 2 1 0 ]
-POC    5 TId: 0 ( P-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     3 ] [L0 4 3 2 1 ] [L1 ]
-POC    6 TId: 0 ( B-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     4 ] [L0 5 4 3 2 ] [L1 5 4 3 2 ]
-POC    7 TId: 0 ( B-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     4 ] [L0 6 5 4 3 ] [L1 6 5 4 3 ]
-POC    8 TId: 0 ( B-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     4 ] [L0 7 6 5 4 ] [L1 7 6 5 4 ]
-POC    9 TId: 0 ( P-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     3 ] [L0 8 7 6 5 ] [L1 ]
-POC   10 TId: 0 ( B-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     4 ] [L0 9 8 7 6 ] [L1 9 8 7 6 ]
-POC   11 TId: 0 ( B-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     4 ] [L0 10 9 8 7 ] [L1 10 9 8 7 ]
-POC   12 TId: 0 ( B-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     5 ] [L0 11 10 9 8 ] [L1 11 10 9 8 ]
-POC   13 TId: 0 ( P-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     3 ] [L0 12 11 10 9 ] [L1 ]
-POC   14 TId: 0 ( B-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     4 ] [L0 13 12 11 10 ] [L1 13 12 11 10 ]
-POC   15 TId: 0 ( B-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     4 ] [L0 14 13 12 11 ] [L1 14 13 12 11 ]
-POC   16 TId: 0 ( B-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     4 ] [L0 15 14 13 12 ] [L1 15 14 13 12 ]
+POC    0 TId: 0 ( I-SLICE, nQP 2 QP 4 )       1408 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     5 ] [L0 ] [L1 ]
+POC    1 TId: 0 ( P-SLICE, nQP 14 QP 12 )        168 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     5 ] [L0 0 ] [L1 ]
+POC    2 TId: 0 ( B-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     7 ] [L0 1 0 ] [L1 1 0 ]
+POC    3 TId: 0 ( B-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     9 ] [L0 2 1 0 ] [L1 2 1 0 ]
+POC    4 TId: 0 ( B-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET    10 ] [L0 3 2 1 0 ] [L1 3 2 1 0 ]
+POC    5 TId: 0 ( P-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     7 ] [L0 4 3 2 1 ] [L1 ]
+POC    6 TId: 0 ( B-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET    10 ] [L0 5 4 3 2 ] [L1 5 4 3 2 ]
+POC    7 TId: 0 ( B-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET    10 ] [L0 6 5 4 3 ] [L1 6 5 4 3 ]
+POC    8 TId: 0 ( B-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET    10 ] [L0 7 6 5 4 ] [L1 7 6 5 4 ]
+POC    9 TId: 0 ( P-SLICE, nQP 14 QP 12 )        160 bits [Y 999.9900 dB    U 999.9900 dB    V 999.9900 dB] [ET     8 ] [L0 8 7 6 5 ] [L1 ]
+
+
+SUMMARY --------------------------------------------------------
+	Total Frames |   Bitrate     Y-PSNR    U-PSNR    V-PSNR    YUV-PSNR 
+	       10    a       6.8544  999.9900  999.9900  999.9900  999.9900
+
+
+I Slices--------------------------------------------------------
+	Total Frames |   Bitrate     Y-PSNR    U-PSNR    V-PSNR    YUV-PSNR 
+	        1    i      33.7920  999.9900  999.9900  999.9900  999.9900
+
+
+P Slices--------------------------------------------------------
+	Total Frames |   Bitrate     Y-PSNR    U-PSNR    V-PSNR    YUV-PSNR 
+	        3    p       3.9040  999.9900  999.9900  999.9900  999.9900
+
+
+B Slices--------------------------------------------------------
+	Total Frames |   Bitrate     Y-PSNR    U-PSNR    V-PSNR    YUV-PSNR 
+	        6    b       3.8400  999.9900  999.9900  999.9900  999.9900
+
+RVM: 0.000
+Bytes written to file: 357 (6.854 kbps)
+
+ Total Time:       81.531 sec.

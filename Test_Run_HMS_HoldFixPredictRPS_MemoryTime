@@ -1,0 +1,21 @@
+#!/bin/bash
+#clear
+
+vid="Breathe2sec_640480"
+W=640
+H=480
+
+rlist="./OrderedFrames_Breathe2sec_640480_gp24.txt"
+mcu=64
+mpd=4
+nf=10
+output_dir="../savenpy"
+opt=''
+
+#ffmpeg -y -i ../vid/$vid.mp4 -vcodec rawvideo -pix_fmt yuv420p ../vid/$vid.yuv
+
+## Target Bit Rate 
+#opt='Test'
+qp=30;rate=40000;refa=4;refs=0;fps=24;fsr=$fps;PBBB='Yes';mode=normal;
+./Run_HMS_HoldFixPredictRPS_Rate_InterRPS_memorytime_ver0 --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt --PBBB=$PBBB
+
