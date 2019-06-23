@@ -8,7 +8,7 @@ H=480
 rlist="./OrderedFrames_Breathe2sec_640480_gp24.txt"
 mcu=64
 mpd=4
-nf=10
+nf=4
 output_dir="../savenpy"
 opt=''
 

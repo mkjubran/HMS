@@ -11,19 +11,21 @@ MaxCUSize = 64
 MaxPartitionDepth = 4
 Mode = normal
 
-File Size (.bin) = 357 Bytes
+File Size (.bin) = 237 Bytes
 
 Frame   1: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]  ..... Video: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]
 Frame   2: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]  ..... Video: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]
 Frame   3: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]  ..... Video: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]
 Frame   4: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]  ..... Video: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]
-Frame   5: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]  ..... Video: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]
-Frame   6: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]  ..... Video: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]
-Frame   7: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]  ..... Video: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]
-Frame   8: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]  ..... Video: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]
-Frame   9: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]  ..... Video: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]
-Frame  10: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]  ..... Video: [Y 999.9900dB   U 999.9900dB   V 999.9900dB   YUV 999.9900dB]
+VMAF_Asset: {"asset_dict": {"height": 480, "use_path_as_workpath": 1, "width": 640, "yuv_type": "yuv420p"}, "asset_id": 8025124379051577, "content_id": 8025124379051577, "dataset": "cmd", "dis_path": "../vid/HMDecodedVideo_Stitching.yuv", "ref_path": "../vid/Breathe2sec_640480.yuv", "workdir": "/u2/Downloads/HMStitching/vmaf/workspace/workdir/d7e41173-73dc-4156-93fd-04ad1813745c"}
+VMAF_Executor: VMAF_VF0.2.4c-0.6.1
+VMAF_Result:
+VMAF_Frame 0: VMAF_feature_adm2_score:1.000000, VMAF_feature_motion2_score:0.000000, VMAF_feature_vif_scale0_score:1.000000, VMAF_feature_vif_scale1_score:1.000000, VMAF_feature_vif_scale2_score:1.000000, VMAF_feature_vif_scale3_score:1.000000, VMAF_score:97.428043
+VMAF_Frame 1: VMAF_feature_adm2_score:1.000000, VMAF_feature_motion2_score:0.000000, VMAF_feature_vif_scale0_score:1.000000, VMAF_feature_vif_scale1_score:1.000000, VMAF_feature_vif_scale2_score:1.000000, VMAF_feature_vif_scale3_score:1.000000, VMAF_score:97.428043
+VMAF_Frame 2: VMAF_feature_adm2_score:1.000000, VMAF_feature_motion2_score:0.000000, VMAF_feature_vif_scale0_score:1.000000, VMAF_feature_vif_scale1_score:1.000000, VMAF_feature_vif_scale2_score:1.000000, VMAF_feature_vif_scale3_score:1.000000, VMAF_score:97.428043
+VMAF_Frame 3: VMAF_feature_adm2_score:1.000000, VMAF_feature_motion2_score:0.000000, VMAF_feature_vif_scale0_score:1.000000, VMAF_feature_vif_scale1_score:1.000000, VMAF_feature_vif_scale2_score:1.000000, VMAF_feature_vif_scale3_score:1.000000, VMAF_score:97.428043
+VMAF_Aggregate (mean): VMAF_feature_adm2_score:1.000000, VMAF_feature_motion2_score:0.000000, VMAF_feature_vif_scale0_score:1.000000, VMAF_feature_vif_scale1_score:1.000000, VMAF_feature_vif_scale2_score:1.000000, VMAF_feature_vif_scale3_score:1.000000, VMAF_score:97.428043
 
-Number of Frames = 10
-Number of written bites = 357
-Bit Rate = 6.854 kbps
+Number of Frames = 4
+Number of written bites = 237
+Bit Rate = 11.376 kbps
