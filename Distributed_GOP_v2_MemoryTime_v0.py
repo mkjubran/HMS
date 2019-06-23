@@ -315,7 +315,7 @@ def Encode_decode_video(Distributed_GOP_Matrix):
             PcntCompleted=[]
          video_encode_endtime=datetime.datetime.now();
          video_encode_time=video_encode_endtime - video_encode_starttime;
-         fid = open(MemoryTime_log,'w')
+         fid = open(MemoryTime_log,'a+')
          fid.write('Video Encoding Time = {}\n'.format(video_encode_time))
          #print(video_encode_time);
          ## finish encoding video

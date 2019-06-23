@@ -1,6 +1,5 @@
 #!/bin/bash
-#clear
 
 python GenerateCFG.py --rate=1M
-python Distributed_GOP_v2_MemoryTime_v0.py --c=./Distributed_GOP_Config_Short.cfg
+python Distributed_GOP_v2_MemoryTime_v0.py --c=./Distributed_GOP_Config.cfg
 
