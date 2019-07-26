@@ -31,6 +31,13 @@ parser.add_argument('--wpp', type=int,
 parser.add_argument('--wd', type=int,
                     help='Dissimilarity weight')
 
+parser.add_argument('--maxn', type=int,
+                    help='Maximum Number of Stitching Frames')
+
+parser.add_argument('--maxf', type=int,
+                    help='Maximum umber of Frames to be considered')
+
+
 args = parser.parse_args()
 
 fn=args.f;
@@ -39,6 +46,9 @@ GP=args.gp;
 suffix=args.suffix;
 wpp=args.wpp;
 wd=args.wd;
+MaxN=args.maxn;
+Maxf=args.maxf;
+
 
 def call(cmd):
     # proc = subprocess.Popen(["cat", "/etc/services"], stdout=subprocess.PIPE, shell=True)
@@ -52,10 +62,17 @@ def export_frames(fn):
     osout = call('mkdir pngall')
     osout = call('ffmpeg -r 1 -i {} -r 1 -qp 0 pngall/%d.png'.format(fn)) ##no downsampling 1:1
 
+    osout = call('rm -rf ../vid/out.mp4')
+    osout = call('ls -v pngall/*.png') ; temp = osout[0]
+    temp = temp.split('\n')[0:-1]
+    for cnt in range(Maxf+1,len(temp)+1):
+       #print('{} ... {}'.format(cnt,len(temp)))
+       #print('rm -rf pngall/{}.png'.format(cnt))
+       osout = call('rm -rf pngall/{}.png'.format(cnt))
+
     osout = call('ls -v pngall/*.png') ; lfrmall = osout[0]
     lfrmall = lfrmall.split('\n')[0:-1]
-    
-    osout = call('rm -rf ../vid/out.mp4')
+
     osout = call('ffmpeg -start_number 0 -i "pngall/%d.png" -c:v libx264 -qp 0 -vf "fps={},format=yuv420p" ../vid/out.mp4'.format(fps))
     return lfrmall
 
@@ -173,6 +190,7 @@ def find_scene_cuts(fn):
 
     win_sc=[];
     for i in range(0, len(scene_list)): 
+        if scene_list[i]<(Maxf+1):
             win_sc.append('pngall/'+str(scene_list[i])+'.png')
     #print(win_sc)
     return win_sc
@@ -216,7 +234,6 @@ if __name__ == '__main__':
     #fn=sys.argv[-1]
     fname=fn.split('/')[2]
     fname=fname[0:(len(fname)-4)]
-    
     lfrm = export_frames(fn);
     lfrmdel=lfrm[1];
     lwin = make_windows(lfrm, FRMPERWIN)
@@ -252,7 +269,7 @@ if __name__ == '__main__':
        # Get global window similarity matrix
        print("Computing similarity between SC and all frames")
        #pdb.set_trace()
-       lwinsim=comp_similarity(lwin,lwin,lwinsim) ### No Scene Cuts
+       lwinsim=comp_similarity(lwin,lwin_sc,lwinsim)
        np.save(('../savenpy/'+fname+'_lwinsim'),lwinsim)
        np.save(('../savenpy/'+fname+'_lwinsim'+suffix),lwinsim)
     lwinsim_0=np.copy(lwinsim)
@@ -293,7 +310,9 @@ if __name__ == '__main__':
     current_top_win = lwin[current_top_win_index]
     #print('{}....{}').format(current_top_win_index,current_top_win)
     print('Producing Popularity-Dissimilarity List')
-    for i in range(0, len(lwin_sc)):
+    nstitch=min(len(lwin_sc),MaxN-1)
+    for i in range(0, nstitch):
+        #####os.system('python ps_mem.py')
         #pdb.set_trace()
 	#print('i={}....{}').format(i,current_top_win_index)
         # lwinsim_ = []
@@ -362,7 +381,7 @@ if __name__ == '__main__':
 	    break
         #print(lwin_opt_sorting)
         now = datetime.datetime.now()
-        print('{} .... {}% ... {}   ({})'.format(lwin_opt_sorting,100*len(lwin_opt_sorting)/(len(lwin_sc)+1),now.strftime("%Y-%m-%d %H:%M:%S"),(now.replace(microsecond=0)-time_begin.replace(microsecond=0))))
+        print('{} .... {}% ... {}   ({})'.format(lwin_opt_sorting,100*len(lwin_opt_sorting)/(nstitch+1),now.strftime("%Y-%m-%d %H:%M:%S"),(now.replace(microsecond=0)-time_begin.replace(microsecond=0))))
  
     #reprint the SC frames
     print("Number of SC frames is {}").format(len(lwin1))    
