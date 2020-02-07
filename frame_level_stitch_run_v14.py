@@ -212,7 +212,7 @@ def comp_dissimilarity(lwin_r,lwin_c,lwinsim):
 
 if __name__ == '__main__':
     time_begin=datetime.datetime.now()
-    np.set_printoptions(threshold=np.nan)
+    np.set_printoptions(threshold=10000) #np.nan)
     #fn=sys.argv[-1]
     fname=fn.split('/')[2]
     fname=fname[0:(len(fname)-4)]
@@ -239,7 +239,7 @@ if __name__ == '__main__':
     WeightPicPos=LambdaPoP*(np.transpose(np.full((len(lwin),1),1)))*np.array(range(1,len(lwin)+1))
     
     #lwinsimNorm=lwinsim/np.matrix.max(lwinsim)
-    np.set_printoptions(threshold=np.nan)
+    np.set_printoptions(threshold=1000)#np.nan)
     #print(lwinsim.shape)
     #print(np.amax(np.amax(lwinsim)))
     #pdb.set_trace()
