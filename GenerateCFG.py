@@ -35,7 +35,7 @@ if __name__ == '__main__':
    flnew=[]
    for l in fl:
      l=l.strip()
-     if ((l[0:5]=='rate=') or (l[0:4]=='Rate=')):
+     if ((l[0:5]=='rate=') or (l[0:5]=='Rate=')):
        flnew.append('Rate='+Rate)
      elif '.dat' in l:
        l1=l.split('Rate')[0]
