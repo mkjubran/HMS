@@ -71,7 +71,7 @@ EPS = 1e-12
 # CROP_SIZE = 256
 RPS = a.rps_size
 
-CROP_SIZE = 256*2
+CROP_SIZE = 128*2
 a.scale_size = CROP_SIZE
 
 # a.aspect_ratio = float(1280)/720
@@ -81,6 +81,7 @@ LABEL_DIGITS = a.label_length
 # LABEL_DIGITS = 10
 
 # Examples = collections.namedtuple("Examples", "labels, paths, inputs, targets, count, steps_per_epoch")
+
 Examples = collections.namedtuple("Examples", "rp_inputs, rp_targets, labels, paths, inputs, targets, count, steps_per_epoch")
 Model = collections.namedtuple("Model", "predicted_rate, ssim_io, ssim_it, rate_relative_error, rate_predictor_loss, predict_rate, outputs, predict_real, predict_fake, discrim_loss, discrim_grads_and_vars, gen_loss_GAN, gen_loss_L1, gen_loss_quality, gen_grads_and_vars, train")
 
@@ -739,6 +740,7 @@ def main():
         return
 
     examples = load_examples()
+    PATHS_TO_PRINT = examples.paths
     print("examples count = %d" % examples.count)
 
     # inputs and targets are [batch_size, height, width, channels]
@@ -897,6 +899,7 @@ def main():
                     # fetches["ssim_it"] = model.ssim_it
                     # fetches["ssim_io"] = model.ssim_io
                     fetches["predicted_rate"] = model.predicted_rate
+                    fetches["paths_to_print"] = PATHS_TO_PRINT
 
                 # if should(a.summary_freq):
                 #     fetches["summary"] = sv.summary_op
@@ -937,6 +940,8 @@ def main():
 
 
                 print("Predicted rate:", results["predicted_rate"])
+                print("Processed Paths:", results["paths_to_print"])
+                open('rate.txt', "a+").write('{} {}\n'.format(results["paths_to_print"],results["predicted_rate"])) #added jubran
 
                 # filesets = save_images(results["display"])
                 # for i, f in enumerate(filesets):

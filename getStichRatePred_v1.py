@@ -14,50 +14,44 @@ INF = 9999999
 parser = argparse.ArgumentParser(description='Optional app description')
 
 # Optional argument
-parser.add_argument('--in_dir', type=str,
-                    help='Input Directory')
+parser.add_argument('--fn', type=str,
+                    help='rate file name')
 
 parser.add_argument('--gp', type=int,
                     help='Guard Period')
 
-parser.add_argument('--suffix', type=str,
-                    help='suffix added to all output files')
+#parser.add_argument('--suffix', type=str,
+#                    help='suffix added to all output files')
 
 args = parser.parse_args()
 
-input_dir=args.in_dir;
+fn=args.fn;
 GP=args.gp;
-suffix=args.suffix;
+#suffix=args.suffix;
 wpp=1;
 wd=1;
 
 
 if __name__ == '__main__':
-  onlyfiles = [f for f in listdir(input_dir) if isfile(join(input_dir, f))]
-  pdb.set_trace()
-  rate = [int(r.split('_')[0]) for r in onlyfiles]
-  FN = [int(r.split('_')[1]) for r in onlyfiles]
-  SF = [int(r.split('_')[2].split('F')[1]) for r in onlyfiles]
-
+  with open(fn) as f:
+    lines = f.readlines()
+  lines = [x.strip() for x in lines] 
+  rate = [float(r.split(' ')[-1]) for r in lines]
+  FN = [int(r.split('_')[1]) for r in lines]
+  SF = [int(r.split('_')[2].split('F')[1]) for r in lines]
   Sim = np.zeros((max(FN)+1,max(FN)+1))
+  Sim = Sim.astype(int)
   for i in range(len(rate)):
-    Sim[FN[i]-1][SF[i]-1] = rate[i]
-
-  for i in range(max(FN)+1):
-     for j in range(max(FN)+1): 
-        if (Sim[i][j] == 0) and (j == 0):
-          Sim[i][j] = Sim[i-1][j]
-        elif (Sim[i][j] == 0):
-          Sim[i][j] = Sim[i][j-1]
+    Sim[SF[i]-1][FN[i]-1] = rate[i] # row is the SF number
 
   lwinsim=np.copy(Sim)
-  lwinsim=lwinsim[:,np.mean(lwinsim,axis=0)!=INF]
+  lwinsim=lwinsim[:,np.mean(lwinsim,axis=0)!=0]
+  lwinsim[lwinsim==0]=np.amax(np.amax(lwinsim))
   lwin_popularity_index = [ 1/np.mean(_) for _ in lwinsim ]
   lwin_popularity_index_Norm_temp=((lwin_popularity_index)/np.amax(np.amax(lwin_popularity_index)))
   lwin_popularity_index_Norm=lwin_popularity_index_Norm_temp
   lwin_popularity_index_Norm=np.transpose(lwin_popularity_index_Norm)
-  print(lwin_popularity_index_Norm[0:20])
-
+  #pdb.set_trace()
 
   lwin_opt_sorting = [] ; lwin_opt_sorting.append(np.argmax(lwin_popularity_index))
   lwin_opt_sorting_GP = [] ;
@@ -65,14 +59,18 @@ if __name__ == '__main__':
     if ((np.argmax(lwin_popularity_index_Norm)+i) > -1 ) and ((np.argmax(lwin_popularity_index_Norm)+i) < len(lwin_popularity_index_Norm)):
        lwin_opt_sorting_GP.append(np.argmax(lwin_popularity_index_Norm)+i)
   current_top_win_index = np.argmax(lwin_popularity_index_Norm) 
-  print(current_top_win_index)
+  #print(current_top_win_index)
   #current_top_win = lwin[current_top_win_index]
   print('Producing Popularity-Dissimilarity List')
-  
+  #pdb.set_trace()
+
   SC = int(Sim.shape[0]/(2*GP))
   print(SC)
+  lwin_opt_sorting = [current_top_win_index]
+  lwindissim=np.full((Sim.shape[0],Sim.shape[1]), INF)
   for i in range(0, SC):
-    lwindissim_0=np.copy(Sim);
+    lwindissim[lwin_opt_sorting,:]=Sim[lwin_opt_sorting,:]
+    lwindissim_0=np.copy(lwindissim);
     lwindissim_test=np.copy(lwindissim_0);
     lwindissim_test[lwindissim_test==INF]=0
     if len(lwindissim_test[np.mean(lwindissim_test,axis=1)!=0,:])==0:
@@ -100,6 +98,6 @@ if __name__ == '__main__':
     if i not in lwin_opt_sorting:
       lwin_opt_sorting=np.append(lwin_opt_sorting,i)
   
-  fid = open('OrderedFrames_'+suffix+'.txt','w')
+  fid = open('OrderedFrames_'+os.path.basename(fn),'w')
   for FNum in lwin_opt_sorting:
     print >> fid, FNum
