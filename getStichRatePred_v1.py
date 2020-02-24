@@ -39,10 +39,16 @@ if __name__ == '__main__':
   rate = [float(r.split(' ')[-1]) for r in lines]
   FN = [int(r.split('_')[1]) for r in lines]
   SF = [int(r.split('_')[2].split('F')[1]) for r in lines]
+
+  #pdb.set_trace()
   Sim = np.zeros((max(FN)+1,max(FN)+1))
   Sim = Sim.astype(int)
   for i in range(len(rate)):
     Sim[SF[i]-1][FN[i]-1] = rate[i] # row is the SF number
+
+  for i in range(len(rate)):
+     if Sim[FN[i]-1][SF[i]-1] == 0 :
+       Sim[FN[i]-1][SF[i]-1] = Sim[SF[i]-1][FN[i]-1]
 
   lwinsim=np.copy(Sim)
   lwinsim=lwinsim[:,np.mean(lwinsim,axis=0)!=0]
