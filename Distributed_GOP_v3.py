@@ -281,6 +281,7 @@ def Encode_decode_video(Distributed_GOP_Matrix):
     decoderlog=[]
     decoderVMAFlog=[]
     PcntCompleted=[]
+    Pcnt1=0
     Pcnt2=0
     now_start=[]
     now_end=[]
@@ -298,7 +299,7 @@ def Encode_decode_video(Distributed_GOP_Matrix):
          fid = open(encoderlogfile,'w')
          osout=call_bg_file('./HMS/bin/TAppEncoderStatic -c {}/Part{}/encoder_HMS.cfg -c {}/Part{}/encoder_HMS_GOP_{}.cfg --InputFile={} --SourceWidth={} --SourceHeight={} --SAO=0 --QP={} --FrameRate={} --FramesToBeEncoded={} --MaxCUSize={} --MaxPartitionDepth={} --QuadtreeTULog2MaxSize=4 --BitstreamFile="{}" --RateControl={} --TargetBitrate={}'.format(Split_video_path,Pcnt,Split_video_path,Pcnt,Pcnt,InputYUV,Width,Hight,QP,fps,GOP,MaxCUSize,MaxPartitionDepth,BitstreamFile,RateControl,int(RVector[Rcnt])),fid)
          encoderlog.append(osout)
-         PcntCompleted.append(Pcnt)
+         PcntCompleted.append(Pcnt1)
          GOPDesc.append('Rate {} - GOP#{}'.format(int(RVector[Rcnt]),Pcnt))
 
          if (int(len(PcntCompleted) % NProcesses) == 0):
@@ -315,9 +316,12 @@ def Encode_decode_video(Distributed_GOP_Matrix):
                 print('Encoding of {} is completed ... {}   ({}) .. ({})'.format(GOPDesc[Pcnt2],now_end[Pcnt2].strftime("%Y-%m-%d %H:%M:%S"),now_end[Pcnt2].replace(microsecond=0)- now_start[Pcnt2].replace(microsecond=0),now_end[Pcnt2].replace(microsecond=0)-now_start[0].replace(microsecond=0)))
             PcntCompleted=[]
 
+         Pcnt1=Pcnt1+1
+
    ### decoding ---------------
 
     PcntCompleted=[]
+    Pcnt1=0
     Pcnt2=0
     now_start=[]
     now_end=[]
@@ -335,7 +339,7 @@ def Encode_decode_video(Distributed_GOP_Matrix):
          fid = open(decoderlogfile,'w')
          osout=call_bg_file('./HMS/bin/TAppDecoderStatic --BitstreamFile="{}" --ReconFile="{}"'.format(BitstreamFile,ReconFile),fid)
          decoderlog.append(osout)
-         PcntCompleted.append(Pcnt)
+         PcntCompleted.append(Pcnt1)
          GOPDesc.append('Rate {} - GOP#{}'.format(int(RVector[Rcnt]),Pcnt))
 
          if (int(len(PcntCompleted) % NProcesses) == 0):
@@ -352,9 +356,12 @@ def Encode_decode_video(Distributed_GOP_Matrix):
                 print('Decoding of {} is completed ... {}   ({}) .. ({})'.format(GOPDesc[Pcnt2],now_end[Pcnt2].strftime("%Y-%m-%d %H:%M:%S"),now_end[Pcnt2].replace(microsecond=0)- now_start[Pcnt2].replace(microsecond=0),now_end[Pcnt2].replace(microsecond=0)-now_start[0].replace(microsecond=0)))
             PcntCompleted=[]
 
+         Pcnt1=Pcnt1+1
+
    ### VMAF ---------------
 
     PcntCompleted=[]
+    Pcnt1=0
     Pcnt2=0
     now_start=[]
     now_end=[]
@@ -371,7 +378,7 @@ def Encode_decode_video(Distributed_GOP_Matrix):
          osout=call_bg_file('../vmaf/run_vmaf yuv420p {} {} {} {}'.format(Width,Hight,ReconFile,InputYUV),fidVMAF)
 	 decoderVMAFlog.append(osout)
          
-         PcntCompleted.append(Pcnt)
+         PcntCompleted.append(Pcnt1)
          GOPDesc.append('Rate {} - GOP#{}'.format(int(RVector[Rcnt]),Pcnt))
 
          if (int(len(PcntCompleted) % NProcesses) == 0):
@@ -387,6 +394,8 @@ def Encode_decode_video(Distributed_GOP_Matrix):
                 now_end.append(datetime.datetime.now())
                 print('Computing VMAF of {} is completed ... {}   ({}) .. ({})'.format(GOPDesc[Pcnt2],now_end[Pcnt2].strftime("%Y-%m-%d %H:%M:%S"),now_end[Pcnt2].replace(microsecond=0)- now_start[Pcnt2].replace(microsecond=0),now_end[Pcnt2].replace(microsecond=0)-now_start[0].replace(microsecond=0)))
             PcntCompleted=[]
+
+         Pcnt1=Pcnt1+1
 
     return
 
