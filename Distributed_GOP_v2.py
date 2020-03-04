@@ -360,7 +360,7 @@ def Encode_decode_video(Distributed_GOP_Matrix):
          
          decoderVMAFlogfile='{}/Part{}/decoderVMAFlog.dat'.format(Split_video_path,Pcnt)
          fidVMAF = open(decoderVMAFlogfile,'w')
-         osout=call_bg_file('../vmaf/run_vmaf yuv420p {} {} {} {}'.format(Width,Hight,ReconFile,InputYUV),fidVMAF)
+         osout=call_bg_file('../vmaf/run_vmaf yuv420p {} {} {} {}'.format(Width,Hight,InputYUV,ReconFile),fidVMAF)
 	 decoderVMAFlog.append(osout)
          
          PcntCompleted.append(Pcnt)
