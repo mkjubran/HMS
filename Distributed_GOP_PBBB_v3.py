@@ -272,7 +272,7 @@ def Create_Encoder_Config(Distributed_GOP_Matrix,ref_pics_in_Distributed_GOP_Mat
 	      GOPLine=GOPLine+' '+str(int(ref_pics_Distributed[cnt1]-cnt))
 	   if cnt == 1:
 	      GOPLine=GOPLine+' 0'
-	   else:	
+	   else:
 	      GOPLine=GOPLine+' 2 0'
 			
            print >> fid, GOPLine
@@ -394,8 +394,6 @@ def Encode_decode_video(Distributed_GOP_Matrix):
 
     return
 
-###--------------------------------------------------------------
-def Combine_encoder_log(Distributed_GOP_Matrix,rate):
 ###--------------------------------------------------------------
 def Combine_encoder_log(Distributed_GOP_Matrix,rate):
     CombinedLines=[]

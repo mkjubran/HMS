@@ -1,8 +1,0 @@
-
-HM software: Decoder Version [16.17] (including RExt)[Linux][GCC 5.4.0][64 bit] 
-POC    0 TId: 0 ( I-SLICE, QP  4 ) [DT  0.023] [L0 ] [L1 ] [:,(unk)] 
-POC    1 TId: 0 ( P-SLICE, QP 12 ) [DT  0.005] [L0 0 ] [L1 ] [:,(unk)] 
-POC    2 TId: 0 ( B-SLICE, QP 12 ) [DT  0.005] [L0 1 0 ] [L1 1 0 ] [:,(unk)] 
-POC    3 TId: 0 ( B-SLICE, QP 12 ) [DT  0.005] [L0 2 1 0 ] [L1 2 1 0 ] [:,(unk)] 
-
- Total Time:        0.083 sec.

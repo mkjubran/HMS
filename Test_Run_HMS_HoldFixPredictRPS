@@ -1,14 +1,14 @@
 #!/bin/bash
 #clear
 
-vid="Breathe2sec_640480"
-W=640
-H=480
+vid="BosphorusShakeNDryHoneyBee_1920x1080_120fps_420_8bit_YUV_rrc10"
+W=1920
+H=1080
 
-rlist="./OrderedFrames_Breathe2sec_640480_gp24.txt"
+rlist="./OrderedFrames_rate_BSH_640480_rrc10_train_frames_640_480_x_xp_10d_skip12.txt"
 mcu=64
 mpd=4
-nf=20800
+nf=1080
 output_dir="../savenpy"
 opt=''
 
@@ -16,22 +16,22 @@ opt=''
 
 ## Target Bit Rate 
 #opt='Test'
-qp=30;rate=40000;refa=4;refs=0;fps=24;fsr=$fps;PBBB='no';mode=normal;
+qp=30;rate=4000000;refa=4;refs=0;fps=120;fsr=$fps;PBBB='no';mode=normal;
 ./Run_HMS_HoldFixPredictRPS_Rate_InterRPS_ver1 --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt --PBBB=$PBBB
 
-#qp=30;rate=80000;refa=4;refs=0;fps=24;fsr=$fps;PBBB='yes';mode=normal;
-#./Run_HMS_HoldFixPredictRPS_Rate_InterRPS_ver1 --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt --PBBB=$PBBB
+qp=30;rate=6000000;refa=4;refs=0;fps=120;fsr=$fps;PBBB='no';mode=normal;
+./Run_HMS_HoldFixPredictRPS_Rate_InterRPS_ver1 --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt --PBBB=$PBBB
 
-#qp=30;rate=100000;refa=4;refs=0;fps=24;fsr=$fps;PBBB='yes';mode=normal;
-#./Run_HMS_HoldFixPredictRPS_Rate_InterRPS_ver1 --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt --PBBB=$PBBB
+qp=30;rate=8000000;refa=4;refs=0;fps=120;fsr=$fps;PBBB='no';mode=normal;
+./Run_HMS_HoldFixPredictRPS_Rate_InterRPS_ver1 --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt --PBBB=$PBBB
 
-#qp=30;rate=200000;refa=4;refs=0;fps=24;fsr=$fps;PBBB='yes';mode=normal;
-#./Run_HMS_HoldFixPredictRPS_Rate_InterRPS_ver1 --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt --PBBB=$PBBB
+qp=30;rate=7000000;refa=4;refs=0;fps=120;fsr=$fps;PBBB='no';mode=normal;
+./Run_HMS_HoldFixPredictRPS_Rate_InterRPS_ver1 --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt --PBBB=$PBBB
 
-#qp=30;rate=300000;refa=4;refs=0;fps=24;fsr=$fps;PBBB='yes';mode=normal;
-#./Run_HMS_HoldFixPredictRPS_Rate_InterRPS_ver1 --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt --PBBB=$PBBB
+qp=30;rate=500000;refa=4;refs=0;fps=120;fsr=$fps;PBBB='yes';mode=normal;
+./Run_HMS_HoldFixPredictRPS_Rate_InterRPS_ver1 --vid=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt --PBBB=$PBBB
 
-#qp=30;rate=400000;refa=4;refs=0;fps=24;fsr=$fps;PBBB='yes';mode=normal;
+#qp=30;rate=400000;refa=4;refs=0;fps=120;fsr=$fps;PBBB='yes';mode=normal;
 #./Run_HMS_HoldFixPredictRPS_Rate_InterRPS_ver1 --vidb=$vid --W=$W --H=$H --rlist=$rlist --qp=$qp --rate=$rate --mcu=$mcu --mpd=$mpd --refa=$refa --refs=$refs --fps=$fps --fsr=$fsr --nf=$nf --mode=$mode --output_dir=$output_dir --opt=$opt --PBBB=$PBBB
 
 

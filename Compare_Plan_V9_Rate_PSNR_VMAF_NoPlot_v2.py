@@ -48,9 +48,12 @@ def Get_FNum_PSNR(fname):
       if len(L)>0:
          if L[0]=='Frame':
              #print(L)
-             FNum=int(L[1])+0
-             FPSNR=float(L[3])+0
-	     FNum_PSNR=np.append(FNum_PSNR,np.array([[FNum,FPSNR]]),0)
+             try:
+                FNum=int(L[1])+0
+                FPSNR=float(L[3])+0
+	        FNum_PSNR=np.append(FNum_PSNR,np.array([[FNum,FPSNR]]),0)
+             except:
+               print(L)
    FNum_PSNR=FNum_PSNR[1:np.size(FNum_PSNR,0)]
    return FNum_PSNR
    

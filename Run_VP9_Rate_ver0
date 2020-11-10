@@ -86,8 +86,8 @@ rm -rf encoder.log
 #../libvpx/build/vpxenc -y $InputYUV -o ../vid/VP9EncodedVideo.webm --codec=vp9 --i420 -w $W -h $H -p 1 -t 4 --good --cpu-used=0 --target-bitrate=$rate --end-usage=vbr  --fps=$fps'000'/1000 -v --kf-min-dist=0 --kf-max-dist=360 --static-thresh=0  --min-q=0 --max-q=63
 #CBR encoding
 rate=$((rate / 1000)) 
-../libvpx/build/vpxenc -y $InputYUV -o ../vid/VP9EncodedVideo.webm --codec=vp9 --i420 -w $W -h $H -p 1 -t 4 --rt --cpu-used=4 --end-usage=cbr --target-bitrate=$rate --fps=$fps'000'/1000 --undershoot-pct=0 --buf-sz=6000 --buf-initial-sz=4000 --buf-optimal-sz=5000 -v --kf-max-dist=999999 --min-q=4 --max-q=56
-
+#../libvpx/build/vpxenc -y $InputYUV -o ../vid/VP9EncodedVideo.webm --codec=vp9 --i420 -w $W -h $H -p 1 -t 4 --rt --cpu-used=4 --end-usage=cbr --target-bitrate=$rate --fps=$fps'000'/1000 --undershoot-pct=0 --buf-sz=6000 --buf-initial-sz=4000 --buf-optimal-sz=5000 -v --kf-max-dist=999999 --min-q=4 --max-q=56
+../libvpx/vpxenc -y $InputYUV -o ../vid/VP9EncodedVideo.webm --codec=vp9 --i420 -w $W -h $H -p 1 -t 4 --rt --cpu-used=4 --end-usage=cbr --target-bitrate=$rate --fps=$fps'000'/1000 --undershoot-pct=0 --buf-sz=6000 --buf-initial-sz=4000 --buf-optimal-sz=5000 -v --kf-max-dist=999999 --min-q=4 --max-q=56
 
 file_size=`du -b "../vid/VP9EncodedVideo.webm" | cut -f1`
 echo "File Size (.webm) = "$file_size" Bytes" >> $HMSResults
@@ -97,7 +97,8 @@ rm -rf "../vid/VP9DecodedVideo.yuv"
 rm -rf decoder.log
 
 #ffmpeg -y -i ../vid/VP9EncodedVideo.webm ../vid/VP9DecodedVideo.yuv
-../libvpx/build/vpxdec ../vid/VP9EncodedVideo.webm --i420 -o ../vid/VP9DecodedVideo.yuv 
+#../libvpx/build/vpxdec ../vid/VP9EncodedVideo.webm --i420 -o ../vid/VP9DecodedVideo.yuv 
+../libvpx/vpxdec ../vid/VP9EncodedVideo.webm --i420 -o ../vid/VP9DecodedVideo.yuv 
 
 echo "PSNR ........................"
 python ./Quality/measure.py  $InputYUV ../vid/VP9DecodedVideo.yuv $W $H >> $HMSResults 

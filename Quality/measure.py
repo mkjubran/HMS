@@ -31,7 +31,8 @@ import mse
 #import niqe
 #import reco
 
-numpy.set_printoptions(threshold='nan')
+#numpy.set_printoptions(threshold='nan')
+numpy.set_printoptions(threshold=sys.maxsize)
 
 def img_read_yuv(src_file, width, height):
     y_imgtemp = numpy.fromfile(src_file, dtype=numpy.uint8, count=(width * height))
