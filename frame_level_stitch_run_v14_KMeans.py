@@ -6,6 +6,10 @@ import datetime, math, time
 import argparse
 import scipy.io as sio
 from numpy import *
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+from sklearn.metrics import pairwise_distances_argmin_min
 
 FRMPERWIN = 1 ; INF = 9999999
 
@@ -154,9 +158,8 @@ def find_scene_cuts(fn):
 
     # Usually use one detector, but multiple can be used.
     detector_list = [scenedetect.ContentDetector()]
-    #detector_list = [scenedetect.ContentDetector(threshold = 5)]
     #detector_list = [scenedetect.ContentDetector(threshold = 30,min_scene_len = 1)]
-    #detector_list = [scenedetect.ThresholdDetector(threshold = 1, min_percent = 0.5, min_scene_len = 1)]
+    #detector_list = [scenedetect.ThresholdDetector(threshold = 1, min_percent = 0.95, min_scene_len = 1)]
 
 
     frames_read = scenedetect.detect_scenes(cap, scene_list, detector_list)
@@ -211,6 +214,55 @@ def comp_dissimilarity(lwin_r,lwin_c,lwinsim):
               lwinsim[iwin_r-1][iwin_c-1]=window_similarity(win_r, win_c)
     return lwinsim
 
+def comp_distance(lwinKM):
+    imgM=[]
+    for image in lwinKM:
+       img=mpimg.imread(image)
+       imgv=np.reshape(img,[size(img)])
+       imgM.append(imgv)
+
+    all_data = [ i for i in range(len(lwinKM)) ]
+
+    #set your own number of clusters
+    num_clusters = 4
+
+    m_km = KMeans(n_clusters=num_clusters)  
+    m_km.fit(imgM)
+    m_clusters = m_km.labels_.tolist()
+
+    centers = np.array(m_km.cluster_centers_)
+
+    closest_data = []
+    for i in range(num_clusters):
+       center_vec = centers[i,].reshape(1,-1)
+       data_idx_within_i_cluster = [ idx for idx, clu_num in enumerate(m_clusters) if clu_num == i ]
+       #print(data_idx_within_i_cluster)
+       one_cluster_tf_matrix = np.zeros( (  len(data_idx_within_i_cluster) , centers.shape[1] ) )
+       for row_num, data_idx in enumerate(data_idx_within_i_cluster):
+           one_row = imgM[data_idx]
+           one_cluster_tf_matrix[row_num] = one_row
+
+       #print(shape(center_vec))
+       #print(shape(one_cluster_tf_matrix))
+       closest, _ = pairwise_distances_argmin_min(center_vec, one_cluster_tf_matrix)
+       closest_idx_in_one_cluster_tf_matrix = closest[0]
+       closest_data_row_num = data_idx_within_i_cluster[closest_idx_in_one_cluster_tf_matrix]
+      
+       data_id = all_data[closest_data_row_num]
+
+       closest_data.append(data_id)
+
+    closest_data = list(set(closest_data))
+
+    assert len(closest_data) == num_clusters
+
+    print(closest_data)
+    Ld=0;
+    lwinCentroid=[]
+    [lwinCentroid.append(lwinKM[i]) for i in closest_data ]
+    print(lwinCentroid)
+    return lwinCentroid
+
 if __name__ == '__main__':
     time_begin=datetime.datetime.now()
     np.set_printoptions(threshold=10000) #np.nan)
@@ -229,7 +281,9 @@ if __name__ == '__main__':
     #lwin1=map_to_downsampled(lwin1,fname)
     print(lwin1)
     print("Number of SC frames is {}").format(len(lwin1))
-    
+
+    comp_distance(lwin1)
+    '''
     #lwin1.append('pngall/1.png') ##it is no neccessary to have first frame part of the stitching frames
     lwin_sc = make_windows(lwin1, FRMPERWIN)
     lwinsim=np.full((len(lwin),len(lwin)), INF)
@@ -389,3 +443,4 @@ if __name__ == '__main__':
     #pdb.set_trace()
 
     np.save(('../savenpy/'+fname+'_lwin_opt_sorting'+suffix),lwin_opt_sorting)
+    '''
