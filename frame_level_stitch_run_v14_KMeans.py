@@ -29,11 +29,8 @@ parser.add_argument('--gp', type=int,
 parser.add_argument('--suffix', type=str,
                     help='suffix added to all output files')
 
-parser.add_argument('--wpp', type=int,
-                    help='Popularity weight')
-
-parser.add_argument('--wd', type=int,
-                    help='Dissimilarity weight')
+parser.add_argument('--km', type=int,
+                    help='number of KMeans clusters')
 
 args = parser.parse_args()
 
@@ -41,8 +38,7 @@ fn=args.f;
 fps=args.fps;
 GP=args.gp;
 suffix=args.suffix;
-wpp=args.wpp;
-wd=args.wd;
+km=args.km;
 
 def call(cmd):
     # proc = subprocess.Popen(["cat", "/etc/services"], stdout=subprocess.PIPE, shell=True)
@@ -214,7 +210,7 @@ def comp_dissimilarity(lwin_r,lwin_c,lwinsim):
               lwinsim[iwin_r-1][iwin_c-1]=window_similarity(win_r, win_c)
     return lwinsim
 
-def comp_distance(lwinKM):
+def getKMeans(lwinKM):
     imgM=[]
     for image in lwinKM:
        img=mpimg.imread(image)
@@ -224,7 +220,7 @@ def comp_distance(lwinKM):
     all_data = [ i for i in range(len(lwinKM)) ]
 
     #set your own number of clusters
-    num_clusters = 4
+    num_clusters = km
 
     m_km = KMeans(n_clusters=num_clusters)  
     m_km.fit(imgM)
@@ -256,8 +252,7 @@ def comp_distance(lwinKM):
 
     assert len(closest_data) == num_clusters
 
-    print(closest_data)
-    Ld=0;
+    #print(closest_data)
     lwinCentroid=[]
     [lwinCentroid.append(lwinKM[i]) for i in closest_data ]
     print(lwinCentroid)
@@ -282,7 +277,7 @@ if __name__ == '__main__':
     print(lwin1)
     print("Number of SC frames is {}").format(len(lwin1))
 
-    comp_distance(lwin1)
+    lwinKMc=getKMeans(lwin1)
     '''
     #lwin1.append('pngall/1.png') ##it is no neccessary to have first frame part of the stitching frames
     lwin_sc = make_windows(lwin1, FRMPERWIN)
@@ -429,7 +424,13 @@ if __name__ == '__main__':
     np.save(('../savenpy/'+fname+'_lwin_popularity_index_Norm'+suffix),lwin_popularity_index_Norm)
     np.save(('../savenpy/'+fname+'_lwin_popularity_index'+suffix),lwin_popularity_index)
 
-
+    '''
+    lwin_opt_sorting=[]
+    for KMc in lwinKMc:
+       s=re.search('(?<=/)\w+', str(KMc))
+       iKMc=int(s.group(0))
+       lwin_opt_sorting.append(iKMc)
+    print(lwin_opt_sorting)
     lwin_opt_sorting=np.array(lwin_opt_sorting)
     print('\nOPTIMAL Stitching frames:') ; print(lwin_opt_sorting)
     for i in range(0, len(lwin)):
@@ -443,4 +444,3 @@ if __name__ == '__main__':
     #pdb.set_trace()
 
     np.save(('../savenpy/'+fname+'_lwin_opt_sorting'+suffix),lwin_opt_sorting)
-    '''
